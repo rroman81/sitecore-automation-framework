@@ -1,0 +1,31 @@
+{
+    "hosting": "OnPrem",
+    "serverRole": "AllInOne",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "sitecore": {
+        "hostName": "",
+        "installDir": ""
+    },
+    "xConnect": {
+        "hostName": "",
+        "installDir": ""
+    },
+    "search": {
+        "solr": {
+            "version": "",
+            "installDir": "",
+            "hostName": "",
+            "port": "",
+            "serviceName": "",
+            "serviceDisplayName": "",
+            "serviceDescription": ""
+        }
+    },
+    "sql": {
+        "serverName": "",
+        "username": "",
+        "password": ""
+    }
+}

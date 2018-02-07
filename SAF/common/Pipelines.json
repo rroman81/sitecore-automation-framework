@@ -1,0 +1,72 @@
+{
+    "installOnPremAllInOne": [
+        {
+            "name": "Install .Net Framework",
+            "script": "\\install\\Install-DotNet.ps1"
+        },
+        {
+            "name": "Configure IIS",
+            "script": "\\install\\Configure-IIS.ps1"
+        },
+        {
+            "name": "Install IIS UrlRewrite Module",
+            "script": "\\install\\Install-UrlRewrite.ps1"
+        },
+        {
+            "name": "Install WebDeploy",
+            "script": "\\install\\Install-WebDeploy.ps1"
+        },
+        {
+            "name": "Install MSSQL Data-Tier Application Framework",
+            "script": "\\install\\Install-DacFramework.ps1"
+        },
+        {
+            "name": "Create MSSQL User",
+            "script": "\\sql\\Create-AdminSqlUser.ps1"
+        },
+        {
+            "name": "Enable MSSQL Contained Database Authentication",
+            "script": "\\sql\\Enable-ContainedDatabaseAuth.ps1"
+        },
+        {
+            "name": "Configure Java Runtime Environment",
+            "script": "\\install\\Install-JRE.ps1"
+        },
+        {
+            "name": "Install Non-Sucking Service Manager",
+            "script": "\\install\\Install-NSSM.ps1"
+        },
+        {
+            "name": "Install Solr",
+            "script": "\\install\\Install-Solr.ps1"
+        },
+        {
+            "name": "Process Sitecore installation package",
+            "script": "\\install\\Process-InstallPackage.ps1"
+        },
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\install\\Install-SIF.ps1"
+        },
+        {
+            "name": "Create xConnect certificate",
+            "script": "\\install\\Create-XConnectCert.ps1"
+        },
+        {
+            "name": "Configure Solr for xConnect",
+            "script": "\\install\\Configure-SolrXConnect.ps1"
+        },
+        {
+            "name": "Install xConnect",
+            "script": "\\install\\Install-XConnect.ps1"
+        },
+        {
+            "name": "Configure Solr for Sitecore",
+            "script": "\\install\\Configure-SolrSitecore.ps1"
+        },
+        {
+            "name": "Install Sitecore",
+            "script": "\\install\\Install-Sitecore.ps1"
+        }
+    ]
+}
