@@ -6,7 +6,7 @@ function Import-SqlModule {
         Update-Module -Name "SqlServer"
     }
     else {
-        Install-Module -Name "SqlServer"
+        Install-Module -Name "SqlServer" -AllowClobber
     }
 
     Import-Module SqlServer
