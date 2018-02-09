@@ -12,8 +12,8 @@ RECONFIGURE;
 GO
 "@
 
-$workingDir = Get-Location
+Push-Location
 Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $sqlServer
-Set-Location $workingDir
+Pop-Location
 
 Write-Host "Enable contained database authentication done."

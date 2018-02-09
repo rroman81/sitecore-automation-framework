@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\..\sql\SQL-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\sql\SQL-Module.psm1"
 $ErrorActionPreference = "Stop"
 
 Write-Host "Install Sitecore started..."
@@ -19,19 +19,30 @@ $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *single.scwd
 CleanInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix
 
 $sitecoreParams = @{
-    Path                      = "$sourcePackageDirectory\sitecore-XP0.json"
-    Package                   = $package.FullName
-    LicenseFile               = $license
-    SqlDbPrefix               = $prefix
-    SqlServer                 = $sqlServer
-    SqlAdminUser              = $sqlUser
-    SqlAdminPassword          = $sqlUserPassword
-    SolrCorePrefix            = $prefix
-    SolrUrl                   = $solrUrl
-    XConnectCert              = $cert
-    Sitename                  = $siteName
-    XConnectCollectionService = "https://$xConnectCollectionService"
-    InstallDirectory          = $installDir
+    Path                           = "$sourcePackageDirectory\sitecore-XP0.json"
+    Package                        = $package.FullName
+    LicenseFile                    = $license
+    SqlDbPrefix                    = $prefix
+    SqlServer                      = $sqlServer
+    SqlAdminUser                   = $sqlUser
+    SqlAdminPassword               = $sqlUserPassword
+    SqlCorePassword                = $sqlUserPassword
+    SqlMasterPassword              = $sqlUserPassword
+    SqlWebPassword                 = $sqlUserPassword
+    SqlReportingPassword           = $sqlUserPassword
+    SqlProcessingPoolsPassword     = $sqlUserPassword
+    SqlProcessingTasksPassword     = $sqlUserPassword
+    SqlReferenceDataPassword       = $sqlUserPassword
+    SqlMarketingAutomationPassword = $sqlUserPassword
+    SqlFormsPassword               = $sqlUserPassword
+    SqlExmMasterPassword           = $sqlUserPassword
+    SqlMessagingPassword           = $sqlUserPassword
+    SolrCorePrefix                 = $prefix
+    SolrUrl                        = $solrUrl
+    XConnectCert                   = $cert
+    Sitename                       = $siteName
+    XConnectCollectionService      = "https://$xConnectCollectionService"
+    InstallDirectory               = $installDir
 }
 Install-SitecoreConfiguration @sitecoreParams
 

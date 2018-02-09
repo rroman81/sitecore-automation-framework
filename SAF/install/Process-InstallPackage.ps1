@@ -2,8 +2,7 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "Processing Sitecore installation package started..."
 
-$installPackageDir = "$PSScriptRoot\..\temp\package"
-$global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+$installPackageDir = $global:Items.SAFInstallPackageDir
 
 Expand-Archive -Path $global:Configuration.installPackage -DestinationPath "$installPackageDir" -Force
 $configFilesZip = Get-ChildItem -Path "$installPackageDir\*" -Include *Configuration*

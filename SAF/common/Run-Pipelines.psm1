@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\Logging-Module.psm1" -Force
+Import-Module "$PSScriptRoot\Logging-Module.psm1"
 $ErrorActionPreference = "Stop"
 
 function RemoveTemp {
@@ -22,7 +22,7 @@ function ShowSteps {
 
     Write-Host "`n`nSAF will run '$Pipeline' pipeline:`n"
     
-    foreach ($step in ($global:Pipelines.$Pipeline)) {
+    foreach ($step in $global:Pipelines.$Pipeline) {
         Write-Host "    - $($step.name)" -NoNewline
 
         if(($step.skip -eq $true) -or (IsStepCompleted -Pipeline $Pipeline -Step $step.name)) {

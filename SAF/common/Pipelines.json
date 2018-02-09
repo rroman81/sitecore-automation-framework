@@ -67,6 +67,10 @@
         {
             "name": "Install Sitecore",
             "script": "\\install\\Install-Sitecore.ps1"
+        },
+        {
+            "name": "Deploy custom databases (if any)",
+            "script": "\\sql\\Deploy-CustomDatabases.ps1"
         }
     ]
 }

@@ -2,10 +2,8 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "Creating xConnect certificate started..."
 
-$prefix = $global:Configuration.prefix
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
-$certName = "$prefix.xconnect_client"
-$global:Items.Add("XConnectCertName", $certName)
+$certName = $global:Items.XConnectCertName
 
 $certParams = @{
     Path            = "$sourcePackageDirectory\xconnect-createcert.json"

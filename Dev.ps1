@@ -3,8 +3,8 @@
 # 2. Set "program": "${workspaceRoot}/Developer/Debug.ps1" in launch.json
 
 ### Configuration ###
-$runtimeDir =  ""
-$configFile = ""
+$runtimeDir =  "C:\Projects\sitecore-automation-framework\SAF"
+$configFile = "C:\Projects\sitecore-automation-framework\Configuration.json"
 ### Configuration ###
 
 ### Initialization ###

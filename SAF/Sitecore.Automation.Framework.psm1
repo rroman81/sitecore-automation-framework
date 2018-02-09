@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\common\Initialization-Module.psm1" -Force
+Import-Module "$PSScriptRoot\common\Initialization-Module.psm1"
 
 $ErrorActionPreference = "Stop"
 Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -48,7 +48,7 @@ function Install-Sitecore {
     )
 
     Initialize -ConfigFile $ConfigFile -PipelinesFile $PipelinesFile
-    Import-Module "$PSScriptRoot\install\Install-Module.psm1" -Force
+    Import-Module "$PSScriptRoot\install\Install-Module.psm1"
 
     if ($PSBoundParameters["Force"]) {
         StartInstall -Force

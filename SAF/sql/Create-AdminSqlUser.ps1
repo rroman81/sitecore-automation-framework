@@ -22,9 +22,9 @@ ELSE
 	END
 "@
 
-$workingDir = Get-Location
+Push-Location
 $createUserResult = Invoke-Sqlcmd -ServerInstance $sqlServer -Query $createUserCMD -QueryTimeout 3600
-Set-Location $workingDir
+Pop-Location
 
 $status = $createUserResult.status
 Write-Host "$status"

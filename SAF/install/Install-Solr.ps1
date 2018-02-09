@@ -14,9 +14,7 @@ $downloadFolder = "~\Downloads"
 $solrSSL = $true
 $JREVersion = Get-ChildItem "HKLM:\SOFTWARE\JavaSoft\Java Runtime Environment" | Select-Object -expa pschildname -Last 1
 $JREPath = "C:\Program Files\Java\jre$JREVersion"
-$serviceRoot = "$installFolder\solr-$version"
-$global:Items.Add("SolrServiceDir", $serviceRoot)
-$global:Items.Add("SolrServiceUrl", "https://$($global:Configuration.search.solr.hostName):$($global:Configuration.search.solr.port)/solr")
+$serviceRoot = $global:Items.SolrServiceDir
 
 function DownloadAndUnzipIfRequired {
     Param(
