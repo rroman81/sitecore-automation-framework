@@ -6,7 +6,6 @@ $prefix = $global:Configuration.prefix
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $solrUrl = $global:Items.SolrServiceUrl
 $solrRoot = $global:Items.SolrServiceDir
-Write-Warning $solrRoot
 $solrService = $global:Configuration.search.solr.serviceName
 
 $solrParams = @{

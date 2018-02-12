@@ -49,5 +49,53 @@ function AddConnectionString {
     Write-Host "Adding a new connection string with name '$ConnStringName' done"
 }
 
+function IISReset {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    Param
+    (
+        [string]$Reason
+    )
+
+    if ($Force -or $PSCmdlet.ShouldProcess("IIS", $Reason)) {
+        Start-Process "iisreset.exe" -NoNewWindow -Wait
+    }
+}
+
+function AddAppPoolUserToGroups {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$AppPool,
+        [string[]]$Groups
+    )
+
+    $needIISReset = $false
+
+    foreach ($gr in $Groups) {
+        $group = [ADSI]"WinNT://$Env:ComputerName/$gr,group"
+        $members = $group.psbase.invoke("Members") | ForEach-Object {$_.GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null)}
+
+        if ($members -contains $AppPool) {
+            Write-Warning "'$AppPool' AppPool user exists in '$gr' group"
+        }
+        else {
+            Write-Host "Adding '$AppPool' AppPool user to '$gr' group..."
+    
+            $ntAccount = New-Object System.Security.Principal.NTAccount("IIS APPPOOL\$AppPool")
+            $strSID = $ntAccount.Translate([System.Security.Principal.SecurityIdentifier])
+            $user = [ADSI]"WinNT://$strSID"
+            $group.Add($user.Path)
+            $needIISReset = $true
+
+            Write-Host "Adding '$AppPool' AppPool user to '$gr' group done."
+        }
+    }
+
+    if ($needIISReset -eq $true) {
+        IISReset -Reason "Changes on '$AppPool' AppPool user will take effect after IIS Reset. Do it now?" -Confirm
+    }
+}
+
 Export-ModuleMember -Function "CleanInstalledXConnectServices"
 Export-ModuleMember -Function "AddConnectionString"
+Export-ModuleMember -Function "AddAppPoolUserToGroups"

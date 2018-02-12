@@ -69,6 +69,10 @@
             "script": "\\install\\Install-Sitecore.ps1"
         },
         {
+            "name": "Configure AppPool access to performance monitoring",
+            "script": "\\install\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+        },
+        {
             "name": "Deploy custom databases (if any)",
             "script": "\\sql\\Deploy-CustomDatabases.ps1"
         }

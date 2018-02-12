@@ -14,10 +14,10 @@
     },
     "search": {
         "solr": {
-            "version": "",
+            "version": "6.6.2",
             "installDir": "",
             "hostName": "",
-            "port": "",
+            "port": "8983",
             "serviceName": "",
             "serviceDisplayName": "",
             "serviceDescription": ""
@@ -27,6 +27,12 @@
         "serverName": "",
         "username": "",
         "password": "",
-        "customDatabases": []
+        "customDatabases": [
+            {
+                "dacpack": "",
+                "loginUsername": "",
+                "connectionStringName": ""
+            }
+        ]
     }
 }
