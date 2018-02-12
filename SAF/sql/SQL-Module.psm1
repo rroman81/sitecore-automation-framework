@@ -8,8 +8,6 @@ function Import-SqlModule {
     else {
         Install-Module -Name "SqlServer" -AllowClobber
     }
-
-    Import-Module SqlServer
 }
 
 function DeleteDb {

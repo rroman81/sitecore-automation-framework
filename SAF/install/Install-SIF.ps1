@@ -21,6 +21,4 @@ else {
     Install-Module -Name "SitecoreInstallFramework"
 }
 
-Import-Module "SitecoreInstallFramework"
-
 Write-Host "Install Sitecore Installation Framework (SIF) done."
