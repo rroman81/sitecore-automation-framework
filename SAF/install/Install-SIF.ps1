@@ -13,8 +13,14 @@ if ($existing -eq $null)
 {
     Register-PSRepository -Name $repositoryName -SourceLocation $repositoryUrl -InstallationPolicy Trusted 
 }
-Install-Module SitecoreInstallFramework
-Update-Module SitecoreInstallFramework
-Import-Module SitecoreInstallFramework
+
+if (Get-Module -ListAvailable -Name "SitecoreInstallFramework") {
+    Update-Module -Name "SitecoreInstallFramework"
+}
+else {
+    Install-Module -Name "SitecoreInstallFramework"
+}
+
+Import-Module "SitecoreInstallFramework"
 
 Write-Host "Install Sitecore Installation Framework (SIF) done."
