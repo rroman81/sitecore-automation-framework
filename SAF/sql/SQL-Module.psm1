@@ -44,14 +44,14 @@ function CleanInstalledXConnectDbs {
 
     $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData")
 
-    Write-Host "Clean existing databases started..."
+    Write-Output "Clean existing databases started..."
 
     foreach ($db in $dbs) {
         $dbName = "$($Prefix)_$db"
         DeleteDb -SqlServer $SqlServer -DatabaseName $dbName
     }
 
-    Write-Host "Clean existing databases done."
+    Write-Output "Clean existing databases done."
 }
 
 function CleanInstalledSitecoreDbs {
@@ -64,14 +64,14 @@ function CleanInstalledSitecoreDbs {
 
     $dbs = @("EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
 
-    Write-Host "Clean existing databases started..."
+    Write-Output "Clean existing databases started..."
 
     foreach ($db in $dbs) {
         $dbName = "$($Prefix)_$db"
         DeleteDb -SqlServer $SqlServer -DatabaseName $dbName
     }
 
-    Write-Host "Clean existing databases done."
+    Write-Output "Clean existing databases done."
 }
 
 function Get-SupportedSqlServerVersions {
@@ -133,14 +133,14 @@ function SetDbOwner {
         Write-Warning "'$TargetDatabaseName' doesn't exist. Setting db_owner won't be executed."
     }
     else {
-        Write-Host "Setting db_owner = '$Username' for '$DatabaseName' database..."
+        Write-Output "Setting db_owner = '$Username' for '$DatabaseName' database..."
         $server = New-Object ("Microsoft.SqlServer.Management.Smo.Server") $SqlServer
         foreach ($db in $server.databases) {  
             if ($db.name -eq $DatabaseName) {
                 Invoke-Sqlcmd -ServerInstance $SqlServer -Database $DatabaseName -Query "EXEC sp_changedbowner '$Username'"
             }
         }
-        Write-Host "Setting db_owner = '$Username' for '$DatabaseName' database done."
+        Write-Output "Setting db_owner = '$Username' for '$DatabaseName' database done."
     }
 }
 
@@ -170,11 +170,11 @@ GRANT EXECUTE TO [$Username];
 GO 
 "@
 
-    Write-Host "Creating database user '$Username'..."
+    Write-Output "Creating database user '$Username'..."
     Push-Location
     Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer
     Pop-Location
-    Write-Host "Creating database user '$Username' done."
+    Write-Output "Creating database user '$Username' done."
 }
 
 function DeployDacpac {
@@ -204,10 +204,10 @@ function DeployDacpac {
         $dacServices = New-Object Microsoft.SqlServer.Dac.DacServices $connectionString
     
         # Deploy package
-        Write-Host "Starting Dacpac deployment for '$TargetDatabaseName'..."
+        Write-Output "Starting Dacpac deployment for '$TargetDatabaseName'..."
         $null = $dacServices.GenerateDeployScript($dacpackage, $TargetDatabaseName, $null)
         $null = $dacServices.Deploy($dacpackage, $TargetDatabaseName, $true, $null, $null)
-        Write-Host "Dacpac deployed '$TargetDatabaseName' successfully."
+        Write-Output "Dacpac deployed '$TargetDatabaseName' successfully."
 
         CreateDbUser -SqlServer $SqlServer -Username $LocalDbUsername -Password $Password -DatabaseName $TargetDatabaseName 
     }

@@ -2,7 +2,7 @@ Import-Module "$PSScriptRoot\..\sql\SQL-Module.psm1"
 Import-Module "$PSScriptRoot\..\common\Utils-Module.psm1"
 $ErrorActionPreference = "Stop"
 
-Write-Host "Install xConnect started..."
+Write-Output "Install xConnect started..."
 
 $prefix = $global:Configuration.prefix
 $license = $global:Configuration.license
@@ -40,4 +40,4 @@ $xconnectParams = @{
 }
 Install-SitecoreConfiguration @xconnectParams
 
-Write-Host "Install xConnect done."
+Write-Output "Install xConnect done."

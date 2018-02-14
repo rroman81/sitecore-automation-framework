@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Processing Sitecore installation package started..."
+Write-Output "Processing Sitecore installation package started..."
 
 $installPackageDir = $global:Items.SAFInstallPackageDir
 
@@ -10,4 +10,4 @@ Expand-Archive -Path $configFilesZip.FullName -DestinationPath "$installPackageD
 Copy-Item "$PSScriptRoot\..\overrides\onPremAllInOne\sitecore-XP0.json" -Destination "$installPackageDir" -Force
 Copy-Item "$PSScriptRoot\..\overrides\onPremAllInOne\xconnect-xp0.json" -Destination "$installPackageDir" -Force
 
-Write-Host "Processing Sitecore installation package done."
+Write-Output "Processing Sitecore installation package done."

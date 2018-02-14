@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Install Non-Sucking Service Manager started..."
+Write-Output "Install Non-Sucking Service Manager started..."
 choco upgrade nssm -y
-Write-Host "Install Non-Sucking Service Manager done."
+Write-Output "Install Non-Sucking Service Manager done."

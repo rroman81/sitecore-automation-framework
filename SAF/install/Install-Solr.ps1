@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Solr installation started..."
+Write-Output "Solr installation started..."
 
 $version = $global:Configuration.search.solr.version
 $solrPackage = "https://archive.apache.org/dist/lucene/solr/$version/solr-$version.zip"
@@ -27,11 +27,11 @@ function DownloadAndUnzipIfRequired {
 
     if (!(Test-Path -Path $toolFolder)) {
         if (!(Test-Path -Path $toolZip)) {
-            Write-Host "Downloading $toolName..."
+            Write-Output "Downloading $toolName..."
             Start-BitsTransfer -Source $toolSourceFile -Destination $toolZip
         }
 
-        Write-Host "Extracting $toolName to $toolFolder..."
+        Write-Output "Extracting $toolName to $toolFolder..."
         Expand-Archive $toolZip -DestinationPath $installRoot
     }
 }
@@ -42,7 +42,7 @@ DownloadAndUnzipIfRequired "Solr" $serviceRoot $solrZip $solrPackage $installFol
 # Ensure Java environment variable
 $jreVal = [Environment]::GetEnvironmentVariable("JAVA_HOME", [EnvironmentVariableTarget]::Machine)
 if ($jreVal -ne $JREPath) {
-    Write-Host "Setting JAVA_HOME environment variable"
+    Write-Output "Setting JAVA_HOME environment variable"
     [Environment]::SetEnvironmentVariable("JAVA_HOME", $JREPath, [EnvironmentVariableTarget]::Machine)
 }
 
@@ -50,7 +50,7 @@ if ($jreVal -ne $JREPath) {
 if ($solrSSL -eq $false) {
     # Update solr cfg to use right host name
     if (!(Test-Path -Path "$serviceRoot\bin\solr.in.cmd.old")) {
-        Write-Host "Rewriting solr config"
+        Write-Output "Rewriting solr config"
 
         $cfg = Get-Content "$serviceRoot\bin\solr.in.cmd"
         Rename-Item "$serviceRoot\bin\solr.in.cmd" "$serviceRoot\bin\solr.in.cmd.old"
@@ -64,7 +64,7 @@ if ($hostName -ne "localhost") {
     $hostNameFileName = "c:\\windows\system32\drivers\etc\hosts"
     $hostNameFile = [System.Io.File]::ReadAllText($hostNameFileName)
     if (!($hostNameFile -like "*$hostName*")) {
-        Write-Host "Updating host file"
+        Write-Output "Updating host file"
         "`r`n127.0.0.1`t$hostName" | Add-Content $hostNameFileName
     }
 }
@@ -74,7 +74,7 @@ if ($solrSSL -eq $true) {
     # Generate SSL cert
     $existingCert = Get-ChildItem Cert:\LocalMachine\Root | where FriendlyName -eq "$serviceName"
     if (!($existingCert)) {
-        Write-Host "Creating & trusting an new SSL Cert for $hostName"
+        Write-Output "Creating & trusting an new SSL Cert for $hostName"
 
         # Generate a cert
         # https://docs.microsoft.com/en-us/powershell/module/pkiclient/new-selfsignedcertificate?view=win10-ps
@@ -93,7 +93,7 @@ if ($solrSSL -eq $true) {
 
     # export the cert to pfx using solr's default password
     if (!(Test-Path -Path "$serviceRoot\server\etc\solr-ssl.keystore.pfx")) {
-        Write-Host "Exporting cert for Solr to use"
+        Write-Output "Exporting cert for Solr to use"
 
         $cert = Get-ChildItem Cert:\LocalMachine\Root | where FriendlyName -eq "$serviceName"
     
@@ -104,7 +104,7 @@ if ($solrSSL -eq $true) {
 
     # Update solr cfg to use keystore & right host name
     if (!(Test-Path -Path "$serviceRoot\bin\solr.in.cmd.old")) {
-        Write-Host "Rewriting solr config"
+        Write-Output "Rewriting solr config"
 
         $cfg = Get-Content "$serviceRoot\bin\solr.in.cmd"
         Rename-Item "$serviceRoot\bin\solr.in.cmd" "$serviceRoot\bin\solr.in.cmd.old"
@@ -120,15 +120,15 @@ if ($solrSSL -eq $true) {
 # install the service & runs
 $svc = Get-Service "$serviceName" -ErrorAction SilentlyContinue
 if (!($svc)) {
-    Write-Host "Installing Solr service"
+    Write-Output "Installing Solr service"
     nssm install $serviceName "$serviceRoot\bin\solr.cmd" "-f" "-p $port"
     nssm set $serviceName DisplayName $serviceDisplayName 
     nssm set $serviceName Description $serviceDesctiption
     $svc = Get-Service "$serviceName" -ErrorAction SilentlyContinue
 }
 if ($svc.Status -ne "Running") {
-    Write-Host "Starting Solr service"
+    Write-Output "Starting Solr service"
     Start-Service "$serviceName"
 }
 
-Write-Host "Solr installation done."
+Write-Output "Solr installation done."

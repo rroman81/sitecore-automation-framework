@@ -27,12 +27,6 @@
         "serverName": "",
         "username": "",
         "password": "",
-        "customDatabases": [
-            {
-                "dacpack": "",
-                "loginUsername": "",
-                "connectionStringName": ""
-            }
-        ]
+        "customDatabases": []
     }
 }

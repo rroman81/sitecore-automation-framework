@@ -1,7 +1,7 @@
 Import-Module "$PSScriptRoot\..\sql\SQL-Module.psm1"
 $ErrorActionPreference = "Stop"
 
-Write-Host "Install Sitecore started..."
+Write-Output "Install Sitecore started..."
 
 $prefix = $global:Configuration.prefix
 $license = $global:Configuration.license
@@ -46,4 +46,4 @@ $sitecoreParams = @{
 }
 Install-SitecoreConfiguration @sitecoreParams
 
-Write-Host "Install Sitecore done."
+Write-Output "Install Sitecore done."

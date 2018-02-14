@@ -9,7 +9,7 @@ function CleanInstalledXConnectServices {
 
     $services = @("IndexWorker", "MarketingAutomationService")
 
-    Write-Host "Cleaning existing xConnect services..."
+    Write-Output "Cleaning existing xConnect services..."
 
     foreach ($service in $services) {
         $serviceName = "$HostName-$service"
@@ -20,7 +20,7 @@ function CleanInstalledXConnectServices {
         }
     }
 
-    Write-Host "Cleaning existing xConnect services done"
+    Write-Output "Cleaning existing xConnect services done"
 }
 
 function AddConnectionString {
@@ -36,7 +36,7 @@ function AddConnectionString {
 
     )
 
-    Write-Host "Adding a new connection string with name '$ConnStringName'..."
+    Write-Output "Adding a new connection string with name '$ConnStringName'..."
     $connStrFile = Join-Path -Path $WebsiteRootDir -ChildPath "\App_Config\ConnectionStrings.config"
     $connStr = "Data Source=$SqlServer;Initial Catalog=$Database;User ID=$Username;Password=$Password"
     
@@ -46,7 +46,7 @@ function AddConnectionString {
     $newConnStr.SetAttribute("name", $ConnStringName)
     $newConnStr.SetAttribute("connectionString", $connStr)
     $xmlDoc.Save($connStrFile)
-    Write-Host "Adding a new connection string with name '$ConnStringName' done"
+    Write-Output "Adding a new connection string with name '$ConnStringName' done"
 }
 
 function IISReset {
@@ -79,7 +79,7 @@ function AddAppPoolUserToGroups {
             Write-Warning "'$AppPool' AppPool user exists in '$gr' group"
         }
         else {
-            Write-Host "Adding '$AppPool' AppPool user to '$gr' group..."
+            Write-Output "Adding '$AppPool' AppPool user to '$gr' group..."
     
             $ntAccount = New-Object System.Security.Principal.NTAccount("IIS APPPOOL\$AppPool")
             $strSID = $ntAccount.Translate([System.Security.Principal.SecurityIdentifier])
@@ -87,7 +87,7 @@ function AddAppPoolUserToGroups {
             $group.Add($user.Path)
             $needIISReset = $true
 
-            Write-Host "Adding '$AppPool' AppPool user to '$gr' group done."
+            Write-Output "Adding '$AppPool' AppPool user to '$gr' group done."
         }
     }
 

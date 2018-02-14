@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "WebDeploy configuration started..."
+Write-Output "WebDeploy configuration started..."
 choco upgrade webdeploy
-Write-Host "WebDeploy configuration done."
+Write-Output "WebDeploy configuration done."

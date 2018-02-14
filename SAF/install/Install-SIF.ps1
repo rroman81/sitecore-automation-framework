@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Install Sitecore Installation Framework (SIF) started..."
+Write-Output "Install Sitecore Installation Framework (SIF) started..."
 
 $repositoryUrl = "https://sitecore.myget.org/F/sc-powershell/api/v2"
 $repositoryName = "SitecoreGallery"
@@ -23,4 +23,4 @@ else {
 
 Import-Module -Name "SitecoreInstallFramework"
 
-Write-Host "Install Sitecore Installation Framework (SIF) done."
+Write-Output "Install Sitecore Installation Framework (SIF) done."

@@ -20,21 +20,19 @@ function ShowSteps {
         [string]$Pipeline
     )
 
-    Write-Host "`n`nSAF will run '$Pipeline' pipeline:`n"
+    Write-Output "`n`nSAF will run '$Pipeline' pipeline:`n"
     
     foreach ($step in $global:Pipelines.$Pipeline) {
-        Write-Host "    - $($step.name)" -NoNewline
-
         if(($step.skip -eq $true) -or (IsStepCompleted -Pipeline $Pipeline -Step $step.name)) {
-            Write-Host " SKIP" -Foreground Yellow
+            Write-Warning "SKIP $($step.name)"
         }
         else {
-            Write-Host ""
+            Write-Output "- $($step.name)"
         }
     }
-    Write-Host ""
+    Write-Output ""
     Write-Warning "Starting after 13 seconds..."
-    Write-Host ""
+    Write-Output ""
     Start-Sleep -s 13
 }
 

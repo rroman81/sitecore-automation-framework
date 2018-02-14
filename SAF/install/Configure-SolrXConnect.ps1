@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Configuration of Solr for xConnect started..."
+Write-Output "Configuration of Solr for xConnect started..."
 
 $prefix = $global:Configuration.prefix
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
@@ -17,4 +17,4 @@ $solrParams = @{
 }
 Install-SitecoreConfiguration @solrParams
 
-Write-Host "Configuration of Solr for xConnect done."
+Write-Output "Configuration of Solr for xConnect done."

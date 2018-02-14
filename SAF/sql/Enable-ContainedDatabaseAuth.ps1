@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Enable contained database authentication started..."
+Write-Output "Enable contained database authentication started..."
 
 $sqlServer = $global:Configuration.sql.serverName
 
@@ -16,4 +16,4 @@ Push-Location
 Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $sqlServer
 Pop-Location
 
-Write-Host "Enable contained database authentication done."
+Write-Output "Enable contained database authentication done."

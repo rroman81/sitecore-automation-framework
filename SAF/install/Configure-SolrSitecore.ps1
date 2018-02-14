@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Configuration of Solr for Sitecore started..."
+Write-Output "Configuration of Solr for Sitecore started..."
 
 $prefix = $global:Configuration.prefix
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
@@ -17,4 +17,4 @@ $solrParams = @{
 }
 Install-SitecoreConfiguration @solrParams
 
-Write-Host "Configuration of Solr for Sitecore done."
+Write-Output "Configuration of Solr for Sitecore done."

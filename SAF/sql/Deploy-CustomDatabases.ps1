@@ -2,10 +2,10 @@ Import-Module "$PSScriptRoot\Sql-Module.psm1"
 Import-Module "$PSScriptRoot\..\common\Utils-Module.psm1"
 $ErrorActionPreference = "Stop"
 
-Write-Host "Deploying custom databases started..."
+Write-Output "Deploying custom databases started..."
 
 if ($global:Configuration.sql.customDatabases.Count -lt 1) {
-    Write-Host "No custom databases found."
+    Write-Output "No custom databases found."
 }
 else {
 
@@ -26,4 +26,4 @@ else {
     }
 }
 
-Write-Host "Deploying custom database done."
+Write-Output "Deploying custom database done."

@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Create SQL user started..."
+Write-Output "Create SQL user started..."
 
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser = $global:Configuration.sql.username
@@ -27,6 +27,6 @@ $createUserResult = Invoke-Sqlcmd -ServerInstance $sqlServer -Query $createUserC
 Pop-Location
 
 $status = $createUserResult.status
-Write-Host "$status"
+Write-Output "$status"
 
-Write-Host "Create SQL user done."
+Write-Output "Create SQL user done."

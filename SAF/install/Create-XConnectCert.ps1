@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Creating xConnect certificate started..."
+Write-Output "Creating xConnect certificate started..."
 
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $certName = $global:Items.XConnectCertName
@@ -11,4 +11,4 @@ $certParams = @{
 }
 Install-SitecoreConfiguration @certParams
 
-Write-Host "Creating xConnect certificate done."
+Write-Output "Creating xConnect certificate done."

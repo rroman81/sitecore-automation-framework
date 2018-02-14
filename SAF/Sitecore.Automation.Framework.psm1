@@ -17,9 +17,9 @@ function Initialize {
         [string]$PipelinesFile
     )
 
-    Write-Host "`n`n------------------------------------------------------" -Foreground Green
-    Write-Host "--- Welcome to Sitecore Automation Framework (SAF) ---" -Foreground Green
-    Write-Host "------------------------------------------------------`n`n" -Foreground Green
+    Write-Output "`n`n------------------------------------------------------"
+    Write-Output "--- Welcome to Sitecore Automation Framework (SAF) ---"
+    Write-Output "------------------------------------------------------`n`n"
     
     ## Verify elevated
     ## https://superuser.com/questions/749243/detect-if-powershell-is-running-as-administrator

@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 function ConfigureChoco {
-    Write-Host "Chocolatey configuration started..."
+    Write-Output "Chocolatey configuration started..."
     try {
         choco
         choco upgrade chocolatey
@@ -9,7 +9,7 @@ function ConfigureChoco {
         Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
     }
     choco feature enable -n allowGlobalConfirmation
-    Write-Host "Chocolatey configuration done."
+    Write-Output "Chocolatey configuration done."
 }
 
 function InitializeSAF {

@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 function Initialize-IIS {
-    Write-Host "IIS configuration started..."
+    Write-Output "IIS configuration started..."
 
     $operatingSystem = (Get-WmiObject win32_operatingsystem).Caption
     
@@ -68,7 +68,7 @@ function Initialize-IIS {
         Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45 | Out-Null
     }
 
-    Write-Host "IIS configuration done."
+    Write-Output "IIS configuration done."
 }
 
 Initialize-IIS
