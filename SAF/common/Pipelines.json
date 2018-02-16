@@ -73,8 +73,12 @@
             "script": "\\install\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         },
         {
-            "name": "Deploy custom databases (if any)",
+            "name": "Create custom databases (if any)",
             "script": "\\sql\\Deploy-CustomDatabases.ps1"
+        },
+        {
+            "name": "Create custom Solr cores (if any)",
+            "script": "\\install\\Create-CustomSolrCores.ps1"
         }
     ]
 }

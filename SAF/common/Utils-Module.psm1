@@ -53,11 +53,18 @@ function IISReset {
     [CmdletBinding(SupportsShouldProcess = $true)]
     Param
     (
-        [string]$Reason
+        [string]$Reason,
+        [int]$TryNumber = 0
     )
 
-    if ($Force -or $PSCmdlet.ShouldProcess("IIS", $Reason)) {
-        Start-Process "iisreset.exe" -NoNewWindow -Wait
+    if ($PSCmdlet.ShouldProcess("IIS", $Reason)) {
+        $process = Start-Process "iisreset.exe" -NoNewWindow -Wait -PassThru
+
+        if(($process.ExitCode -gt 0) -and ($TryNumber -lt 3) ) {
+            Write-Warning "IIS Reset failed. Retrying..."
+            $newTryNumber = $TryNumber + 1
+            IISReset -Reason $Reason -TryNumber $newTryNumber
+        }
     }
 }
 
