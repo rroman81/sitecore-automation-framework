@@ -1,15 +1,17 @@
 $ErrorActionPreference = "Stop"
 
-function Import-SqlModule {
+function ImportSqlModule {
     
-    if (Get-Module -ListAvailable -Name "SqlServer") {
-        Update-Module -Name "SqlServer"
+    if (Get-Module "SqlServer" -ListAvailable) {
+        Update-Module "SqlServer"
     }
     else {
-        Install-Module -Name "SqlServer" -AllowClobber
+        Install-Module "SqlServer" -AllowClobber
     }
 
-    Import-Module "SqlServer" 
+    if (!(Get-Module "SqlServer")) {
+        Import-Module "SqlServer"
+    }
 }
 
 function DeleteDb {
@@ -103,8 +105,8 @@ function DatabaseExists {
         [string]$SqlServer,
         [string]$DatabaseName
     )
-
-    Import-SqlModule
+    
+    ImportSqlModule
 
     $exists = $false
     

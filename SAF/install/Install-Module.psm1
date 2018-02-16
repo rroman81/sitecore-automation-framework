@@ -1,6 +1,34 @@
 Import-Module "$PSScriptRoot\..\common\Run-Pipelines.psm1"
 $ErrorActionPreference = "Stop"
 
+function ImportSIF {
+    Write-Output "Import Sitecore Installation Framework (SIF) started..."
+
+    $repositoryUrl = "https://sitecore.myget.org/F/sc-powershell/api/v2"
+    $repositoryName = "SitecoreGallery"
+
+    # Check to see whether that location is registered already
+    $existing = Get-PSRepository -Name $repositoryName -ErrorAction Ignore
+
+    # If not, register it
+    if ($existing -eq $null) {
+        Register-PSRepository -Name $repositoryName -SourceLocation $repositoryUrl -InstallationPolicy Trusted 
+    }
+
+    if (Get-Module "SitecoreInstallFramework" -ListAvailable) {
+        Update-Module "SitecoreInstallFramework"
+    }
+    else {
+        Install-Module "SitecoreInstallFramework"
+    }
+
+    if (!(Get-Module "SitecoreInstallFramework")) {
+        Import-Module "SitecoreInstallFramework"
+    }
+
+    Write-Output "Import Sitecore Installation Framework (SIF) done."
+}
+
 function ResolvePipeline {
     return "install$($global:Configuration.hosting)$($global:Configuration.serverRole)"
 }
@@ -12,7 +40,7 @@ function LoadItems {
         [string]$Pipeline
     )
 
-    if($Pipeline -eq "installOnPremAllInOne") {
+    if ($Pipeline -eq "installOnPremAllInOne") {
         $installPackageDir = "$PSScriptRoot\..\temp\package"
         $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
 
@@ -45,4 +73,6 @@ function StartInstall {
 }
 
 Export-ModuleMember -Function "StartInstall"
+Export-ModuleMember -Function "ImportSIF"
+
 

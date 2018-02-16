@@ -20,7 +20,8 @@
             "port": "8983",
             "serviceName": "",
             "serviceDisplayName": "",
-            "serviceDescription": ""
+            "serviceDescription": "",
+            "customCores": []
         }
     },
     "sql": {
