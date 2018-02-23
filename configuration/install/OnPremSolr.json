@@ -1,0 +1,16 @@
+{
+    "hosting": "OnPrem",
+    "serverRole": "Solr",
+    "search": {
+        "solr": {
+            "version": "6.6.2",
+            "installDir": "",
+            "hostName": "",
+            "port": "8983",
+            "serviceName": "",
+            "serviceDisplayName": "",
+            "serviceDescription": "",
+            "customCores": []
+        }
+    }
+}

@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 function ConfigureChoco {
-    Write-Output "Chocolatey configuration started..."
+    Write-Warning "SAF needs Choco. Installation will start after 3 seconds."
     try {
         choco
         choco upgrade chocolatey
@@ -9,15 +9,7 @@ function ConfigureChoco {
         Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
     }
     choco feature enable -n allowGlobalConfirmation
-    Write-Output "Chocolatey configuration done."
+    Write-Warning "SAF has its Choco!"
 }
 
-function InitializeSAF {
-    Write-Warning "SAF initialization will start after 3 seconds."
-    Start-Sleep -s 3
-
-    ConfigureChoco
-    Write-Warning "SAF initialization done."
-}
-
-Export-ModuleMember -Function "InitializeSAF"
+Export-ModuleMember -Function "ConfigureChoco"

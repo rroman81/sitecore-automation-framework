@@ -80,5 +80,19 @@
             "name": "Create custom Solr cores (if any)",
             "script": "\\install\\Create-CustomSolrCores.ps1"
         }
+    ],
+    "installOnPremSolr": [
+        {
+            "name": "Configure Java Runtime Environment",
+            "script": "\\install\\Install-JRE.ps1"
+        },
+        {
+            "name": "Install Non-Sucking Service Manager",
+            "script": "\\install\\Install-NSSM.ps1"
+        },
+        {
+            "name": "Install Solr",
+            "script": "\\install\\Install-Solr.ps1"
+        }
     ]
 }

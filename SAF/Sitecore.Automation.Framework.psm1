@@ -7,7 +7,6 @@ $global:Configuration = $null
 $global:Items = $null
 $global:Pipelines = Get-Content -Raw -Path "$PSScriptRoot\common\Pipelines.json" | ConvertFrom-Json
 
-
 function Initialize {
 
     [CmdletBinding()]
@@ -33,8 +32,6 @@ function Initialize {
     if (!([string]::IsNullOrEmpty($PipelinesFile))) {
         $global:Pipelines = Get-Content -Raw -Path $PipelinesFile | ConvertFrom-Json
     }
-
-    InitializeSAF
 }
 
 function Install-Sitecore {
@@ -48,6 +45,8 @@ function Install-Sitecore {
     )
 
     Initialize -ConfigFile $ConfigFile -PipelinesFile $PipelinesFile
+    ConfigureChoco
+
     Import-Module "$PSScriptRoot\install\Install-Module.psm1"
 
     if ($PSBoundParameters["Force"]) {

@@ -33,25 +33,35 @@ function ResolvePipeline {
     return "install$($global:Configuration.hosting)$($global:Configuration.serverRole)"
 }
 
-function LoadItems {
+function InitializeItems {
     [CmdletBinding()]
     Param
     (
         [string]$Pipeline
     )
 
-    if ($Pipeline -eq "installOnPremAllInOne") {
-        $installPackageDir = "$PSScriptRoot\..\temp\package"
-        $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+    switch ($Pipeline) {
+        "installOnPremAllInOne" {
+            $installPackageDir = "$PSScriptRoot\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+    
+            $solrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
+            $global:Items.Add("SolrServiceDir", $solrServiceDir)
+    
+            $global:Items.Add("SolrServiceUrl", "https://$($global:Configuration.search.solr.hostName):$($global:Configuration.search.solr.port)/solr")
+    
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
 
-        $solrServiceRoot = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
-        $global:Items.Add("SolrServiceDir", $solrServiceRoot)
-
-        $global:Items.Add("SolrServiceUrl", "https://$($global:Configuration.search.solr.hostName):$($global:Configuration.search.solr.port)/solr")
-
-        $certName = "$($global:Configuration.prefix).xconnect_client"
-        $global:Items.Add("XConnectCertName", $certName)
-    }
+            break
+        }
+        "installOnPremSolr" {
+            $solrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
+            $global:Items.Add("SolrServiceDir", $solrServiceDir)
+            
+            break
+        }
+     }
 }
 
 function StartInstall {
@@ -62,7 +72,7 @@ function StartInstall {
     )
     
     $pipeline = ResolvePipeline
-    LoadItems -Pipeline $pipeline
+    InitializeItems -Pipeline $pipeline
 
     if ($PSBoundParameters["Force"]) {
         RunSteps -Pipeline $pipeline -Force
