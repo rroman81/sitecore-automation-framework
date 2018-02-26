@@ -15,6 +15,9 @@ function ImportSIF {
         Register-PSRepository -Name $repositoryName -SourceLocation $repositoryUrl -InstallationPolicy Trusted 
     }
 
+    # Ensure Trusted, so that users are not prompted before installing modules from that source.
+    Set-PSRepository -Name $repositoryName -InstallationPolicy Trusted
+
     if (Get-Module "SitecoreInstallFramework" -ListAvailable) {
         Update-Module "SitecoreInstallFramework"
     }
