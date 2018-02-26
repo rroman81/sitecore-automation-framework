@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\Logging-Module.psm1"
+Import-Module "$PSScriptRoot\Logging-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 function RemoveTemp {

@@ -73,16 +73,17 @@ function IISReset {
     Param
     (
         [string]$Reason,
-        [int]$TryNumber = 0
+        [int]$TryNumber = 0,
+        [switch]$Force
     )
 
-    if ($PSCmdlet.ShouldProcess("IIS", $Reason)) {
+    if ($Force -or $PSCmdlet.ShouldProcess("IIS", $Reason)) {
         $process = Start-Process "iisreset.exe" -NoNewWindow -Wait -PassThru
 
         if(($process.ExitCode -gt 0) -and ($TryNumber -lt 3) ) {
             Write-Warning "IIS Reset failed. Retrying..."
             $newTryNumber = $TryNumber + 1
-            IISReset -Reason $Reason -TryNumber $newTryNumber
+            IISReset -Reason $Reason -TryNumber $newTryNumber -Force
         }
     }
 }
@@ -194,9 +195,9 @@ function InstallSolr {
     $svc = Get-Service "$ServiceName" -ErrorAction SilentlyContinue
     if (!($svc)) {
         Write-Output "Installing Solr service"
-        nssm install $ServiceName "$ServiceDir\bin\solr.cmd" "-f" "-p $Port"
-        nssm set $ServiceName DisplayName $ServiceDisplayName 
-        nssm set $ServiceName Description $ServiceDesctiption
+        nssm install "$ServiceName" "$ServiceDir\bin\solr.cmd" "-f" "-p $Port"
+        nssm set "$ServiceName" DisplayName "$ServiceDisplayName" 
+        nssm set "$ServiceName" Description "$ServiceDescription"
         $svc = Get-Service "$ServiceName" -ErrorAction SilentlyContinue
     }
     if ($svc.Status -ne "Running") {

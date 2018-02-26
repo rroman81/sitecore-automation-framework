@@ -1,10 +1,10 @@
-Import-Module "$PSScriptRoot\Sql-Module.psm1"
-Import-Module "$PSScriptRoot\..\common\Utils-Module.psm1"
+Import-Module "$PSScriptRoot\Sql-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\common\Utils-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Write-Output "Deploying custom databases started..."
 
-if ($global:Configuration.sql.customDatabases.Count -lt 1) {
+if (($global:Configuration.search.solr.customCores -eq $null) -or ($global:Configuration.sql.customDatabases.Count -lt 1)) {
     Write-Output "No custom databases found."
 }
 else {

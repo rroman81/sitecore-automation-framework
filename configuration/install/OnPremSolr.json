@@ -9,8 +9,7 @@
             "port": "8983",
             "serviceName": "",
             "serviceDisplayName": "",
-            "serviceDescription": "",
-            "customCores": []
+            "serviceDescription": ""
         }
     }
 }

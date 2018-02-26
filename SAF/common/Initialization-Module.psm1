@@ -1,6 +1,7 @@
 $ErrorActionPreference = "Stop"
 function ConfigureChoco {
     Write-Warning "SAF needs Choco. Installation will start after 3 seconds."
+    Start-Sleep -s 3
     try {
         choco
         choco upgrade chocolatey

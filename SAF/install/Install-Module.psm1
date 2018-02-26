@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\..\common\Run-Pipelines.psm1"
+Import-Module "$PSScriptRoot\..\common\Run-Pipelines.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 function ImportSIF {

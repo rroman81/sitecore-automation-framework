@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\common\Initialization-Module.psm1"
+Import-Module "$PSScriptRoot\common\Initialization-Module.psm1" -Force
 
 $ErrorActionPreference = "Stop"
 Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -47,7 +47,7 @@ function Install-Sitecore {
     Initialize -ConfigFile $ConfigFile -PipelinesFile $PipelinesFile
     ConfigureChoco
 
-    Import-Module "$PSScriptRoot\install\Install-Module.psm1"
+    Import-Module "$PSScriptRoot\install\Install-Module.psm1" -Force
 
     if ($PSBoundParameters["Force"]) {
         StartInstall -Force

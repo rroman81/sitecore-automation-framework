@@ -14,4 +14,3 @@ Import-Module -Name $module -Force
 
 ############### Debug ###################
 Install-Sitecore -ConfigFile $configFile
-

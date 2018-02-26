@@ -152,7 +152,7 @@ function CreateDbUser {
     (
         [string]$SqlServer,
         [string]$Username,
-        [string]$Password,
+        [SecureString]$Password,
         [string]$DatabaseName
     )
 
@@ -186,7 +186,7 @@ function DeployDacpac {
         [string]$SqlServer,
         [string]$Username,
         [string]$LocalDbUsername,
-        [string]$Password,
+        [SecureString]$Password,
         [string]$Dacpac,
         [string]$TargetDatabaseName
     )

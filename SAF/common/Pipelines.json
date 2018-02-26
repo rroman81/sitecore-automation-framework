@@ -93,6 +93,10 @@
         {
             "name": "Install Solr",
             "script": "\\install\\Install-Solr.ps1"
+        },
+        {
+            "name": "Create custom Solr cores (if any)",
+            "script": "\\install\\Create-CustomSolrCores.ps1"
         }
     ]
 }

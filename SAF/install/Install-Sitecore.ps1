@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\..\sql\SQL-Module.psm1"
+Import-Module "$PSScriptRoot\..\sql\SQL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Write-Output "Install Sitecore started..."
