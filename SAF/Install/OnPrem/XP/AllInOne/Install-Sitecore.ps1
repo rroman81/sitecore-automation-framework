@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\..\sql\SQL-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Write-Output "Install Sitecore started..."
@@ -16,7 +16,7 @@ $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *single.scwdp.zip*
 
-CleanInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix
+CleanAllInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix
 
 $sitecoreParams = @{
     Path                           = "$sourcePackageDirectory\sitecore-XP0.json"

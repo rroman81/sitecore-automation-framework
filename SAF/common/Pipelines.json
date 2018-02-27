@@ -1,102 +1,232 @@
 {
-    "installOnPremAllInOne": [
-        {
-            "name": "Install .Net Framework",
-            "script": "\\install\\Install-DotNet.ps1"
-        },
-        {
-            "name": "Configure IIS",
-            "script": "\\install\\Configure-IIS.ps1"
-        },
-        {
-            "name": "Install IIS UrlRewrite Module",
-            "script": "\\install\\Install-UrlRewrite.ps1"
-        },
-        {
-            "name": "Install WebDeploy",
-            "script": "\\install\\Install-WebDeploy.ps1"
-        },
-        {
-            "name": "Install MSSQL Data-Tier Application Framework",
-            "script": "\\install\\Install-DacFramework.ps1"
-        },
-        {
-            "name": "Create MSSQL User",
-            "script": "\\sql\\Create-AdminSqlUser.ps1"
-        },
-        {
-            "name": "Enable MSSQL Contained Database Authentication",
-            "script": "\\sql\\Enable-ContainedDatabaseAuth.ps1"
-        },
+    "installOnPremSolr-XP": [
         {
             "name": "Configure Java Runtime Environment",
-            "script": "\\install\\Install-JRE.ps1"
+            "script": "\\Install\\OnPrem\\Solr\\Install-JRE.ps1"
         },
         {
             "name": "Install Non-Sucking Service Manager",
-            "script": "\\install\\Install-NSSM.ps1"
+            "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
         },
         {
             "name": "Install Solr",
-            "script": "\\install\\Install-Solr.ps1"
+            "script": "\\Install\\OnPrem\\Solr\\Install-Solr.ps1"
         },
         {
             "name": "Process Sitecore installation package",
-            "script": "\\install\\Process-InstallPackage.ps1"
+            "script": "\\Install\\OnPrem\\Solr\\Process-InstallPackage.ps1"
         },
         {
-            "name": "Install Sitecore Installation Framework (SIF)",
-            "script": "\\install\\Install-SIF.ps1"
+            "name": "Add Sitecore Solr cores",
+            "script": "\\Install\\OnPrem\\Solr\\Configure-SolrSitecore.ps1"
         },
         {
-            "name": "Create xConnect certificate",
-            "script": "\\install\\Create-XConnectCert.ps1"
+            "name": "Add xConnect Solr cores",
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Configure-SolrXConnect.ps1"
         },
         {
-            "name": "Configure Solr for xConnect",
-            "script": "\\install\\Configure-SolrXConnect.ps1"
-        },
-        {
-            "name": "Install xConnect",
-            "script": "\\install\\Install-XConnect.ps1"
-        },
-        {
-            "name": "Configure Solr for Sitecore",
-            "script": "\\install\\Configure-SolrSitecore.ps1"
-        },
-        {
-            "name": "Install Sitecore",
-            "script": "\\install\\Install-Sitecore.ps1"
-        },
-        {
-            "name": "Configure AppPool access to performance monitoring",
-            "script": "\\install\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
-        },
-        {
-            "name": "Create custom databases (if any)",
-            "script": "\\sql\\Deploy-CustomDatabases.ps1"
-        },
-        {
-            "name": "Create custom Solr cores (if any)",
-            "script": "\\install\\Create-CustomSolrCores.ps1"
+            "name": "Add custom Solr cores (if any)",
+            "script": "\\Install\\OnPrem\\Solr\\Create-CustomSolrCores.ps1"
         }
     ],
-    "installOnPremSolr": [
+    "installOnPremAllInOne-XP": [
+        {
+            "name": "Install .Net Framework",
+            "script": "\\Install\\OnPrem\\Install-DotNet.ps1"
+        },
+        {
+            "name": "Configure IIS",
+            "script": "\\Install\\OnPrem\\Configure-IIS.ps1"
+        },
+        {
+            "name": "Install IIS UrlRewrite Module",
+            "script": "\\Install\\OnPrem\\Install-UrlRewrite.ps1"
+        },
+        {
+            "name": "Install WebDeploy",
+            "script": "\\Install\\OnPrem\\Install-WebDeploy.ps1"
+        },
+        {
+            "name": "Install MSSQL Data-Tier Application Framework",
+            "script": "\\Install\\OnPrem\\Install-DacFramework.ps1"
+        },
+        {
+            "name": "Create MSSQL User",
+            "script": "\\SQL\\Create-AdminSqlUser.ps1"
+        },
+        {
+            "name": "Enable MSSQL Contained Database Authentication",
+            "script": "\\SQL\\Enable-ContainedDatabaseAuth.ps1"
+        },
         {
             "name": "Configure Java Runtime Environment",
-            "script": "\\install\\Install-JRE.ps1"
+            "script": "\\Install\\OnPrem\\Solr\\Install-JRE.ps1"
         },
         {
             "name": "Install Non-Sucking Service Manager",
-            "script": "\\install\\Install-NSSM.ps1"
+            "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
         },
         {
             "name": "Install Solr",
-            "script": "\\install\\Install-Solr.ps1"
+            "script": "\\Install\\OnPrem\\Solr\\Install-Solr.ps1"
         },
         {
-            "name": "Create custom Solr cores (if any)",
-            "script": "\\install\\Create-CustomSolrCores.ps1"
+            "name": "Process Sitecore installation package",
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Process-InstallPackage.ps1"
+        },
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
+            "name": "Create xConnect certificate",
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Create-XConnectCert.ps1"
+        },
+        {
+            "name": "Add xConnect Solr cores",
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Configure-SolrXConnect.ps1"
+        },
+        {
+            "name": "Install xConnect",
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Install-XConnect.ps1"
+        },
+        {
+            "name": "Add Sitecore Solr cores",
+            "script": "\\Install\\OnPrem\\Solr\\Configure-SolrSitecore.ps1"
+        },
+        {
+            "name": "Install Sitecore",
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Install-Sitecore.ps1"
+        },
+        {
+            "name": "Configure AppPool access to performance monitoring",
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+        },
+        {
+            "name": "Add custom databases (if any)",
+            "script": "\\SQL\\Deploy-CustomDatabases.ps1"
+        },
+        {
+            "name": "Add custom Solr cores (if any)",
+            "script": "\\Install\\OnPrem\\Solr\\Create-CustomSolrCores.ps1"
+        }
+    ],
+    "installOnPremSolr-XM": [
+        {
+            "name": "Configure Java Runtime Environment",
+            "script": "\\Install\\OnPrem\\Solr\\Install-JRE.ps1"
+        },
+        {
+            "name": "Install Non-Sucking Service Manager",
+            "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
+        },
+        {
+            "name": "Install Solr",
+            "script": "\\Install\\OnPrem\\Solr\\Install-Solr.ps1"
+        },
+        {
+            "name": "Process Sitecore installation package",
+            "script": "\\Install\\OnPrem\\Solr\\Process-InstallPackage.ps1"
+        },
+        {
+            "name": "Add Sitecore Solr cores",
+            "script": "\\Install\\OnPrem\\Solr\\Configure-SolrSitecore.ps1"
+        },
+        {
+            "name": "Add custom Solr cores (if any)",
+            "script": "\\Install\\OnPrem\\Solr\\Create-CustomSolrCores.ps1"
+        }
+    ],
+    "installOnPremCM-XM": [
+        {
+            "name": "Install .Net Framework",
+            "script": "\\Install\\OnPrem\\Install-DotNet.ps1"
+        },
+        {
+            "name": "Configure IIS",
+            "script": "\\Install\\OnPrem\\Configure-IIS.ps1"
+        },
+        {
+            "name": "Install IIS UrlRewrite Module",
+            "script": "\\Install\\OnPrem\\Install-UrlRewrite.ps1"
+        },
+        {
+            "name": "Install WebDeploy",
+            "script": "\\Install\\OnPrem\\Install-WebDeploy.ps1"
+        },
+        {
+            "name": "Install MSSQL Data-Tier Application Framework",
+            "script": "\\Install\\OnPrem\\Install-DacFramework.ps1"
+        },
+        {
+            "name": "Create MSSQL User",
+            "script": "\\SQL\\Create-AdminSqlUser.ps1"
+        },
+        {
+            "name": "Enable MSSQL Contained Database Authentication",
+            "script": "\\SQL\\Enable-ContainedDatabaseAuth.ps1"
+        },
+        {
+            "name": "Process Sitecore installation package",
+            "script": "\\Install\\OnPrem\\XM\\Scaled\\Process-InstallPackage.ps1"
+        },
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
+            "name": "Install Sitecore CM",
+            "script": "\\Install\\OnPrem\\XM\\Scaled\\Install-CM.ps1"
+        },
+        {
+            "name": "Configure AppPool access to performance monitoring",
+            "script": "\\Install\\OnPrem\\XM\\Scaled\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+        }
+    ],
+    "installOnPremCD-XM": [
+        {
+            "name": "Install .Net Framework",
+            "script": "\\Install\\OnPrem\\Install-DotNet.ps1"
+        },
+        {
+            "name": "Configure IIS",
+            "script": "\\Install\\OnPrem\\Configure-IIS.ps1"
+        },
+        {
+            "name": "Install IIS UrlRewrite Module",
+            "script": "\\Install\\OnPrem\\Install-UrlRewrite.ps1"
+        },
+        {
+            "name": "Install WebDeploy",
+            "script": "\\Install\\OnPrem\\Install-WebDeploy.ps1"
+        },
+        {
+            "name": "Install MSSQL Data-Tier Application Framework",
+            "script": "\\Install\\OnPrem\\Install-DacFramework.ps1"
+        },
+        {
+            "name": "Create MSSQL User",
+            "script": "\\SQL\\Create-AdminSqlUser.ps1"
+        },
+        {
+            "name": "Enable MSSQL Contained Database Authentication",
+            "script": "\\SQL\\Enable-ContainedDatabaseAuth.ps1"
+        },
+        {
+            "name": "Process Sitecore installation package",
+            "script": "\\Install\\OnPrem\\XM\\Scaled\\Process-InstallPackage.ps1"
+        },
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
+            "name": "Install Sitecore CD",
+            "script": "\\Install\\OnPrem\\XM\\Scaled\\Install-CD.ps1"
+        },
+        {
+            "name": "Configure AppPool access to performance monitoring",
+            "script": "\\Install\\OnPrem\\XM\\Scaled\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ]
 }

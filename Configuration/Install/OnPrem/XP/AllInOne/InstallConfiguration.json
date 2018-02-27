@@ -1,31 +1,45 @@
 {
     "hosting": "OnPrem",
+    "sitecoreMode": "XP",
     "serverRole": "AllInOne",
     "installPackage": "C:\\RP\\Sitecore 9.0.1 rev. 171219 (WDP XP0 packages).zip",
     "license": "C:\\RP\\license.xml",
     "prefix": "rm",
     "sitecore": {
         "hostName": "rm.local",
-        "installDir": "C:\\solr\\Website"
+        "installDir": "C:\\AllInOne\\Website"
     },
     "xConnect": {
         "hostName": "xconnect.rm.local",
-        "installDir": "C:\\solr\\XConnect"
+        "installDir": "C:\\AllInOne\\XConnect"
     },
     "search": {
         "solr": {
             "version": "6.6.2",
-            "installDir": "C:\\solr\\Solr",
+            "installDir": "C:\\AllInOne\\Solr",
             "hostName": "solrrm",
-            "port": "8983",
+            "port": "8988",
             "serviceName": "solrrm",
             "serviceDisplayName": "solr rm",
-            "serviceDescription": "solr des"
+            "serviceDescription": "solr desc",
+            "customCores": [
+	            {
+                    "name": "custom_index"
+                }
+               
+	        ]
         }
     },
     "sql": {
         "serverName": ".\\SQL2017",
         "username": "rm",
-        "password": "1234QWer"
+        "password": "123Test",
+        "customDatabases": [
+            {
+                "dacpack": "C:\\RP\\CUSTOM.dacpac",
+                "loginUsername": "customuser",
+                "connectionStringName": "custom"
+            }
+        ]
     }
 }

@@ -1,5 +1,40 @@
 $ErrorActionPreference = "Stop"
 
+function Test-URI {
+    [cmdletbinding(DefaultParameterSetName = "Default")]
+    Param(
+        [Parameter(Position = 0, Mandatory, HelpMessage = "Enter the URI path starting with HTTP or HTTPS")]
+        [ValidatePattern( "^(http|https)://" )]
+        [string]$URI,
+        [ValidateScript( {$_ -ge 0})]
+        [int]$Timeout = 30
+    )
+     
+    try {
+        
+        $paramHash = @{
+            UseBasicParsing  = $true
+            DisableKeepAlive = $true
+            Uri              = $URI
+            Method           = 'Head'
+            ErrorAction      = 'Stop'
+            TimeoutSec       = $Timeout
+        }
+     
+        $test = Invoke-WebRequest @paramHash
+       
+        if ($test.statuscode -ne 200) {
+            return $false
+        }
+        else {
+            return $true
+        }
+    }
+    catch {
+        return $false
+    }
+}
+    
 function DownloadAndUnzip {
     Param(
         [string]$toolName,
@@ -50,7 +85,7 @@ function AddConnectionString {
         [string]$SqlServer,
         [string]$Database,
         [string]$Username,
-        [SecureString]$Password,
+        [string]$Password,
         [string]$WebsiteRootDir,
         [string]$ConnStringName
     )
@@ -80,7 +115,7 @@ function IISReset {
     if ($Force -or $PSCmdlet.ShouldProcess("IIS", $Reason)) {
         $process = Start-Process "iisreset.exe" -NoNewWindow -Wait -PassThru
 
-        if(($process.ExitCode -gt 0) -and ($TryNumber -lt 3) ) {
+        if (($process.ExitCode -gt 0) -and ($TryNumber -lt 3) ) {
             Write-Warning "IIS Reset failed. Retrying..."
             $newTryNumber = $TryNumber + 1
             IISReset -Reason $Reason -TryNumber $newTryNumber -Force
@@ -105,13 +140,11 @@ function InstallSolr {
    
     Write-Output "Solr installation started..."
     
-    # download & extract the solr archive to the right folder
     $downloadFolder = "~\Downloads"
     $solrPackage = "https://archive.apache.org/dist/lucene/solr/$Version/solr-$Version.zip"
     $solrZip = "$downloadFolder\$ServiceName.zip"
     DownloadAndUnzip "Solr" $ServiceDir $solrZip $solrPackage $InstallDir
     
-    # Ensure Java environment variable
     $JREVersion = Get-ChildItem "HKLM:\SOFTWARE\JavaSoft\Java Runtime Environment" | Select-Object -expa pschildname -Last 1
     $JREPath = "C:\Program Files\Java\jre$JREVersion"
     $jreVal = [Environment]::GetEnvironmentVariable("JAVA_HOME", [EnvironmentVariableTarget]::Machine)
@@ -120,9 +153,7 @@ function InstallSolr {
         [Environment]::SetEnvironmentVariable("JAVA_HOME", $JREPath, [EnvironmentVariableTarget]::Machine)
     }
     
-    # if we're using HTTP
     if ($solrSSL -eq $false) {
-        # Update solr cfg to use right host name
         if (!(Test-Path -Path "$ServiceDir\bin\solr.in.cmd.old")) {
             Write-Output "Rewriting solr config"
     
@@ -133,7 +164,6 @@ function InstallSolr {
         }
     }
     
-    # Ensure the solr host name is in your hosts file
     if ($HostName -ne "localhost") {
         $HostNameFileName = "c:\\windows\system32\drivers\etc\hosts"
         $HostNameFile = [System.Io.File]::ReadAllText($HostNameFileName)
@@ -143,9 +173,7 @@ function InstallSolr {
         }
     }
     
-    # if we're using HTTPS
     if ($solrSSL -eq $true) {
-        # Generate SSL cert
         $existingCert = Get-ChildItem Cert:\LocalMachine\Root | Where-Object FriendlyName -eq "$ServiceName"
         if (!($existingCert)) {
             Write-Output "Creating & trusting an new SSL Cert for $HostName"
@@ -161,11 +189,11 @@ function InstallSolr {
             $store.Add($cert)
             $store.Close()
     
-            # remove the untrusted copy of the cert
+            # Remove the untrusted copy of the cert
             $cert | Remove-Item
         }
     
-        # export the cert to pfx using solr's default password
+        # Export the cert to pfx using solr's default password
         if (!(Test-Path -Path "$ServiceDir\server\etc\solr-ssl.keystore.pfx")) {
             Write-Output "Exporting cert for Solr to use"
     
@@ -191,7 +219,6 @@ function InstallSolr {
         }
     }
     
-    # install the service & runs
     $svc = Get-Service "$ServiceName" -ErrorAction SilentlyContinue
     if (!($svc)) {
         Write-Output "Installing Solr service"
@@ -212,7 +239,7 @@ function AddAppPoolUserToGroups {
     [CmdletBinding()]
     Param
     (
-        [string]$AppPool,
+        [string[]]$AppPools,
         [string[]]$Groups
     )
 
@@ -222,24 +249,26 @@ function AddAppPoolUserToGroups {
         $group = [ADSI]"WinNT://$Env:ComputerName/$gr,group"
         $members = $group.psbase.invoke("Members") | ForEach-Object {$_.GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null)}
 
-        if ($members -contains $AppPool) {
-            Write-Warning "'$AppPool' AppPool user exists in '$gr' group"
-        }
-        else {
-            Write-Output "Adding '$AppPool' AppPool user to '$gr' group..."
+        foreach($pool in $AppPools){
+            if ($members -contains $pool) {
+                Write-Warning "'$pool' AppPool user exists in '$gr' group"
+            }
+            else {
+                Write-Output "Adding '$pool' AppPool user to '$gr' group..."
+        
+                $ntAccount = New-Object System.Security.Principal.NTAccount("IIS APPPOOL\$pool")
+                $strSID = $ntAccount.Translate([System.Security.Principal.SecurityIdentifier])
+                $user = [ADSI]"WinNT://$strSID"
+                $group.Add($user.Path)
+                $needIISReset = $true
     
-            $ntAccount = New-Object System.Security.Principal.NTAccount("IIS APPPOOL\$AppPool")
-            $strSID = $ntAccount.Translate([System.Security.Principal.SecurityIdentifier])
-            $user = [ADSI]"WinNT://$strSID"
-            $group.Add($user.Path)
-            $needIISReset = $true
-
-            Write-Output "Adding '$AppPool' AppPool user to '$gr' group done."
+                Write-Output "Adding '$pool' AppPool user to '$gr' group done."
+            }
         }
     }
 
     if ($needIISReset -eq $true) {
-        IISReset -Reason "Changes on '$AppPool' AppPool user will take effect after IIS Reset. Do it now?" -Confirm
+        IISReset -Reason "Groups changes will take effect after IIS Reset. Do it now?" -Confirm
     }
 }
 
@@ -248,3 +277,4 @@ Export-ModuleMember -Function "AddConnectionString"
 Export-ModuleMember -Function "AddAppPoolUserToGroups"
 Export-ModuleMember -Function "DownloadAndUnzip"
 Export-ModuleMember -Function "InstallSolr"
+Export-ModuleMember -Function "Test-URI"
