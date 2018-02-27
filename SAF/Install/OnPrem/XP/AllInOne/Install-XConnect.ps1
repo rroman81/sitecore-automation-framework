@@ -1,5 +1,5 @@
-Import-Module "$PSScriptRoot\..\sql\SQL-Module.psm1" -Force
-Import-Module "$PSScriptRoot\..\common\Utils-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\Common\Utils-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Write-Output "Install xConnect started..."

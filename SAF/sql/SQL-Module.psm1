@@ -56,7 +56,7 @@ function CleanInstalledXConnectDbs {
     Write-Output "Clean existing databases done."
 }
 
-function CleanInstalledSitecoreDbs {
+function CleanAllInstalledSitecoreDbs {
     [CmdletBinding()]
     Param
     (
@@ -64,7 +64,27 @@ function CleanInstalledSitecoreDbs {
         [string]$Prefix
     )
 
-    $dbs = @("EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
+    $dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
+
+    Write-Output "Clean existing databases started..."
+
+    foreach ($db in $dbs) {
+        $dbName = "$($Prefix)_$db"
+        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName
+    }
+
+    Write-Output "Clean existing databases done."
+}
+
+function CleanCMInstalledSitecoreDbs {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$SqlServer,
+        [string]$Prefix
+    )
+
+    $dbs = @("Core", "ExperienceForms", "Master", "Web")
 
     Write-Output "Clean existing databases started..."
 
@@ -152,7 +172,7 @@ function CreateDbUser {
     (
         [string]$SqlServer,
         [string]$Username,
-        [SecureString]$Password,
+        [string]$Password,
         [string]$DatabaseName
     )
 
@@ -186,7 +206,7 @@ function DeployDacpac {
         [string]$SqlServer,
         [string]$Username,
         [string]$LocalDbUsername,
-        [SecureString]$Password,
+        [string]$Password,
         [string]$Dacpac,
         [string]$TargetDatabaseName
     )
@@ -216,6 +236,7 @@ function DeployDacpac {
 }
 
 Export-ModuleMember -Function "CleanInstalledXConnectDbs"
-Export-ModuleMember -Function "CleanInstalledSitecoreDbs"
+Export-ModuleMember -Function "CleanAllInstalledSitecoreDbs"
+Export-ModuleMember -Function "CleanCMInstalledSitecoreDbs"
 Export-ModuleMember -Function "DeleteDb"
 Export-ModuleMember -Function "DeployDacpac"

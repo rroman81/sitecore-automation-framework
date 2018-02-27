@@ -1,0 +1,18 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XM",
+    "serverRole": "Solr",
+    "installPackage": "C:\\RP\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
+    "prefix": "ross",
+    "search": {
+        "solr": {
+            "version": "6.6.2",
+            "installDir": "C:\\Solr",
+            "hostName": "solrself",
+            "port": "8986",
+            "serviceName": "solrself",
+            "serviceDisplayName": "solr self",
+            "serviceDescription": "solr self description"
+        }
+    }
+}

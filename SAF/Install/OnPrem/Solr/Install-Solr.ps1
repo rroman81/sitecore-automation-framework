@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\..\common\Utils-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\Common\Utils-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 $Version = $global:Configuration.search.solr.version

@@ -4,7 +4,7 @@
 
 ### Configuration ###
 $runtimeDir =  "C:\Projects\sitecore-automation-framework\saf"
-$configFile = "C:\Projects\sitecore-automation-framework\configuration\install\OnPremAllInOne.json"
+$configFile = "C:\Projects\sitecore-automation-framework\Configuration\Install\OnPrem\XP\AllInOne\InstallConfiguration.json"
 ### Configuration ###
 
 ### Initialization ###
@@ -13,4 +13,4 @@ Import-Module -Name $module -Force
 ### Initialization ###
 
 ############### Debug ###################
-Install-Sitecore -ConfigFile $configFile
+Install-Sitecore -ConfigFile $configFile -Force

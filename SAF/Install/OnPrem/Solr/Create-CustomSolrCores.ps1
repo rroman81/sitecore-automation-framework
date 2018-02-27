@@ -1,8 +1,8 @@
 $ErrorActionPreference = "Stop"
 
-Write-Output "Creating custom Solr cores started..."
+Write-Output "Add custom Solr cores started..."
 
-if (($global:Configuration.search.solr.customCores -eq $null) -or ($global:Configuration.search.solr.customCores -lt 1)) {
+if (($global:Configuration.search.solr.customCores -eq $null) -or ($global:Configuration.search.solr.customCores.Count -lt 1)) {
     Write-Warning "No custom Solr cores found."
 }
 else {
@@ -25,4 +25,4 @@ else {
     }
 }
 
-Write-Output "Creating custom Solr cores done."
+Write-Output "Add custom Solr cores done."

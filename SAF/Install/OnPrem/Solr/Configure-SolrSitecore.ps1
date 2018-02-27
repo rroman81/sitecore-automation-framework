@@ -1,12 +1,12 @@
 $ErrorActionPreference = "Stop"
 
-Write-Output "Configuration of Solr for Sitecore started..."
+Write-Output "Add Sitecore Solr cores started..."
 
 $prefix = $global:Configuration.prefix
+$solrService = $global:Configuration.search.solr.serviceName
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $solrUrl = $global:Items.SolrServiceUrl
 $solrRoot = $global:Items.SolrServiceDir
-$solrService = $global:Configuration.search.solr.serviceName
 
 $solrParams = @{
     Path        = "$sourcePackageDirectory\sitecore-solr.json"
@@ -17,4 +17,4 @@ $solrParams = @{
 }
 Install-SitecoreConfiguration @solrParams
 
-Write-Output "Configuration of Solr for Sitecore done."
+Write-Output "Add Sitecore Solr cores done."
