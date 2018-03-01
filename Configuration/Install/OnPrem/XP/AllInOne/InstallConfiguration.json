@@ -2,26 +2,26 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
     "serverRole": "AllInOne",
-    "installPackage": "C:\\RP\\Sitecore 9.0.1 rev. 171219 (WDP XP0 packages).zip",
-    "license": "C:\\RP\\license.xml",
-    "prefix": "rm",
+    "installPackage": "E:\\SAF\\Files\\Sitecore 9.0.1 rev. 171219 (WDP XP0 packages).zip",
+    "license": "E:\\SAF\\Files\\license.xml",
+    "prefix": "all",
     "sitecore": {
-        "hostName": "rm.local",
+        "hostName": "all.local",
         "installDir": "C:\\AllInOne\\Website"
     },
     "xConnect": {
-        "hostName": "xconnect.rm.local",
+        "hostName": "xconnect.all.local",
         "installDir": "C:\\AllInOne\\XConnect"
     },
     "search": {
         "solr": {
             "version": "6.6.2",
             "installDir": "C:\\AllInOne\\Solr",
-            "hostName": "solrrm",
+            "hostName": "solr",
             "port": "8988",
-            "serviceName": "solrrm",
-            "serviceDisplayName": "solr rm",
-            "serviceDescription": "solr desc",
+            "serviceName": "solr",
+            "serviceDisplayName": "solr display",
+            "serviceDescription": "solr description",
             "customCores": [
 	            {
                     "name": "custom_index"
@@ -31,12 +31,13 @@
         }
     },
     "sql": {
-        "serverName": ".\\SQL2017",
-        "username": "rm",
-        "password": "123Test",
+        "serverName": "192.168.56.103,49172",
+        "adminUsername": "sa",
+        "adminPassword": "Test123",
+        "TODO": "ADD Password for connection strings",
         "customDatabases": [
             {
-                "dacpack": "C:\\RP\\CUSTOM.dacpac",
+                "dacpack": "E:\\SAF\\Files\\CUSTOM.dacpac",
                 "loginUsername": "customuser",
                 "connectionStringName": "custom"
             }

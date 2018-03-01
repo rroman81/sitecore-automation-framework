@@ -22,7 +22,7 @@
     },
     "sql": {
         "serverName": ".\\SQL2017",
-        "username": "ross",
-        "password": "123Test"
+        "adminUsername": "ross",
+        "adminPassword": "123Test"
     }
 }

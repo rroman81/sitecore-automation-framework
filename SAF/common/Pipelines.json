@@ -51,10 +51,6 @@
             "script": "\\Install\\OnPrem\\Install-DacFramework.ps1"
         },
         {
-            "name": "Create MSSQL User",
-            "script": "\\SQL\\Create-AdminSqlUser.ps1"
-        },
-        {
             "name": "Enable MSSQL Contained Database Authentication",
             "script": "\\SQL\\Enable-ContainedDatabaseAuth.ps1"
         },

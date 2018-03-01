@@ -6,8 +6,8 @@ $prefix = $global:Configuration.prefix
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
-$sqlUser = $global:Configuration.sql.username
-$sqlUserPassword = $global:Configuration.sql.password
+$sqlUser = $global:Configuration.sql.adminUsername
+$sqlUserPassword = $global:Configuration.sql.adminPassword
 $solrUrl = $global:Configuration.search.solr.serviceUrl
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *cm.scwdp.zip*
 

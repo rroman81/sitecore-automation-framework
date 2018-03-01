@@ -47,7 +47,7 @@ function Install-Sitecore {
     Initialize -ConfigFile $ConfigFile -PipelinesFile $PipelinesFile
     ConfigureChoco
 
-    Import-Module "$PSScriptRoot\install\Install-Module.psm1" -Force
+    Import-Module "$PSScriptRoot\Install\OnPrem\Install-Module.psm1" -Force
 
     if ($PSBoundParameters["Force"]) {
         StartInstall -Force

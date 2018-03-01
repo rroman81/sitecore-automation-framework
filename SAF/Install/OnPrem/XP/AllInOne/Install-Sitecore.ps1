@@ -9,14 +9,14 @@ $siteName = $global:Configuration.sitecore.hostName
 $xConnectCollectionService = $global:Configuration.xConnect.hostName
 $cert = $global:Items.XConnectCertName
 $sqlServer = $global:Configuration.sql.serverName
-$sqlUser =  $global:Configuration.sql.username
-$sqlUserPassword =  $global:Configuration.sql.password
+$sqlUser =  $global:Configuration.sql.adminUsername
+$sqlUserPassword =  $global:Configuration.sql.adminPassword
 $installDir = $global:Configuration.sitecore.installDir
 $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *single.scwdp.zip*
 
-CleanAllInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix
+CleanInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlUserPassword
 
 $sitecoreParams = @{
     Path                           = "$sourcePackageDirectory\sitecore-XP0.json"

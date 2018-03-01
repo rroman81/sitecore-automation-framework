@@ -1,5 +1,6 @@
 $ErrorActionPreference = "Stop"
 
+# Private functions
 function ImportSqlModule {
     
     if (Get-Module "SqlServer" -ListAvailable) {
@@ -14,12 +15,19 @@ function ImportSqlModule {
     }
 }
 
+function Get-SupportedSqlServerVersions {
+    $sqlServerVersion = @("140", "130")
+    return $sqlServerVersion
+}
+
 function DeleteDb {
     [CmdletBinding()]
     Param
     (
         [string]$SqlServer,
-        [string]$DatabaseName
+        [string]$DatabaseName,
+        [string]$Username,
+        [string]$Password
     )
 
     $cmd = 
@@ -32,76 +40,12 @@ DROP DATABASE [$DatabaseName]
 END
 "@
     Push-Location
-    Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer
+    Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer -Username $Username -Password $Password
     Pop-Location
 }
 
-function CleanInstalledXConnectDbs {
-    [CmdletBinding()]
-    Param
-    (
-        [string]$SqlServer,
-        [string]$Prefix
-    )
-
-    $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData")
-
-    Write-Output "Clean existing databases started..."
-
-    foreach ($db in $dbs) {
-        $dbName = "$($Prefix)_$db"
-        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName
-    }
-
-    Write-Output "Clean existing databases done."
-}
-
-function CleanAllInstalledSitecoreDbs {
-    [CmdletBinding()]
-    Param
-    (
-        [string]$SqlServer,
-        [string]$Prefix
-    )
-
-    $dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
-
-    Write-Output "Clean existing databases started..."
-
-    foreach ($db in $dbs) {
-        $dbName = "$($Prefix)_$db"
-        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName
-    }
-
-    Write-Output "Clean existing databases done."
-}
-
-function CleanCMInstalledSitecoreDbs {
-    [CmdletBinding()]
-    Param
-    (
-        [string]$SqlServer,
-        [string]$Prefix
-    )
-
-    $dbs = @("Core", "ExperienceForms", "Master", "Web")
-
-    Write-Output "Clean existing databases started..."
-
-    foreach ($db in $dbs) {
-        $dbName = "$($Prefix)_$db"
-        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName
-    }
-
-    Write-Output "Clean existing databases done."
-}
-
-function Get-SupportedSqlServerVersions {
-    $sqlServerVersion = @("140", "130")
-    return $sqlServerVersion
-}
-
 function LoadDacfx {
+    # TODO Don't depend on the dll
     $dacfxPath = $null
     $sqlServerVersions = Get-SupportedSqlServerVersions
     foreach ($version in $sqlServerVersions) {
@@ -123,16 +67,23 @@ function DatabaseExists {
     Param
     (
         [string]$SqlServer,
-        [string]$DatabaseName
+        [string]$DatabaseName,
+        [string]$Username,
+        [string]$Password
     )
-    
-    ImportSqlModule
 
     $exists = $false
     
-    # Get reference to database instance
-    $server = New-Object ("Microsoft.SqlServer.Management.Smo.Server") $SqlServer
-   
+    # Load the SMO assembly and create a Server object
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SMO') | Out-Null
+    $server = New-Object ('Microsoft.SqlServer.Management.Smo.Server') $SqlServer
+    
+    # Set credentials
+    $server.ConnectionContext.LoginSecure = $false
+    $server.ConnectionContext.set_Login($Username)
+    $securedPassword = ConvertTo-SecureString $Password -AsPlainText -Force
+    $server.ConnectionContext.set_SecurePassword($securedPassword)
+
     foreach ($db in $server.databases) {  
         if ($db.name -eq $DatabaseName) {
             $exists = $true
@@ -140,6 +91,42 @@ function DatabaseExists {
     }
 
     return $exists
+}
+
+function CreateDbUser {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$SqlServer,
+        [string]$Username,
+        [string]$Password,
+        [string]$DbUser,
+        [string]$DbPassword,
+        [string]$DatabaseName
+    )
+
+    $cmd = 
+    @"
+Use [$DatabaseName]
+Go
+IF NOT EXISTS (SELECT name 
+                FROM [sys].[database_principals]
+                WHERE [type] = 'S' AND name = N'$DbUser')
+BEGIN
+ALTER DATABASE [$DatabaseName] 
+SET CONTAINMENT = partial
+CREATE USER [$DbUser] WITH PASSWORD = '$DbPassword';
+EXEC sp_addrolemember 'db_datareader', [$DbUser];
+EXEC sp_addrolemember 'db_datawriter', [$DbUser];
+GRANT EXECUTE TO [$DbUser];
+END
+"@
+
+    Write-Output "Creating database user '$DbUser' for '$DatabaseName' database..."
+    Push-Location
+    Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer -Username $Username -Password $Password
+    Pop-Location
+    Write-Output "Creating database user '$DbUser' done."
 }
 
 function SetDbOwner {
@@ -166,37 +153,76 @@ function SetDbOwner {
     }
 }
 
-function CreateDbUser {
+# Private functions
+
+function CleanInstalledXConnectDbs {
     [CmdletBinding()]
     Param
     (
         [string]$SqlServer,
+        [string]$Prefix,
         [string]$Username,
-        [string]$Password,
-        [string]$DatabaseName
+        [string]$Password
     )
 
-    $cmd = 
-    @"
-Use [$DatabaseName]
-Go
-ALTER DATABASE [$DatabaseName] 
-SET CONTAINMENT = partial
-GO
-CREATE USER [$Username] WITH PASSWORD = '$Password';
-GO
-EXEC sp_addrolemember 'db_datareader', [$Username];
-EXEC sp_addrolemember 'db_datawriter', [$Username];
-GO
-GRANT EXECUTE TO [$Username];
-GO 
-"@
+    ImportSqlModule
 
-    Write-Output "Creating database user '$Username'..."
-    Push-Location
-    Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer
-    Pop-Location
-    Write-Output "Creating database user '$Username' done."
+    $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData")
+
+    Write-Output "Clean existing databases started..."
+
+    foreach ($db in $dbs) {
+        $dbName = "$($Prefix)_$db"
+        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName -Username $Username -Password $Password
+    }
+
+    Write-Output "Clean existing databases done."
+}
+
+function CleanInstalledSitecoreDbs {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$SqlServer,
+        [string]$Prefix,
+        [string]$Username,
+        [string]$Password
+    )
+
+    ImportSqlModule
+
+    $dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
+
+    Write-Output "Clean existing databases started..."
+
+    foreach ($db in $dbs) {
+        $dbName = "$($Prefix)_$db"
+        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName -Username $Username -Password $Password
+    }
+
+    Write-Output "Clean existing databases done."
+}
+
+function CleanCMInstalledSitecoreDbs {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$SqlServer,
+        [string]$Prefix
+    )
+
+    ImportSqlModule
+
+    $dbs = @("Core", "ExperienceForms", "Master", "Web")
+
+    Write-Output "Clean existing databases started..."
+
+    foreach ($db in $dbs) {
+        $dbName = "$($Prefix)_$db"
+        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName
+    }
+
+    Write-Output "Clean existing databases done."
 }
 
 function DeployDacpac {
@@ -205,13 +231,15 @@ function DeployDacpac {
     (
         [string]$SqlServer,
         [string]$Username,
-        [string]$LocalDbUsername,
         [string]$Password,
+        [string]$LocalDbUsername,
         [string]$Dacpac,
         [string]$TargetDatabaseName
     )
 
-    if (DatabaseExists -SqlServer $SqlServer -DatabaseName $TargetDatabaseName) {
+    ImportSqlModule
+
+    if (DatabaseExists -SqlServer $SqlServer -DatabaseName $TargetDatabaseName -Username $Username -Password $Password) {
         Write-Warning "'$TargetDatabaseName' database exists. Dacpac deployement won't be executed."
     }
     else {
@@ -230,13 +258,13 @@ function DeployDacpac {
         $null = $dacServices.GenerateDeployScript($dacpackage, $TargetDatabaseName, $null)
         $null = $dacServices.Deploy($dacpackage, $TargetDatabaseName, $true, $null, $null)
         Write-Output "Dacpac deployed '$TargetDatabaseName' successfully."
-
-        CreateDbUser -SqlServer $SqlServer -Username $LocalDbUsername -Password $Password -DatabaseName $TargetDatabaseName 
     }
+
+    CreateDbUser -SqlServer $SqlServer -Username $Username -Password $Password -DbUser $LocalDbUsername -DbPassword $Password -DatabaseName $TargetDatabaseName 
 }
 
 Export-ModuleMember -Function "CleanInstalledXConnectDbs"
-Export-ModuleMember -Function "CleanAllInstalledSitecoreDbs"
+Export-ModuleMember -Function "CleanInstalledSitecoreDbs"
 Export-ModuleMember -Function "CleanCMInstalledSitecoreDbs"
 Export-ModuleMember -Function "DeleteDb"
 Export-ModuleMember -Function "DeployDacpac"

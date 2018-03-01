@@ -6,7 +6,7 @@ function GetOrCreateHistoryLogFile {
         [string]$Pipeline
     )
 
-    $historyFile = "$PSScriptRoot\..\temp\$Pipeline-history.txt"
+    $historyFile = "$PSScriptRoot\..\..\temp\$Pipeline-history.txt"
     
     if (!(Test-Path $historyFile)) {
         New-Item $historyFile -ItemType File

@@ -9,14 +9,14 @@ $license = $global:Configuration.license
 $xConnectCollectionService = $global:Configuration.xConnect.hostName
 $cert = $global:Items.XConnectCertName
 $sqlServer = $global:Configuration.sql.serverName
-$sqlUser =  $global:Configuration.sql.username
-$sqlUserPassword =  $global:Configuration.sql.password
+$sqlUser =  $global:Configuration.sql.adminUsername
+$sqlUserPassword =  $global:Configuration.sql.adminPassword
 $installDir = $global:Configuration.xConnect.installDir
 $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *xconnect.scwdp.zip*
 
-CleanInstalledXConnectDbs -SqlServer $sqlServer -Prefix $prefix
+CleanInstalledXConnectDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlUserPassword
 CleanInstalledXConnectServices -HostName $xConnectCollectionService
 
 $xconnectParams = @{

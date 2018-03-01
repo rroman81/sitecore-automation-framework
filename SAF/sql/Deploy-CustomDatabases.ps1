@@ -10,8 +10,8 @@ if (($global:Configuration.sql.customDatabases -eq $null) -or ($global:Configura
 else {
 
     $sqlServer = $global:Configuration.sql.serverName
-    $sqlUser = $global:Configuration.sql.username
-    $sqlUserPassword = $global:Configuration.sql.password
+    $sqlUser = $global:Configuration.sql.adminUsername
+    $sqlUserPassword = $global:Configuration.sql.adminPassword
     $sitecoreInstallDir = $global:Configuration.sitecore.installDir
 
     foreach ($db in $global:Configuration.sql.customDatabases) {
