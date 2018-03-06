@@ -10,13 +10,14 @@ $xConnectCollectionService = $global:Configuration.xConnect.hostName
 $cert = $global:Items.XConnectCertName
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser =  $global:Configuration.sql.adminUsername
-$sqlUserPassword =  $global:Configuration.sql.adminPassword
+$sqlAdminPassword =  $global:Configuration.sql.adminPassword
+$sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.sitecore.installDir
 $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *single.scwdp.zip*
 
-CleanInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlUserPassword
+CleanInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlAdminPassword
 
 $sitecoreParams = @{
     Path                           = "$sourcePackageDirectory\sitecore-XP0.json"
@@ -25,18 +26,17 @@ $sitecoreParams = @{
     SqlDbPrefix                    = $prefix
     SqlServer                      = $sqlServer
     SqlAdminUser                   = $sqlUser
-    SqlAdminPassword               = $sqlUserPassword
-    SqlCorePassword                = $sqlUserPassword
-    SqlMasterPassword              = $sqlUserPassword
-    SqlWebPassword                 = $sqlUserPassword
-    SqlReportingPassword           = $sqlUserPassword
-    SqlProcessingPoolsPassword     = $sqlUserPassword
-    SqlProcessingTasksPassword     = $sqlUserPassword
-    SqlReferenceDataPassword       = $sqlUserPassword
-    SqlMarketingAutomationPassword = $sqlUserPassword
-    SqlFormsPassword               = $sqlUserPassword
-    SqlExmMasterPassword           = $sqlUserPassword
-    SqlMessagingPassword           = $sqlUserPassword
+    SqlAdminPassword               = $sqlAdminPassword
+    SqlCorePassword                = $sqlSitecorePassword
+    SqlMasterPassword              = $sqlSitecorePassword
+    SqlWebPassword                 = $sqlSitecorePassword
+    SqlReportingPassword           = $sqlSitecorePassword
+    SqlProcessingPoolsPassword     = $sqlSitecorePassword
+    SqlReferenceDataPassword       = $sqlSitecorePassword
+    SqlMarketingAutomationPassword = $sqlSitecorePassword
+    SqlFormsPassword               = $sqlSitecorePassword
+    SqlExmMasterPassword           = $sqlSitecorePassword
+    SqlMessagingPassword           = $sqlSitecorePassword
     SolrCorePrefix                 = $prefix
     SolrUrl                        = $solrUrl
     XConnectCert                   = $cert

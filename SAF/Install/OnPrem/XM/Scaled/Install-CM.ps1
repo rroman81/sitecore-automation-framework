@@ -7,7 +7,8 @@ $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser = $global:Configuration.sql.adminUsername
-$sqlUserPassword = $global:Configuration.sql.adminPassword
+$sqlAdminPassword = $global:Configuration.sql.adminPassword
+$sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $solrUrl = $global:Configuration.search.solr.serviceUrl
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *cm.scwdp.zip*
 
@@ -18,13 +19,13 @@ foreach ($cm in $global:Configuration.sitecore) {
     $installDir = $cm.installDir
 
     Write-Output "Testing installation of Sitecore CM$count..."
-    if (Test-Uri -Uri "https://$siteName") {
+    if (TestURI -Uri "https://$siteName") {
         Write-Output "Sitecore CM$count has been installed before. Going forward..."
     }
     else {
         Write-Output "Install Sitecore CM$count started..."
 
-        CleanCMInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix
+        CleanCMInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlAdminPassword
 
         $sitecoreParams = @{
             Path              = "$sourcePackageDirectory\sitecore-XM1-cm.json"
@@ -33,11 +34,11 @@ foreach ($cm in $global:Configuration.sitecore) {
             SqlDbPrefix       = $prefix
             SqlServer         = $sqlServer
             SqlAdminUser      = $sqlUser
-            SqlAdminPassword  = $sqlUserPassword
-            SqlCorePassword   = $sqlUserPassword
-            SqlMasterPassword = $sqlUserPassword
-            SqlWebPassword    = $sqlUserPassword
-            SqlFormsPassword  = $sqlUserPassword
+            SqlAdminPassword  = $sqlAdminPassword
+            SqlCorePassword   = $sqlSitecorePassword
+            SqlMasterPassword = $sqlSitecorePassword
+            SqlWebPassword    = $sqlSitecorePassword
+            SqlFormsPassword  = $sqlSitecorePassword
             SolrCorePrefix    = $prefix
             SolrUrl           = $solrUrl
             Sitename          = $siteName

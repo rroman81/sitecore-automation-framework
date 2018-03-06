@@ -2,11 +2,11 @@ Import-Module "$PSScriptRoot\Logging-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 function RemoveTemp {
-    Remove-Item -Path "$PSScriptRoot\..\..\temp" -Recurse -Force | Out-Null
+    Remove-Item -Path "$PSScriptRoot\..\temp" -Recurse -Force | Out-Null
 }
 
 function CreateTemp {
-    $tempFolder = "$PSScriptRoot\..\..\temp"
+    $tempFolder = "$PSScriptRoot\..\temp"
     If(!(Test-Path $tempFolder))
     {
         New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null

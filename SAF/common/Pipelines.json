@@ -17,6 +17,14 @@
             "script": "\\Install\\OnPrem\\Solr\\Process-InstallPackage.ps1"
         },
         {
+            "name": "Configure IIS",
+            "script": "\\Install\\OnPrem\\Configure-IIS.ps1"
+        },
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
             "name": "Add Sitecore Solr cores",
             "script": "\\Install\\OnPrem\\Solr\\Configure-SolrSitecore.ps1"
         },
@@ -47,8 +55,8 @@
             "script": "\\Install\\OnPrem\\Install-WebDeploy.ps1"
         },
         {
-            "name": "Install MSSQL Data-Tier Application Framework",
-            "script": "\\Install\\OnPrem\\Install-DacFramework.ps1"
+            "name": "Install MSSQL Server dependencies",
+            "script": "\\Install\\OnPrem\\Install-SqlServerDependencies.ps1"
         },
         {
             "name": "Enable MSSQL Contained Database Authentication",
@@ -125,6 +133,14 @@
             "script": "\\Install\\OnPrem\\Solr\\Process-InstallPackage.ps1"
         },
         {
+            "name": "Configure IIS",
+            "script": "\\Install\\OnPrem\\Configure-IIS.ps1"
+        },
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
             "name": "Add Sitecore Solr cores",
             "script": "\\Install\\OnPrem\\Solr\\Configure-SolrSitecore.ps1"
         },
@@ -151,12 +167,8 @@
             "script": "\\Install\\OnPrem\\Install-WebDeploy.ps1"
         },
         {
-            "name": "Install MSSQL Data-Tier Application Framework",
-            "script": "\\Install\\OnPrem\\Install-DacFramework.ps1"
-        },
-        {
-            "name": "Create MSSQL User",
-            "script": "\\SQL\\Create-AdminSqlUser.ps1"
+            "name": "Install MSSQL Server dependencies",
+            "script": "\\Install\\OnPrem\\Install-SqlServerDependencies.ps1"
         },
         {
             "name": "Enable MSSQL Contained Database Authentication",
@@ -177,6 +189,10 @@
         {
             "name": "Configure AppPool access to performance monitoring",
             "script": "\\Install\\OnPrem\\XM\\Scaled\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+        },
+        {
+            "name": "Add custom databases (if any)",
+            "script": "\\SQL\\Deploy-CustomDatabases.ps1"
         }
     ],
     "installOnPremCD-XM": [
@@ -197,12 +213,8 @@
             "script": "\\Install\\OnPrem\\Install-WebDeploy.ps1"
         },
         {
-            "name": "Install MSSQL Data-Tier Application Framework",
-            "script": "\\Install\\OnPrem\\Install-DacFramework.ps1"
-        },
-        {
-            "name": "Create MSSQL User",
-            "script": "\\SQL\\Create-AdminSqlUser.ps1"
+            "name": "Install MSSQL Server dependencies",
+            "script": "\\Install\\OnPrem\\Install-SqlServerDependencies.ps1"
         },
         {
             "name": "Enable MSSQL Contained Database Authentication",
@@ -223,6 +235,10 @@
         {
             "name": "Configure AppPool access to performance monitoring",
             "script": "\\Install\\OnPrem\\XM\\Scaled\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+        },
+        {
+            "name": "Add custom databases (if any)",
+            "script": "\\SQL\\Deploy-CustomDatabases.ps1"
         }
     ]
 }

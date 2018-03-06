@@ -10,13 +10,14 @@ $xConnectCollectionService = $global:Configuration.xConnect.hostName
 $cert = $global:Items.XConnectCertName
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser =  $global:Configuration.sql.adminUsername
-$sqlUserPassword =  $global:Configuration.sql.adminPassword
+$sqlAdminPassword =  $global:Configuration.sql.adminPassword
+$sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.xConnect.installDir
 $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *xconnect.scwdp.zip*
 
-CleanInstalledXConnectDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlUserPassword
+CleanInstalledXConnectDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlAdminPassword
 CleanInstalledXConnectServices -HostName $xConnectCollectionService
 
 $xconnectParams = @{
@@ -28,12 +29,12 @@ $xconnectParams = @{
     SqlDbPrefix                    = $prefix
     SqlServer                      = $sqlServer
     SqlAdminUser                   = $sqlUser
-    SqlAdminPassword               = $sqlUserPassword
-    SqlCollectionPassword          = $sqlUserPassword
-    SqlProcessingPoolsPassword     = $sqlUserPassword
-    SqlReferenceDataPassword       = $sqlUserPassword
-    SqlMarketingAutomationPassword = $sqlUserPassword
-    SqlMessagingPassword           = $sqlUserPassword
+    SqlAdminPassword               = $sqlAdminPassword
+    SqlCollectionPassword          = $sqlSitecorePassword
+    SqlProcessingPoolsPassword     = $sqlSitecorePassword
+    SqlReferenceDataPassword       = $sqlSitecorePassword
+    SqlMarketingAutomationPassword = $sqlSitecorePassword
+    SqlMessagingPassword           = $sqlSitecorePassword
     SolrCorePrefix                 = $prefix
     SolrURL                        = $solrUrl
     InstallDirectory               = $installDir

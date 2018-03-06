@@ -41,6 +41,7 @@ function ResolvePipeline {
     }
 }
 
+# TODO: Refactor Items initialization. This switch is not OK.
 function InitializeItems {
     [CmdletBinding()]
     Param
@@ -50,7 +51,7 @@ function InitializeItems {
 
     switch ($Pipeline) {
         "installOnPremSolr-XP" {
-            $installPackageDir = "$PSScriptRoot\..\temp\package"
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
 
             $solrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
@@ -61,7 +62,7 @@ function InitializeItems {
             break
         }
         "installOnPremAllInOne-XP" {
-            $installPackageDir = "$PSScriptRoot\..\temp\package"
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
     
             $solrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
@@ -75,7 +76,7 @@ function InitializeItems {
             break
         }
         "installOnPremSolr-XM" {
-            $installPackageDir = "$PSScriptRoot\..\temp\package"
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
             
             $solrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
@@ -86,13 +87,13 @@ function InitializeItems {
             break
         }
         "installOnPremCM-XM" {
-            $installPackageDir = "$PSScriptRoot\..\temp\package"
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
 
             break
         }
         "installOnPremCD-XM" {
-            $installPackageDir = "$PSScriptRoot\..\temp\package"
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
 
             break

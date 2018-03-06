@@ -27,11 +27,19 @@ function Initialize {
         throw "In order to use SAF, please run this script elevated."
     }
 
+    Write-Warning "SAF initialization will start after 3 seconds..."
+    Start-Sleep -s 3
+
+    ConfigurePSGallery
+    ConfigureChoco
+
     $global:Items = @{}
     $global:Configuration = Get-Content -Raw -Path $ConfigFile | ConvertFrom-Json
     if (!([string]::IsNullOrEmpty($PipelinesFile))) {
         $global:Pipelines = Get-Content -Raw -Path $PipelinesFile | ConvertFrom-Json
     }
+
+    Write-Warning "SAF initialization is done."
 }
 
 function Install-Sitecore {
@@ -45,7 +53,6 @@ function Install-Sitecore {
     )
 
     Initialize -ConfigFile $ConfigFile -PipelinesFile $PipelinesFile
-    ConfigureChoco
 
     Import-Module "$PSScriptRoot\Install\OnPrem\Install-Module.psm1" -Force
 

@@ -6,7 +6,7 @@ $prefix = $global:Configuration.prefix
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
-$sqlUserPassword = $global:Configuration.sql.adminPassword
+$sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $solrUrl = $global:Configuration.search.solr.serviceUrl
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *cd.scwdp.zip*
 
@@ -17,7 +17,7 @@ foreach ($cm in $global:Configuration.sitecore) {
     $installDir = $cm.installDir
 
     Write-Output "Testing installation of Sitecore CD$count..."
-    if (Test-Uri -Uri "https://$siteName") {
+    if (TestURI -Uri "https://$siteName") {
         Write-Output "Sitecore CD$count has been installed before. Going forward..."
     }
     else {
@@ -29,9 +29,9 @@ foreach ($cm in $global:Configuration.sitecore) {
             LicenseFile       = $license
             SqlDbPrefix       = $prefix
             SqlServer         = $sqlServer
-            SqlCorePassword   = $sqlUserPassword
-            SqlWebPassword    = $sqlUserPassword
-            SqlFormsPassword  = $sqlUserPassword
+            SqlCorePassword   = $sqlSitecorePassword
+            SqlWebPassword    = $sqlSitecorePassword
+            SqlFormsPassword  = $sqlSitecorePassword
             SolrCorePrefix    = $prefix
             SolrUrl           = $solrUrl
             Sitename          = $siteName

@@ -15,11 +15,6 @@ function ImportSqlModule {
     }
 }
 
-function Get-SupportedSqlServerVersions {
-    $sqlServerVersion = @("140", "130")
-    return $sqlServerVersion
-}
-
 function DeleteDb {
     [CmdletBinding()]
     Param
@@ -45,18 +40,10 @@ END
 }
 
 function LoadDacfx {
-    # TODO Don't depend on the dll
-    $dacfxPath = $null
-    $sqlServerVersions = Get-SupportedSqlServerVersions
-    foreach ($version in $sqlServerVersions) {
-        $tempDacfxPath = "C:\Program Files (x86)\Microsoft SQL Server\$version\DAC\bin\Microsoft.SqlServer.Dac.dll"
-        if (Test-Path $tempDacfxPath) { 
-            $dacfxPath = $tempDacfxPath
-        }
-    }
+    $dacfxPath = "C:\Program Files (x86)\Microsoft SQL Server\140\DAC\bin\Microsoft.SqlServer.Dac.dll"
 
-    if ($dacfxPath -eq $null) {
-        throw "Microsoft.SqlServer.Dac.dll doesn't exist"
+    if (-not (Test-Path $dacfxPath)) {
+        throw "Microsoft.SqlServer.Dac.dll doesn't exist '$dacfxPath'"
     }
 
     Add-Type -Path $dacfxPath
@@ -155,6 +142,34 @@ function SetDbOwner {
 
 # Private functions
 
+function EnableContainedDatabaseAuth {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$SqlServer,
+        [string]$Username,
+        [string]$Password
+    )
+
+    Write-Output "Enable contained database authentication started..."
+
+    ImportSqlModule
+
+    $cmd = 
+    @"
+sp_configure 'contained database authentication', 1; 
+GO
+RECONFIGURE; 
+GO
+"@
+
+    Push-Location
+    Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer -Username $Username -Password $Password
+    Pop-Location
+
+    Write-Output "Enable contained database authentication done."
+}
+
 function CleanInstalledXConnectDbs {
     [CmdletBinding()]
     Param
@@ -208,7 +223,9 @@ function CleanCMInstalledSitecoreDbs {
     Param
     (
         [string]$SqlServer,
-        [string]$Prefix
+        [string]$Prefix,
+        [string]$Username,
+        [string]$Password
     )
 
     ImportSqlModule
@@ -219,7 +236,7 @@ function CleanCMInstalledSitecoreDbs {
 
     foreach ($db in $dbs) {
         $dbName = "$($Prefix)_$db"
-        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName
+        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName -Username $Username -Password $Password
     }
 
     Write-Output "Clean existing databases done."
@@ -233,6 +250,7 @@ function DeployDacpac {
         [string]$Username,
         [string]$Password,
         [string]$LocalDbUsername,
+        [string]$LocalDbPassword,
         [string]$Dacpac,
         [string]$TargetDatabaseName
     )
@@ -260,7 +278,7 @@ function DeployDacpac {
         Write-Output "Dacpac deployed '$TargetDatabaseName' successfully."
     }
 
-    CreateDbUser -SqlServer $SqlServer -Username $Username -Password $Password -DbUser $LocalDbUsername -DbPassword $Password -DatabaseName $TargetDatabaseName 
+    CreateDbUser -SqlServer $SqlServer -Username $Username -Password $Password -DbUser $LocalDbUsername -DbPassword $LocalDbPassword -DatabaseName $TargetDatabaseName 
 }
 
 Export-ModuleMember -Function "CleanInstalledXConnectDbs"
@@ -268,3 +286,4 @@ Export-ModuleMember -Function "CleanInstalledSitecoreDbs"
 Export-ModuleMember -Function "CleanCMInstalledSitecoreDbs"
 Export-ModuleMember -Function "DeleteDb"
 Export-ModuleMember -Function "DeployDacpac"
+Export-ModuleMember -Function "EnableContainedDatabaseAuth"

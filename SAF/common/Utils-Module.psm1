@@ -1,6 +1,11 @@
 $ErrorActionPreference = "Stop"
 
-function Test-URI {
+function RefreshEnvironment {
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
+    refreshenv
+}
+
+function TestURI {
     [cmdletbinding(DefaultParameterSetName = "Default")]
     Param(
         [Parameter(Position = 0, Mandatory, HelpMessage = "Enter the URI path starting with HTTP or HTTPS")]
@@ -277,4 +282,5 @@ Export-ModuleMember -Function "AddConnectionString"
 Export-ModuleMember -Function "AddAppPoolUserToGroups"
 Export-ModuleMember -Function "DownloadAndUnzip"
 Export-ModuleMember -Function "InstallSolr"
-Export-ModuleMember -Function "Test-URI"
+Export-ModuleMember -Function "TestURI"
+Export-ModuleMember -Function "RefreshEnvironment"

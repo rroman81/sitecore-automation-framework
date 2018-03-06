@@ -2,27 +2,32 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XM",
     "serverRole": "CM",
-    "installPackage": "C:\\RP\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
-    "license": "C:\\RP\\license.xml",
-    "prefix": "ross",
+    "installPackage": "C:\\Development\\files\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
+    "license": "C:\\Development\\files\\license.xml",
+    "prefix": "xm",
     "sitecore": [
         {
-            "hostName": "ross-cm1.local",
-            "installDir": "C:\\XM\\Website-CM1"
-        },
-        {
-            "hostName": "ross-cm2.local",
-            "installDir": "C:\\XM\\Website-CM2"
+            "hostName": "cm1.local",
+            "installDir": "C:\\Development\\web\\CM1"
         }
     ],
     "search": {
         "solr": {
-           "serviceUrl": "https://solrself:8986/solr"
+            "serviceUrl": "https://solrself:8986/solr"
         }
     },
     "sql": {
-        "serverName": ".\\SQL2017",
-        "adminUsername": "ross",
-        "adminPassword": "123Test"
+        "serverName": "192.168.56.103,49172",
+        "adminUsername": "sa",
+        "adminPassword": "Test123",
+        "sitecorePassword": "Test123",
+        "keepSSMS": false,
+        "customDatabases": [
+            {
+                "dacpack": "C:\\Development\\files\\CUSTOM.dacpac",
+                "loginUsername": "customuser",
+                "connectionStringName": "custom"
+            }
+        ]
     }
 }

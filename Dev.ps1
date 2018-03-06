@@ -3,14 +3,14 @@
 # 2. Set "program": "${workspaceRoot}/Developer/Debug.ps1" in launch.json
 
 ### Configuration ###
-$runtimeDir =  "C:\Projects\sitecore-automation-framework\saf"
-$configFile = "C:\Projects\sitecore-automation-framework\Configuration\Install\OnPrem\XP\AllInOne\InstallConfiguration.json"
+$runtimeDir =  "C:\Development\sitecore-automation-framework\saf"
+$configFile = "C:\Development\sitecore-automation-framework\Configuration\Install\OnPrem\XM\Scaled\CD\InstallConfiguration.json"
 ### Configuration ###
 
 ### Initialization ###
 $module = Join-Path -Path $runtimeDir -ChildPath "Sitecore.Automation.Framework.psm1"
 Import-Module -Name $module -Force
-### Initialization ###
+### Initialization ### 
 
 ############### Debug ###################
-Install-Sitecore -ConfigFile $configFile -Force
+Install-Sitecore -ConfigFile $configFile

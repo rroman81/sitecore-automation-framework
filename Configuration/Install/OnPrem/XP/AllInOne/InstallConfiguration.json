@@ -2,21 +2,23 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
     "serverRole": "AllInOne",
-    "installPackage": "E:\\SAF\\Files\\Sitecore 9.0.1 rev. 171219 (WDP XP0 packages).zip",
-    "license": "E:\\SAF\\Files\\license.xml",
+    "installPackage": "C:\\Development\\files\\Sitecore 9.0.1 rev. 171219 (WDP XP0 packages).zip",
+    "license": "C:\\Development\\files\\license.xml",
     "prefix": "all",
-    "sitecore": {
-        "hostName": "all.local",
-        "installDir": "C:\\AllInOne\\Website"
-    },
+    "sitecore": [
+        {
+            "hostName": "all.local",
+            "installDir": "C:\\Development\\web\\Website"
+        }
+    ],
     "xConnect": {
         "hostName": "xconnect.all.local",
-        "installDir": "C:\\AllInOne\\XConnect"
+        "installDir": "C:\\Development\\web\\XConnect"
     },
     "search": {
         "solr": {
             "version": "6.6.2",
-            "installDir": "C:\\AllInOne\\Solr",
+            "installDir": "C:\\Development\\web\\Solr",
             "hostName": "solr",
             "port": "8988",
             "serviceName": "solr",
@@ -34,10 +36,11 @@
         "serverName": "192.168.56.103,49172",
         "adminUsername": "sa",
         "adminPassword": "Test123",
-        "TODO": "ADD Password for connection strings",
+        "sitecorePassword": "Test123",
+        "keepSSMS": false,
         "customDatabases": [
             {
-                "dacpack": "E:\\SAF\\Files\\CUSTOM.dacpac",
+                "dacpack": "C:\\Development\\files\\CUSTOM.dacpac",
                 "loginUsername": "customuser",
                 "connectionStringName": "custom"
             }

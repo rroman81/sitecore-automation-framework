@@ -11,8 +11,9 @@ else {
 
     $sqlServer = $global:Configuration.sql.serverName
     $sqlUser = $global:Configuration.sql.adminUsername
-    $sqlUserPassword = $global:Configuration.sql.adminPassword
-    $sitecoreInstallDir = $global:Configuration.sitecore.installDir
+    $sqlAdminPassword = $global:Configuration.sql.adminPassword
+    $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
+   
 
     foreach ($db in $global:Configuration.sql.customDatabases) {
         $dacpac = $db.dacpack
@@ -21,8 +22,11 @@ else {
         $dacpackName = [System.IO.Path]::GetFileNameWithoutExtension($db.dacpack)
         $targetDatabaseName = "$($global:Configuration.prefix)_$dacpackName"
         
-        DeployDacpac -SqlServer $sqlServer -Username $sqlUser -LocalDbUsername $localDbUserName -Password $sqlUserPassword -Dacpac $dacpac -TargetDatabaseName $targetDatabaseName
-        AddConnectionString -SqlServer $sqlServer -Database $targetDatabaseName -Username $localDbUserName -Password $sqlUserPassword -WebsiteRootDir $sitecoreInstallDir -ConnStringName $connStrName
+        DeployDacpac -SqlServer $sqlServer -Username $sqlUser -Password $sqlAdminPassword -LocalDbUsername $localDbUserName -LocalDbPassword $sqlSitecorePassword -Dacpac $dacpac -TargetDatabaseName $targetDatabaseName
+        foreach($sitecoreInstance in $global:Configuration.sitecore){
+            $sitecoreInstallDir = $sitecoreInstance.installDir
+            AddConnectionString -SqlServer $sqlServer -Database $targetDatabaseName -Username $localDbUserName -Password $sqlSitecorePassword -WebsiteRootDir $sitecoreInstallDir -ConnStringName $connStrName
+        }
     }
 }
 

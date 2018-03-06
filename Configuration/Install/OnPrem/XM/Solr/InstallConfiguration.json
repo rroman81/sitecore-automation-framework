@@ -2,8 +2,8 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XM",
     "serverRole": "Solr",
-    "installPackage": "C:\\RP\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
-    "prefix": "ross",
+    "installPackage": "C:\\Development\\files\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
+    "prefix": "xm",
     "search": {
         "solr": {
             "version": "6.6.2",
