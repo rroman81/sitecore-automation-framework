@@ -3,6 +3,7 @@ $ErrorActionPreference = "Stop"
 
 Write-Output "Install MSSQL Server dependencies started..."
 
+taskkill /F /IM Ssms.exe | Out-Null
 choco upgrade sql-server-management-studio --limitoutput
 RefreshEnvironment
 
