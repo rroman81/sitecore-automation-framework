@@ -30,14 +30,24 @@ function Initialize {
     Write-Warning "SAF initialization will start after 3 seconds..."
     Start-Sleep -s 3
 
-    ConfigurePSGallery
-    ConfigureChoco
+    if ([string]::IsNullOrEmpty($ConfigFile)) {
+        $dir = Get-Location
+        $ConfigFile = "$dir\InstallConfiguration.json"
+    }
+
+    if(!(Test-Path $ConfigFile)) {
+        throw "Please, provide 'InstallConfiguration.json' file."
+    }
 
     $global:Items = @{}
+
     $global:Configuration = Get-Content -Raw -Path $ConfigFile | ConvertFrom-Json
     if (!([string]::IsNullOrEmpty($PipelinesFile))) {
         $global:Pipelines = Get-Content -Raw -Path $PipelinesFile | ConvertFrom-Json
     }
+
+    ConfigurePSGallery
+    ConfigureChoco
 
     Write-Warning "SAF initialization is done."
 }
@@ -46,7 +56,6 @@ function Install-Sitecore {
     [CmdletBinding()]
     Param
     (
-        [Parameter(Mandatory = $true)]
         [string]$ConfigFile,
         [string]$PipelinesFile,
         [switch]$Force
