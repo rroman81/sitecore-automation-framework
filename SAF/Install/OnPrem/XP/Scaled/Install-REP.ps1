@@ -1,0 +1,42 @@
+Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\Common\Utils-Module.psm1" -Force
+$ErrorActionPreference = "Stop"
+
+$prefix = $global:Configuration.prefix
+$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
+$license = $global:Configuration.license
+$sqlServer = $global:Configuration.sql.serverName
+$sqlUser = $global:Configuration.sql.adminUsername
+$sqlAdminPassword = $global:Configuration.sql.adminPassword
+$sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
+$siteName = $global:Configuration.reporting.hostName
+$installDir = $global:Configuration.reporting.installDir
+$serviceApiKey = $global:Configuration.reporting.serviceApiKey
+$sslCert = $global:Configuration.reporting.sslCert
+$package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *rep.scwdp.zip*
+
+Write-Output "Install Sitecore Reporting started..."
+
+$sitecoreParams = @{
+    Path                   = "$sourcePackageDirectory\sitecore-XP1-rep.json"
+    Package                = $package.FullName
+    LicenseFile            = $license
+    Sitename               = $siteName
+    SSLCert                = $sslCert
+    SqlDbPrefix            = $prefix
+    SqlCoreUser            = "$($prefix)_coreuser"
+    SqlCorePassword        = $sqlSitecorePassword
+    SqlMasterUser          = "$($prefix)_masteruser"
+    SqlMasterPassword      = $sqlSitecorePassword
+    SqlWebUser             = "$($prefix)_webuser"
+    SqlWebPassword         = $sqlSitecorePassword
+    SqlReportingUser       = "$($prefix)_reportinguser"
+    SqlReportingPassword   = $sqlSitecorePassword
+    SqlServer              = $sqlServer
+    ReportingServiceApiKey = $serviceApiKey 
+    InstallDirectory       = $installDir
+}
+
+Install-SitecoreConfiguration @sitecoreParams
+
+Write-Output "Install Sitecore Reporting done."

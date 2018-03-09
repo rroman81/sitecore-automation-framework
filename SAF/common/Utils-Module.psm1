@@ -60,18 +60,17 @@ function DownloadAndUnzip {
     }
 }
 
-function CleanInstalledXConnectServices {
+function DeleteServices {
     [CmdletBinding()]
     Param
     (
-        [string]$HostName
+        [string]$HostName,
+        [string[]]$Services
     )
 
-    $services = @("IndexWorker", "MarketingAutomationService")
+    Write-Output "Deleting existing services..."
 
-    Write-Output "Cleaning existing xConnect services..."
-
-    foreach ($service in $services) {
+    foreach ($service in $Services) {
         $serviceName = "$HostName-$service"
         if (Get-Service $serviceName -ErrorAction SilentlyContinue) {
             nssm stop $serviceName | Out-Null
@@ -80,7 +79,7 @@ function CleanInstalledXConnectServices {
         }
     }
 
-    Write-Output "Cleaning existing xConnect services done"
+    Write-Output "Deleting existing services done."
 }
 
 function AddConnectionString {
@@ -277,7 +276,7 @@ function AddAppPoolUserToGroups {
     }
 }
 
-Export-ModuleMember -Function "CleanInstalledXConnectServices"
+Export-ModuleMember -Function "DeleteServices"
 Export-ModuleMember -Function "AddConnectionString"
 Export-ModuleMember -Function "AddAppPoolUserToGroups"
 Export-ModuleMember -Function "DownloadAndUnzip"

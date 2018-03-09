@@ -75,6 +75,84 @@ function InitializeItems {
 
             break
         }
+        "installOnPremCM-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
+
+            break
+        }
+        "installOnPremCD-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
+            
+            break
+        }
+        "installOnPremPRC-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
+
+            break
+        }
+        "installOnPremCollection-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
+
+            break
+        }
+        "installOnPremCollectionSearch-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
+            
+            break
+        }
+        "installOnPremMarketingAutomation-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
+
+            break
+        }
+        "installOnPremReferenceData-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
+            
+            break
+        }
+        "installOnPremMarketingAutomationReporting-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            $certName = "$($global:Configuration.prefix).xconnect_client"
+            $global:Items.Add("XConnectCertName", $certName)
+
+            break
+        }
+        "installOnPremREP-XP" {
+            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
+            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
+
+            break
+        }
         "installOnPremSolr-XM" {
             $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
@@ -89,7 +167,7 @@ function InitializeItems {
         "installOnPremCM-XM" {
             $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
+            
             break
         }
         "installOnPremCD-XM" {

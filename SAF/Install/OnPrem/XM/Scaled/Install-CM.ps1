@@ -17,6 +17,7 @@ $count = 1
 foreach ($cm in $global:Configuration.sitecore) {
     $siteName = $cm.hostName
     $installDir = $cm.installDir
+    $sslCert = $cm.sslCert
 
     Write-Output "Testing installation of Sitecore CM$count..."
     if (TestURI -Uri "https://$siteName") {
@@ -25,7 +26,8 @@ foreach ($cm in $global:Configuration.sitecore) {
     else {
         Write-Output "Install Sitecore CM$count started..."
 
-        CleanCMInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlAdminPassword
+        $dbs = @("Core", "Master", "Web", "ExperienceForms")
+        DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
 
         $sitecoreParams = @{
             Path              = "$sourcePackageDirectory\sitecore-XM1-cm.json"
@@ -35,13 +37,18 @@ foreach ($cm in $global:Configuration.sitecore) {
             SqlServer         = $sqlServer
             SqlAdminUser      = $sqlUser
             SqlAdminPassword  = $sqlAdminPassword
+            SqlCoreUser       = "$($prefix)_coreuser"
             SqlCorePassword   = $sqlSitecorePassword
+            SqlMasterUser     = "$($prefix)_masteruser"
             SqlMasterPassword = $sqlSitecorePassword
+            SqlWebUser        = "$($prefix)_webuser"
             SqlWebPassword    = $sqlSitecorePassword
+            SqlFormsUser      = "$($prefix)_formsuser"
             SqlFormsPassword  = $sqlSitecorePassword
             SolrCorePrefix    = $prefix
             SolrUrl           = $solrUrl
             Sitename          = $siteName
+            SSLCert           = $sslCert
             InstallDirectory  = $installDir
         }
 

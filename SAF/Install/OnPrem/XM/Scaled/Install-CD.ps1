@@ -1,4 +1,3 @@
-Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\Common\Utils-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
@@ -12,9 +11,9 @@ $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *cd.scwdp.zi
 
 $count = 1
 
-foreach ($cm in $global:Configuration.sitecore) {
-    $siteName = $cm.hostName
-    $installDir = $cm.installDir
+foreach ($cd in $global:Configuration.sitecore) {
+    $siteName = $cd.hostName
+    $installDir = $cd.installDir
 
     Write-Output "Testing installation of Sitecore CD$count..."
     if (TestURI -Uri "https://$siteName") {
@@ -29,8 +28,11 @@ foreach ($cm in $global:Configuration.sitecore) {
             LicenseFile       = $license
             SqlDbPrefix       = $prefix
             SqlServer         = $sqlServer
+            SqlCoreUser       = "$($prefix)_coreuser"
             SqlCorePassword   = $sqlSitecorePassword
+            SqlWebUser        = "$($prefix)_webuser"
             SqlWebPassword    = $sqlSitecorePassword
+            SqlFormsUser      = "$($prefix)_formsuser"
             SqlFormsPassword  = $sqlSitecorePassword
             SolrCorePrefix    = $prefix
             SolrUrl           = $solrUrl

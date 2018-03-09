@@ -1,6 +1,6 @@
 Import-Module "$PSScriptRoot\common\Initialization-Module.psm1" -Force
-
 $ErrorActionPreference = "Stop"
+
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 $global:Configuration = $null

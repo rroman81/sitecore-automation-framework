@@ -1,0 +1,22 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "MarketingAutomationReporting",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xp",
+    "marketingAutomationReporting": {
+        "hostName": "marketingautomationreporting.test.local",
+        "installDir": "C:\\XP\\MarketingAutomationReporting",
+        "sslCert": ""
+    },
+    "xConnect": {
+        "sslCert": "",
+        "environment": "Staging",
+        "logLevel": "Information"
+    },
+    "sql": {
+        "serverName": ".\\SQL2017",
+        "sitecorePassword": "TestRoss123"
+    }
+}

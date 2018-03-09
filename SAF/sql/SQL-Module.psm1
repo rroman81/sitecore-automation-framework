@@ -170,76 +170,28 @@ GO
     Write-Output "Enable contained database authentication done."
 }
 
-function CleanInstalledXConnectDbs {
+function DeleteDatabases {
     [CmdletBinding()]
     Param
     (
         [string]$SqlServer,
         [string]$Prefix,
+        [string[]]$Databases,
         [string]$Username,
         [string]$Password
     )
 
     ImportSqlModule
 
-    $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData")
-
     Write-Output "Clean existing databases started..."
 
-    foreach ($db in $dbs) {
+    foreach ($db in $Databases) {
         $dbName = "$($Prefix)_$db"
         DeleteDb -SqlServer $SqlServer -DatabaseName $dbName -Username $Username -Password $Password
     }
 
     Write-Output "Clean existing databases done."
-}
 
-function CleanInstalledSitecoreDbs {
-    [CmdletBinding()]
-    Param
-    (
-        [string]$SqlServer,
-        [string]$Prefix,
-        [string]$Username,
-        [string]$Password
-    )
-
-    ImportSqlModule
-
-    $dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
-
-    Write-Output "Clean existing databases started..."
-
-    foreach ($db in $dbs) {
-        $dbName = "$($Prefix)_$db"
-        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName -Username $Username -Password $Password
-    }
-
-    Write-Output "Clean existing databases done."
-}
-
-function CleanCMInstalledSitecoreDbs {
-    [CmdletBinding()]
-    Param
-    (
-        [string]$SqlServer,
-        [string]$Prefix,
-        [string]$Username,
-        [string]$Password
-    )
-
-    ImportSqlModule
-
-    $dbs = @("Core", "ExperienceForms", "Master", "Web")
-
-    Write-Output "Clean existing databases started..."
-
-    foreach ($db in $dbs) {
-        $dbName = "$($Prefix)_$db"
-        DeleteDb -SqlServer $SqlServer -DatabaseName $dbName -Username $Username -Password $Password
-    }
-
-    Write-Output "Clean existing databases done."
 }
 
 function DeployDacpac {
@@ -281,9 +233,6 @@ function DeployDacpac {
     CreateDbUser -SqlServer $SqlServer -Username $Username -Password $Password -DbUser $LocalDbUsername -DbPassword $LocalDbPassword -DatabaseName $TargetDatabaseName 
 }
 
-Export-ModuleMember -Function "CleanInstalledXConnectDbs"
-Export-ModuleMember -Function "CleanInstalledSitecoreDbs"
-Export-ModuleMember -Function "CleanCMInstalledSitecoreDbs"
-Export-ModuleMember -Function "DeleteDb"
+Export-ModuleMember -Function "DeleteDatabases"
 Export-ModuleMember -Function "DeployDacpac"
 Export-ModuleMember -Function "EnableContainedDatabaseAuth"

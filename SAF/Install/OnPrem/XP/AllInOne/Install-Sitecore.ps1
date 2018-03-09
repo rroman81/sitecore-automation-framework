@@ -17,7 +17,8 @@ $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *single.scwdp.zip*
 
-CleanInstalledSitecoreDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlAdminPassword
+$dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
+DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
 
 $sitecoreParams = @{
     Path                           = "$sourcePackageDirectory\sitecore-XP0.json"
@@ -27,15 +28,25 @@ $sitecoreParams = @{
     SqlServer                      = $sqlServer
     SqlAdminUser                   = $sqlUser
     SqlAdminPassword               = $sqlAdminPassword
+    SqlCoreUser                    = "$($prefix)_coreuser"
     SqlCorePassword                = $sqlSitecorePassword
+    SqlMasterUser                  = "$($prefix)_masteruser"
     SqlMasterPassword              = $sqlSitecorePassword
+    SqlWebUser                     = "$($prefix)_webuser"
     SqlWebPassword                 = $sqlSitecorePassword
+    SqlReportingUser               = "$($prefix)_reportinguser"
     SqlReportingPassword           = $sqlSitecorePassword
+    SqlProcessingPoolsUser         = "$($prefix)_processingpoolsuser"
     SqlProcessingPoolsPassword     = $sqlSitecorePassword
+    SqlReferenceDataUser           = "$($prefix)_referencedatauser"
     SqlReferenceDataPassword       = $sqlSitecorePassword
+    SqlMarketingAutomationUser     = "$($prefix)_marketingautomationuser"
     SqlMarketingAutomationPassword = $sqlSitecorePassword
+    SqlFormsUser                   = "$($prefix)_formsuser"
     SqlFormsPassword               = $sqlSitecorePassword
+    SqlExmMasterUser               = "$($prefix)_exmmasteruser"
     SqlExmMasterPassword           = $sqlSitecorePassword
+    SqlMessagingUser               = "$($prefix)_messaginguser"
     SqlMessagingPassword           = $sqlSitecorePassword
     SolrCorePrefix                 = $prefix
     SolrUrl                        = $solrUrl

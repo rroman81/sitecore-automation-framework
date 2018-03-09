@@ -1,0 +1,27 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "CollectionSearch",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xp",
+    "collectionSearch": {
+        "hostName": "collectionsearch.test.local",
+        "installDir": "C:\\XP\\CollectionSearch",
+        "sslCert": ""
+    },
+    "xConnect": {
+        "sslCert": "",
+        "environment": "Staging",
+        "logLevel": "Information"
+    },
+    "search": {
+        "solr": {
+            "serviceUrl": "https://solrself:8999/solr"
+        }
+    },
+    "sql": {
+        "serverName": ".\\SQL2017",
+        "sitecorePassword": "TestRoss123"
+    }
+}

@@ -8,7 +8,8 @@
     "sitecore": [
         {
             "hostName": "cm1.local",
-            "installDir": "C:\\Development\\web\\CM1"
+            "installDir": "C:\\Development\\web\\CM1",
+            "sslCert": ""
         }
     ],
     "search": {
@@ -21,7 +22,6 @@
         "adminUsername": "sa",
         "adminPassword": "Test123",
         "sitecorePassword": "Test123",
-        "keepSSMS": false,
         "customDatabases": [
             {
                 "dacpack": "C:\\Development\\files\\CUSTOM.dacpac",

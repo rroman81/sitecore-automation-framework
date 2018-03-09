@@ -1,0 +1,26 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "MarketingAutomation",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xp",
+    "marketingAutomation": {
+        "hostName": "marketingautomation.test.local",
+        "installDir": "C:\\XP\\MarketingAutomation",
+        "sslCert": ""
+    },
+    "xConnect": {
+        "sslCert": "",
+        "collectionService": "https://collection.test.local",
+        "referenceDataService": "https://refdata.test.local",
+        "environment": "Staging",
+        "logLevel": "Information"
+    },
+    "sql": {
+        "serverName": ".\\SQL2017",
+        "adminUsername": "FFWAdmin",
+        "adminPassword": "TestRoss123",
+        "sitecorePassword": "TestRoss123"
+    }
+}

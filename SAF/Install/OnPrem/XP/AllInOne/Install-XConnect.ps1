@@ -17,8 +17,10 @@ $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *xconnect.scwdp.zip*
 
-CleanInstalledXConnectDbs -SqlServer $sqlServer -Prefix $prefix -Username $sqlUser -Password $sqlAdminPassword
-CleanInstalledXConnectServices -HostName $xConnectCollectionService
+$dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData")
+DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
+$services = @("IndexWorker", "MarketingAutomationService")
+DeleteServices -HostName $xConnectCollectionService -Services $services
 
 $xconnectParams = @{
     Path                           = "$sourcePackageDirectory\xconnect-xp0.json"
@@ -30,10 +32,15 @@ $xconnectParams = @{
     SqlServer                      = $sqlServer
     SqlAdminUser                   = $sqlUser
     SqlAdminPassword               = $sqlAdminPassword
+    SqlCollectionUser              = "$($prefix)_collectionuser"
     SqlCollectionPassword          = $sqlSitecorePassword
+    SqlProcessingPoolsUser         = "$($prefix)_processingpoolsuser"
     SqlProcessingPoolsPassword     = $sqlSitecorePassword
+    SqlReferenceDataUser           = "$($prefix)_referencedatauser"
     SqlReferenceDataPassword       = $sqlSitecorePassword
+    SqlMarketingAutomationUser     = "$($prefix)_marketingautomationuser"
     SqlMarketingAutomationPassword = $sqlSitecorePassword
+    SqlMessagingUser               = "$($prefix)_messaginguser"
     SqlMessagingPassword           = $sqlSitecorePassword
     SolrCorePrefix                 = $prefix
     SolrURL                        = $solrUrl
