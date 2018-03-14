@@ -8,9 +8,6 @@ $sqlServer = $global:Configuration.sql.serverName
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $solrUrl = $global:Configuration.search.solr.serviceUrl
 $xConnectSslCert = $global:Configuration.xConnect.sslCert
-if ([string]::IsNullOrEmpty($xConnectSslCert)) {
-    $xConnectSslCert = $global:Items.XConnectCertName
-}
 $xConnectCollectionService = $global:Configuration.xConnect.collectionService
 $xConnectReferenceDataService = $global:Configuration.xConnect.referenceDataService
 $marketingAutomationOperationsService = $global:Configuration.marketingAutomation.operationsService

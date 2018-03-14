@@ -6,8 +6,7 @@ Write-Output "Install Sitecore started..."
 $prefix = $global:Configuration.prefix
 $license = $global:Configuration.license
 $siteName = $global:Configuration.sitecore.hostName
-$xConnectCollectionService = $global:Configuration.xConnect.hostName
-$cert = $global:Items.XConnectCertName
+$xConnectHostName = $global:Configuration.xConnect.hostName
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser =  $global:Configuration.sql.adminUsername
 $sqlAdminPassword =  $global:Configuration.sql.adminPassword
@@ -16,6 +15,7 @@ $installDir = $global:Configuration.sitecore.installDir
 $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *single.scwdp.zip*
+$cert = $xConnectHostName
 
 $dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
@@ -38,6 +38,8 @@ $sitecoreParams = @{
     SqlReportingPassword           = $sqlSitecorePassword
     SqlProcessingPoolsUser         = "$($prefix)_processingpoolsuser"
     SqlProcessingPoolsPassword     = $sqlSitecorePassword
+    SqlProcessingTasksUser         = "$($prefix)_processingtasksuser"
+    SqlProcessingTasksPassword     = $sqlSitecorePassword
     SqlReferenceDataUser           = "$($prefix)_referencedatauser"
     SqlReferenceDataPassword       = $sqlSitecorePassword
     SqlMarketingAutomationUser     = "$($prefix)_marketingautomationuser"
@@ -52,7 +54,7 @@ $sitecoreParams = @{
     SolrUrl                        = $solrUrl
     XConnectCert                   = $cert
     Sitename                       = $siteName
-    XConnectCollectionService      = "https://$xConnectCollectionService"
+    XConnectCollectionService      = "https://$xConnectHostName"
     InstallDirectory               = $installDir
 }
 Install-SitecoreConfiguration @sitecoreParams

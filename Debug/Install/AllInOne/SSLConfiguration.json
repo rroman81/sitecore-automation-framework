@@ -1,0 +1,10 @@
+{
+    "sslCerts": {
+        "password": "Pass123",
+        "prefix": "all",
+        "hostNames": [
+            "solr.all.local",
+            "xconnect.all.local"
+        ]
+    }
+}

@@ -6,8 +6,7 @@ Write-Output "Install xConnect started..."
 
 $prefix = $global:Configuration.prefix
 $license = $global:Configuration.license
-$xConnectCollectionService = $global:Configuration.xConnect.hostName
-$cert = $global:Items.XConnectCertName
+$xConnectHostName = $global:Configuration.xConnect.hostName
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser =  $global:Configuration.sql.adminUsername
 $sqlAdminPassword =  $global:Configuration.sql.adminPassword
@@ -16,17 +15,19 @@ $installDir = $global:Configuration.xConnect.installDir
 $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *xconnect.scwdp.zip*
+$cert = $xConnectHostName
 
 $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
 $services = @("IndexWorker", "MarketingAutomationService")
-DeleteServices -HostName $xConnectCollectionService -Services $services
+DeleteServices -HostName $xConnectHostName -Services $services
 
 $xconnectParams = @{
     Path                           = "$sourcePackageDirectory\xconnect-xp0.json"
     Package                        = $package.FullName
     LicenseFile                    = $license
-    Sitename                       = $xConnectCollectionService
+    Sitename                       = $xConnectHostName
+    SSLCert                        = $cert
     XConnectCert                   = $cert
     SqlDbPrefix                    = $prefix
     SqlServer                      = $sqlServer

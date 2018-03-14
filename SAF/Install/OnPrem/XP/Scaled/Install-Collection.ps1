@@ -11,9 +11,6 @@ $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $siteName = $global:Configuration.collection.hostName
 $installDir = $global:Configuration.collection.installDir
 $xConnectSslCert = $global:Configuration.xConnect.sslCert
-if ([string]::IsNullOrEmpty($xConnectSslCert)) {
-    $xConnectSslCert = $global:Items.XConnectCertName
-}
 $sslCert = $global:Configuration.collection.sslCert
 $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel

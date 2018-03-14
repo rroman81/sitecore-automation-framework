@@ -11,9 +11,6 @@ $sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $solrUrl = $global:Configuration.search.solr.serviceUrl
 $xConnectSslCert = $global:Configuration.xConnect.sslCert
-if ([string]::IsNullOrEmpty($xConnectSslCert)) {
-    $xConnectSslCert = $global:Items.XConnectCertName
-}
 $processingServiceURL = $global:Configuration.processing.serviceURL
 $reportingServiceURL = $global:Configuration.reporting.serviceURL
 $reportingServiceApiKey = $global:Configuration.reporting.serviceApiKey

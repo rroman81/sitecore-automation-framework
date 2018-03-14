@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\common\Initialization-Module.psm1" -Force
+Import-Module "$PSScriptRoot\Common\Initialization-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -7,14 +7,38 @@ $global:Configuration = $null
 $global:Items = $null
 $global:Pipelines = Get-Content -Raw -Path "$PSScriptRoot\common\Pipelines.json" | ConvertFrom-Json
 
-function Initialize {
+function CheckSSLCertsPFX {
+    $dir = Get-Location
 
+    $pfxRootCert = "$dir\SitecoreRootSSLCertificate.pfx"
+    if (!(Test-Path $pfxRootCert)) {
+        throw "Please, provide 'SitecoreRootSSLCertificate.pfx' file."
+    }
+
+    $pfxCert = "$dir\SitecoreSSLCertificates.pfx"
+    if (!(Test-Path $pfxCert)) {
+        throw "Please, provide 'SitecoreSSLCertificates.pfx' file."
+    }
+}
+
+function LoadCofigurations {
     [CmdletBinding()]
     Param
     (
-        [string]$ConfigFile,
-        [string]$PipelinesFile
+        [string]$ConfigName
     )
+
+    $dir = Get-Location
+    $configFile = "$dir\$ConfigName.json"
+
+    if (!(Test-Path $configFile)) {
+        throw "Please, provide '$ConfigName.json' file."
+    }
+
+    $global:Configuration = Get-Content -Raw -Path $configFile | ConvertFrom-Json
+}
+
+function Initialize {
 
     Write-Output "`n`n------------------------------------------------------"
     Write-Output "--- Welcome to Sitecore Automation Framework (SAF) ---"
@@ -30,24 +54,9 @@ function Initialize {
     Write-Warning "SAF initialization will start after 3 seconds..."
     Start-Sleep -s 3
 
-    if ([string]::IsNullOrEmpty($ConfigFile)) {
-        $dir = Get-Location
-        $ConfigFile = "$dir\InstallConfiguration.json"
-    }
-
-    if(!(Test-Path $ConfigFile)) {
-        throw "Please, provide 'InstallConfiguration.json' file."
-    }
-
-    $global:Items = @{}
-
-    $global:Configuration = Get-Content -Raw -Path $ConfigFile | ConvertFrom-Json
-    if (!([string]::IsNullOrEmpty($PipelinesFile))) {
-        $global:Pipelines = Get-Content -Raw -Path $PipelinesFile | ConvertFrom-Json
-    }
-
     ConfigurePSGallery
     ConfigureChoco
+    $global:Items = @{}
 
     Write-Warning "SAF initialization is done."
 }
@@ -56,12 +65,12 @@ function Install-Sitecore {
     [CmdletBinding()]
     Param
     (
-        [string]$ConfigFile,
-        [string]$PipelinesFile,
         [switch]$Force
     )
 
-    Initialize -ConfigFile $ConfigFile -PipelinesFile $PipelinesFile
+    Initialize
+    LoadCofigurations -ConfigName "InstallConfiguration"
+    CheckSSLCertsPFX
 
     Import-Module "$PSScriptRoot\Install\OnPrem\Install-Module.psm1" -Force
 
@@ -73,4 +82,25 @@ function Install-Sitecore {
     }
 }
 
+function New-SSLCerts {
+    [CmdletBinding()]
+    Param
+    (
+        [switch]$Force
+    )
+
+    Initialize
+    LoadCofigurations -ConfigName "SSLConfiguration"
+
+    Import-Module "$PSScriptRoot\Common\SSL\SSL-Module.psm1" -Force
+
+    if ($PSBoundParameters["Force"]) {
+        StartSSLCertsCreation -Force
+    }
+    else {
+        StartSSLCertsCreation
+    }
+}
+
 Export-ModuleMember -Function "Install-Sitecore"
+Export-ModuleMember -Function "New-SSLCerts"

@@ -1,0 +1,17 @@
+{
+    "sslCerts": {
+        "password": "",
+        "prefix": "",
+        "hostNames": [
+            "SOLR_HOST_NAME",
+            "CM_HOST_NAME",
+            "REPORTING_HOST_NAME",
+            "PROCESSING_HOST_NAME",
+            "XCONNECT_COLLECTION_HOST_NAME",
+            "XCONNECT_COLLECTION_SEARCH_HOST_NAME",
+            "XDB_REFERENCE_DATA_HOST_NAME",
+            "XDB_AUTOMATION_OPERATIONS_HOST_NAME",
+            "XDB_AUTOMATION_REPORTING_HOST_NAME"
+        ]
+    }
+}

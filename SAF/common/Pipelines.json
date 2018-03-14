@@ -9,6 +9,10 @@
             "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
         },
         {
+            "name": "Import SSL certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
+        },
+        {
             "name": "Install Solr",
             "script": "\\Install\\OnPrem\\Solr\\Install-Solr.ps1"
         },
@@ -71,6 +75,10 @@
             "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
         },
         {
+            "name": "Import SSL certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
+        },
+        {
             "name": "Install Solr",
             "script": "\\Install\\OnPrem\\Solr\\Install-Solr.ps1"
         },
@@ -81,10 +89,6 @@
         {
             "name": "Install Sitecore Installation Framework (SIF)",
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
-        },
-        {
-            "name": "Create xConnect certificate",
-            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Create-XConnectCert.ps1"
         },
         {
             "name": "Add xConnect Solr cores",
@@ -149,8 +153,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Ensure xConnect SSL certificate",
-            "script": "\\Install\\OnPrem\\Ensure-XConnectCert.ps1"
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Sitecore CM",
@@ -191,8 +195,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Ensure xConnect SSL certificate",
-            "script": "\\Install\\OnPrem\\Ensure-XConnectCert.ps1"
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Sitecore CD",
@@ -237,8 +241,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Ensure xConnect SSL certificate",
-            "script": "\\Install\\OnPrem\\Ensure-XConnectCert.ps1"
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Sitecore Processing",
@@ -273,6 +277,10 @@
         {
             "name": "Install Sitecore Installation Framework (SIF)",
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Sitecore Reporting",
@@ -317,8 +325,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Ensure xConnect SSL certificate",
-            "script": "\\Install\\OnPrem\\Ensure-XConnectCert.ps1"
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install xConnect Collection",
@@ -355,8 +363,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Ensure xConnect SSL certificate",
-            "script": "\\Install\\OnPrem\\Ensure-XConnectCert.ps1"
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install xConnect Collection Search",
@@ -401,8 +409,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Ensure xConnect SSL certificate",
-            "script": "\\Install\\OnPrem\\Ensure-XConnectCert.ps1"
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install xConnect Marketing Automation",
@@ -439,8 +447,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Ensure xConnect SSL certificate",
-            "script": "\\Install\\OnPrem\\Ensure-XConnectCert.ps1"
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install xConnect Marketing Automation Reporting",
@@ -485,8 +493,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Ensure xConnect SSL certificate",
-            "script": "\\Install\\OnPrem\\Ensure-XConnectCert.ps1"
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install xConnect Reference Data",
@@ -505,6 +513,10 @@
         {
             "name": "Install Non-Sucking Service Manager",
             "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
+        },
+        {
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Solr",
@@ -565,6 +577,10 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
+        },
+        {
             "name": "Install Sitecore CM",
             "script": "\\Install\\OnPrem\\XM\\Scaled\\Install-CM.ps1"
         },
@@ -603,12 +619,34 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
+            "name": "Import SSL Certificates",
+            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
+        },
+        {
             "name": "Install Sitecore CD",
             "script": "\\Install\\OnPrem\\XM\\Scaled\\Install-CD.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
             "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+        }
+    ],
+    "newSSLCerts":[
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
+            "name": "Generate SSL Root CA Certificate",
+            "script": "\\Common\\SSL\\Generate-RootCACert.ps1"
+        },
+        {
+            "name": "Generate SSL Certificates",
+            "script": "\\Common\\SSL\\Generate-Cert.ps1"
+        },
+        {
+            "name": "Export SSL Certificates",
+            "script": "\\Common\\SSL\\Export-Certs.ps1"
         }
     ]
 }

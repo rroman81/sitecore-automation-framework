@@ -13,14 +13,14 @@ else {
     $sqlUser = $global:Configuration.sql.adminUsername
     $sqlAdminPassword = $global:Configuration.sql.adminPassword
     $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
-   
+    $prefix = $global:Configuration.prefix
 
     foreach ($db in $global:Configuration.sql.customDatabases) {
         $dacpac = $db.dacpack
-        $localDbUserName = $db.loginUsername
+        $localDbUserName = "$($prefix)_$($db.loginUsername)"
         $connStrName = $db.connectionStringName
         $dacpackName = [System.IO.Path]::GetFileNameWithoutExtension($db.dacpack)
-        $targetDatabaseName = "$($global:Configuration.prefix)_$dacpackName"
+        $targetDatabaseName = "$($prefix)_$dacpackName"
         
         DeployDacpac -SqlServer $sqlServer -Username $sqlUser -Password $sqlAdminPassword -LocalDbUsername $localDbUserName -LocalDbPassword $sqlSitecorePassword -Dacpac $dacpac -TargetDatabaseName $targetDatabaseName
         foreach($sitecoreInstance in $global:Configuration.sitecore){

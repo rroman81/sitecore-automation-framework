@@ -49,5 +49,8 @@
                 "connectionStringName": "custom"
             }
         ]
+    },
+    "ssl": {
+        "importCertPassword": "password"
     }
 }

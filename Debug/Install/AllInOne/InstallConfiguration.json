@@ -8,22 +8,22 @@
     "sitecore": [
         {
             "hostName": "all.local",
-            "installDir": "C:\\SAF_FILES\\web\\Website"
+            "installDir": "C:\\SAF_FILES\\web\\AllInOne\\Website"
         }
     ],
     "xConnect": {
         "hostName": "xconnect.all.local",
-        "installDir": "C:\\SAF_FILES\\web\\XConnect"
+        "installDir": "C:\\SAF_FILES\\web\\AllInOne\\XConnect"
     },
     "search": {
         "solr": {
             "version": "6.6.2",
-            "installDir": "C:\\SAF_FILES\\web\\Solr",
-            "hostName": "solr",
+            "installDir": "C:\\SAF_FILES\\web\\AllInOne\\Solr",
+            "hostName": "solr.all.local",
             "port": "8988",
-            "serviceName": "solr",
-            "serviceDisplayName": "solr display",
-            "serviceDescription": "solr description",
+            "serviceName": "allsolr",
+            "serviceDisplayName": "solr AllInOne",
+            "serviceDescription": "solr AllInOne",
             "customCores": [
 	            {
                     "name": "custom_index"
@@ -33,10 +33,10 @@
         }
     },
     "sql": {
-        "serverName": "192.168.56.103,49172",
-        "adminUsername": "sa",
-        "adminPassword": "Test123",
-        "sitecorePassword": "Test123",
+        "serverName": ".\\SQL2017",
+        "adminUsername": "FFWAdmin",
+        "adminPassword": "Pass123",
+        "sitecorePassword": "Pass123",
         "customDatabases": [
             {
                 "dacpack": "C:\\SAF_FILES\\CUSTOM.dacpac",
@@ -46,6 +46,6 @@
         ]
     },
     "ssl": {
-        "importCertPassword": "password"
+        "importCertPassword": "Pass123"
     }
 }

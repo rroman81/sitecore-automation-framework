@@ -8,9 +8,6 @@ $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $siteName = $global:Configuration.marketingAutomationReporting.hostName
 $installDir = $global:Configuration.marketingAutomationReporting.installDir
 $xConnectSslCert = $global:Configuration.xConnect.sslCert
-if ([string]::IsNullOrEmpty($xConnectSslCert)) {
-    $xConnectSslCert = $global:Items.XConnectCertName
-}
 $sslCert = $global:Configuration.marketingAutomationReporting.sslCert
 $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel

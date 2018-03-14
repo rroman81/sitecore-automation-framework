@@ -27,5 +27,8 @@
         "adminUsername": "FFWAdmin",
         "adminPassword": "TestRoss123",
         "sitecorePassword": "TestRoss123"
+    },
+    "ssl": {
+        "importCertPassword": "password"
     }
 }

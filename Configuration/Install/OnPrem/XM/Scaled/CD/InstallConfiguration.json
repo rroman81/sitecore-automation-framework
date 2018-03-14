@@ -2,17 +2,17 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XM",
     "serverRole": "CD",
-    "installPackage": "C:\\Development\\files\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
-    "license": "C:\\Development\\files\\license.xml",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xm",
     "sitecore": [
         {
             "hostName": "cd1.local",
-            "installDir": "C:\\Development\\web\\CD1"
+            "installDir": "C:\\SAF_FILES\\web\\CD1"
         },
         {
             "hostName": "cd2.local",
-            "installDir": "C:\\Development\\web\\CD2"
+            "installDir": "C:\\SAF_FILES\\web\\CD2"
         }
     ],
     "search": {
@@ -25,10 +25,13 @@
         "sitecorePassword": "Test123",
         "customDatabases": [
             {
-                "dacpack": "C:\\Development\\files\\CUSTOM.dacpac",
+                "dacpack": "C:\\SAF_FILES\\CUSTOM.dacpac",
                 "loginUsername": "customuser",
                 "connectionStringName": "custom"
             }
         ]
+    },
+    "ssl": {
+        "importCertPassword": "password"
     }
 }

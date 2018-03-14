@@ -10,9 +10,6 @@ $sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $solrUrl = $global:Configuration.search.solr.serviceUrl
 $xConnectSslCert = $global:Configuration.xConnect.sslCert
-if ([string]::IsNullOrEmpty($xConnectSslCert)) {
-    $xConnectSslCert = $global:Items.XConnectCertName
-}
 $sslCert = $global:Configuration.processing.sslCert
 $collectionService = $global:Configuration.xConnect.collectionService
 $siteName = $global:Configuration.processing.hostName

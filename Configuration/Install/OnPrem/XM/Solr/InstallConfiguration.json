@@ -2,7 +2,7 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XM",
     "serverRole": "Solr",
-    "installPackage": "C:\\Development\\files\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
     "prefix": "xm",
     "search": {
         "solr": {
@@ -14,5 +14,8 @@
             "serviceDisplayName": "solr self",
             "serviceDescription": "solr self description"
         }
+    },
+    "ssl": {
+        "importCertPassword": "password"
     }
 }

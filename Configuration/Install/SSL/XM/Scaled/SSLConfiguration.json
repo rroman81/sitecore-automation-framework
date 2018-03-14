@@ -1,0 +1,10 @@
+{
+    "sslCerts": {
+        "password": "",
+        "prefix": "",
+        "hostNames": [
+            "SOLR_HOST_NAME",
+            "CM_HOST_NAME"
+        ]
+    }
+}

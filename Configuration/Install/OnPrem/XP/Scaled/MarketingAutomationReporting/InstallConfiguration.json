@@ -18,5 +18,8 @@
     "sql": {
         "serverName": ".\\SQL2017",
         "sitecorePassword": "TestRoss123"
+    },
+    "ssl": {
+        "importCertPassword": "password"
     }
 }
