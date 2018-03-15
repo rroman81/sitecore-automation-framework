@@ -9,9 +9,15 @@ $sqlUser = $global:Configuration.sql.adminUsername
 $sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $siteName = $global:Configuration.collection.hostName
-$installDir = $global:Configuration.collection.installDir
-$xConnectSslCert = $global:Configuration.xConnect.sslCert
 $sslCert = $global:Configuration.collection.sslCert
+if ([string]::IsNullOrEmpty($sslCert)) {
+    $sslCert = $siteName
+}
+$xConnectSslCert = $global:Configuration.xConnect.sslCert
+if ([string]::IsNullOrEmpty($xConnectSslCert)) {
+    $xConnectSslCert = $siteName
+}
+$installDir = $global:Configuration.collection.installDir
 $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *collection.scwdp.zip*

@@ -1,0 +1,21 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "REP",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xp",
+    "reporting": {
+        "hostName": "rep.xp.local",
+        "installDir": "C:\\SAF_FILES\\web\\xp\\Reporting",
+        "serviceApiKey" : "abcde111112222233333444445555566",
+        "sslCert": ""
+    },
+    "sql": {
+        "serverName": ".\\SQL2017",
+        "sitecorePassword": "Pass123"
+    },
+    "ssl": {
+        "importCertPassword": "Pass123"
+    }
+}

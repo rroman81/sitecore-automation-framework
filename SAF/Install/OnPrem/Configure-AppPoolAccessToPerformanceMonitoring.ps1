@@ -27,12 +27,12 @@ if ($global:Configuration.collectionSearch.hostName -ne $null) {
     $pools += $global:Configuration.collectionSearch.hostName
 }
 
-if ($global:Configuration.marketingAutomation.hostName -ne $null) {
-    $pools += $global:Configuration.marketingAutomation.hostName
+if ($global:Configuration.automationOperations.hostName -ne $null) {
+    $pools += $global:Configuration.automationOperations.hostName
 }
 
-if ($global:Configuration.marketingAutomationReporting.hostName -ne $null) {
-    $pools += $global:Configuration.marketingAutomationReporting.hostName
+if ($global:Configuration.automationReporting.hostName -ne $null) {
+    $pools += $global:Configuration.automationReporting.hostName
 }
 
 if ($global:Configuration.referenceData.hostName -ne $null) {

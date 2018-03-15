@@ -375,7 +375,7 @@
             "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
-    "installOnPremMarketingAutomation-XP": [
+    "installOnPremAutomationOperations-XP": [
         {
             "name": "Install .Net Framework",
             "script": "\\Install\\OnPrem\\Install-DotNet.ps1"
@@ -413,15 +413,15 @@
             "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
-            "name": "Install xConnect Marketing Automation",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-MarketingAutomation.ps1"
+            "name": "Install xDB Automation Operations",
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-AutomationOperations.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
             "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
-    "installOnPremMarketingAutomationReporting-XP": [
+    "installOnPremAutomationReporting-XP": [
         {
             "name": "Install .Net Framework",
             "script": "\\Install\\OnPrem\\Install-DotNet.ps1"
@@ -451,8 +451,8 @@
             "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
-            "name": "Install xConnect Marketing Automation Reporting",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-MarketingAutomationReporting.ps1"
+            "name": "Install xDB Automation Reporting",
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-AutomationReporting.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
@@ -497,7 +497,7 @@
             "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
-            "name": "Install xConnect Reference Data",
+            "name": "Install xDB Reference Data",
             "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-ReferenceData.ps1"
         },
         {

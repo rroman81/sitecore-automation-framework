@@ -24,7 +24,7 @@
         "collectionSearchService": "https://collectionsearch.test.local",
         "referenceDataService": "https://refdata.test.local"
     },
-    "marketingAutomation":{
+    "automationOperations":{
         "operationsService": "https://marketingautomation.test.local",
         "reportingService": "https://marketingautomationreporting.test.local"
     },

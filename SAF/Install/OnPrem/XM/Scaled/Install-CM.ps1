@@ -18,6 +18,9 @@ foreach ($cm in $global:Configuration.sitecore) {
     $siteName = $cm.hostName
     $installDir = $cm.installDir
     $sslCert = $cm.sslCert
+    if ([string]::IsNullOrEmpty($sslCert)) {
+        $sslCert = $siteName
+    }
 
     Write-Output "Testing installation of Sitecore CM$count..."
     if (TestURI -Uri "https://$siteName") {

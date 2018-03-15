@@ -1,0 +1,27 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "ReferenceData",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xp",
+    "referenceData": {
+        "hostName": "refdata.xp.local",
+        "installDir": "C:\\SAF_FILES\\web\\xp\\xDBReferenceData",
+        "sslCert": ""
+    },
+    "xConnect": {
+        "sslCert": "",
+        "environment": "Staging",
+        "logLevel": "Information"
+    },
+    "sql": {
+        "serverName": ".\\SQL2017",
+        "adminUsername": "FFWAdmin",
+        "adminPassword": "Pass123",
+        "sitecorePassword": "Pass123"
+    },
+    "ssl": {
+        "importCertPassword": "Pass123"
+    }
+}

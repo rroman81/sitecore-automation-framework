@@ -1,0 +1,17 @@
+{
+    "sslCerts": {
+        "password": "Pass123",
+        "prefix": "xp",
+        "hostNames": [
+            "solr.xp.local",
+            "cm.xp.local",
+            "rep.xp.local",
+            "prc.xp.local",
+            "coll.xp.local",
+            "collsearch.xp.local",
+            "refdata.xp.local",
+            "autooperations.xp.local",
+            "autoreport.xp.local"
+        ]
+    }
+}

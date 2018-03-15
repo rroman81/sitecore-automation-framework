@@ -8,17 +8,23 @@ $sqlServer = $global:Configuration.sql.serverName
 $sqlUser = $global:Configuration.sql.adminUsername
 $sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
-$siteName = $global:Configuration.marketingAutomation.hostName
-$installDir = $global:Configuration.marketingAutomation.installDir
+$siteName = $global:Configuration.automationOperations.hostName
+$sslCert = $global:Configuration.automationOperations.sslCert
+if ([string]::IsNullOrEmpty($sslCert)) {
+    $sslCert = $siteName
+}
 $xConnectSslCert = $global:Configuration.xConnect.sslCert
-$sslCert = $global:Configuration.marketingAutomation.sslCert
+if ([string]::IsNullOrEmpty($xConnectSslCert)) {
+    $xConnectSslCert = $siteName
+}
+$installDir = $global:Configuration.automationOperations.installDir
 $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel
 $collectionService = $global:Configuration.xConnect.collectionService
 $referenceDataService = $global:Configuration.xConnect.referenceDataService
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *marketingautomation.scwdp.zip*
 
-Write-Output "Install xConnect Marketing Automation started..."
+Write-Output "Install xDB Automation Operations started..."
 
 $services = @("marketingautomationservice")
 DeleteServices -HostName $siteName -Services $services
@@ -53,4 +59,4 @@ $sitecoreParams = @{
 
 Install-SitecoreConfiguration @sitecoreParams
 
-Write-Output "Install xConnect Marketing Automation done."
+Write-Output "Install xDB Automation Operations done."

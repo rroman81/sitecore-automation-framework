@@ -33,7 +33,7 @@ function ShowSteps {
     Write-Output ""
     Write-Warning "Starting after 13 seconds..."
     Write-Output ""
-    Start-Sleep -s 13
+    #Start-Sleep -s 13
 }
 
 function RunSteps {

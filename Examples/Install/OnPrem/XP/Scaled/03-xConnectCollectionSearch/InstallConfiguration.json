@@ -1,13 +1,13 @@
 {
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
-    "serverRole": "MarketingAutomationReporting",
+    "serverRole": "CollectionSearch",
     "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
-    "marketingAutomationReporting": {
-        "hostName": "marketingautomationreporting.test.local",
-        "installDir": "C:\\XP\\MarketingAutomationReporting",
+    "collectionSearch": {
+        "hostName": "collsearch.xp.local",
+        "installDir": "C:\\SAF_FILES\\web\\xp\\xConnectCollectionSearch",
         "sslCert": ""
     },
     "xConnect": {
@@ -15,11 +15,16 @@
         "environment": "Staging",
         "logLevel": "Information"
     },
+    "search": {
+        "solr": {
+            "serviceUrl": "https://solr.xp.local:8911/solr"
+        }
+    },
     "sql": {
         "serverName": ".\\SQL2017",
-        "sitecorePassword": "TestRoss123"
+        "sitecorePassword": "Pass123"
     },
     "ssl": {
-        "importCertPassword": "password"
+        "importCertPassword": "Pass123"
     }
 }

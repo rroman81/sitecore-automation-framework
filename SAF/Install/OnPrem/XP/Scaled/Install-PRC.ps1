@@ -9,10 +9,16 @@ $sqlUser = $global:Configuration.sql.adminUsername
 $sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $solrUrl = $global:Configuration.search.solr.serviceUrl
-$xConnectSslCert = $global:Configuration.xConnect.sslCert
-$sslCert = $global:Configuration.processing.sslCert
 $collectionService = $global:Configuration.xConnect.collectionService
 $siteName = $global:Configuration.processing.hostName
+$sslCert = $global:Configuration.processing.sslCert
+if ([string]::IsNullOrEmpty($sslCert)) {
+    $sslCert = $siteName
+}
+$xConnectSslCert = $global:Configuration.xConnect.sslCert
+if ([string]::IsNullOrEmpty($xConnectSslCert)) {
+    $xConnectSslCert = $siteName
+}
 $installDir = $global:Configuration.processing.installDir
 $reportingServiceApiKey = $global:Configuration.reporting.serviceApiKey
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *prc.scwdp.zip*

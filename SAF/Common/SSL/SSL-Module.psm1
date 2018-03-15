@@ -81,11 +81,11 @@ function ExportCert {
     $securePassword = ConvertTo-SecureString -String $Password -AsPlainText -Force
 
     Write-Output "Exporting '$RootCertName' Root CA cetificate started..."
-    Get-ChildItem -Path cert:\CurrentUser\My | Where-Object { $_.Subject -Like "CN=$RootCertName*" } | Export-PfxCertificate -FilePath $rootCertDestPath -Password $securePassword
+    Get-ChildItem -Path cert:\CurrentUser\My | Where-Object { $_.Subject -Like "CN=$RootCertName*" } | Export-PfxCertificate -FilePath $rootCertDestPath -Password $securePassword | Out-Null
     Write-Output "Exporting '$RootCertName' Root CA cetificate done."
 
     Write-Output "Exporting all certificates issued by '$RootCertName' started..."
-    Get-ChildItem -Path cert:\LocalMachine\My | Where-Object { $_.Issuer -Like "CN=$RootCertName*" } | Export-PfxCertificate -FilePath $certDestPath -Password $securePassword
+    Get-ChildItem -Path cert:\LocalMachine\My | Where-Object { $_.Issuer -Like "CN=$RootCertName*" } | Export-PfxCertificate -FilePath $certDestPath -Password $securePassword | Out-Null
     Write-Output "Exporting all certificates issued by '$RootCertName' done."
     
     try {

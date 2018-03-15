@@ -2,50 +2,50 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
     "serverRole": "AllInOne",
-    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP0 packages).zip",
-    "license": "C:\\SAF_FILES\\license.xml",
-    "prefix": "all",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
     "sitecore": [
         {
-            "hostName": "all.local",
-            "installDir": "C:\\SAF_FILES\\web\\Website"
+            "hostName": "",
+            "installDir": ""
         }
     ],
     "xConnect": {
-        "hostName": "xconnect.all.local",
-        "installDir": "C:\\SAF_FILES\\web\\XConnect"
+        "hostName": "",
+        "installDir": ""
     },
     "search": {
         "solr": {
-            "version": "6.6.2",
-            "installDir": "C:\\SAF_FILES\\web\\Solr",
-            "hostName": "solr",
-            "port": "8988",
-            "serviceName": "solr",
-            "serviceDisplayName": "solr display",
-            "serviceDescription": "solr description",
+            "version": "",
+            "installDir": "",
+            "hostName": "",
+            "port": "",
+            "serviceName": "",
+            "serviceDisplayName": "",
+            "serviceDescription": "",
             "customCores": [
 	            {
-                    "name": "custom_index"
+                    "name": ""
                 }
                
 	        ]
         }
     },
     "sql": {
-        "serverName": "192.168.56.103,49172",
-        "adminUsername": "sa",
-        "adminPassword": "Test123",
-        "sitecorePassword": "Test123",
+        "serverName": "",
+        "adminUsername": "",
+        "adminPassword": "",
+        "sitecorePassword": "",
         "customDatabases": [
             {
-                "dacpack": "C:\\SAF_FILES\\CUSTOM.dacpac",
-                "loginUsername": "customuser",
-                "connectionStringName": "custom"
+                "dacpack": "",
+                "loginUsername": "",
+                "connectionStringName": ""
             }
         ]
     },
     "ssl": {
-        "importCertPassword": "password"
+        "importCertPassword": ""
     }
 }

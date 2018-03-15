@@ -10,14 +10,20 @@ $sqlUser = $global:Configuration.sql.adminUsername
 $sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $siteName = $global:Configuration.referenceData.hostName
-$installDir = $global:Configuration.referenceData.installDir
-$xConnectSslCert = $global:Configuration.xConnect.sslCert
 $sslCert = $global:Configuration.referenceData.sslCert
+if ([string]::IsNullOrEmpty($sslCert)) {
+    $sslCert = $siteName
+}
+$xConnectSslCert = $global:Configuration.xConnect.sslCert
+if ([string]::IsNullOrEmpty($xConnectSslCert)) {
+    $xConnectSslCert = $siteName
+}
+$installDir = $global:Configuration.referenceData.installDir
 $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *referencedata.scwdp.zip*
 
-Write-Output "Install xConnect Reference Data started..."
+Write-Output "Install xDB Reference Data started..."
 
 $dbs = @("ReferenceData")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
@@ -42,4 +48,4 @@ $sitecoreParams = @{
 
 Install-SitecoreConfiguration @sitecoreParams
 
-Write-Output "Install xConnect Reference Data done."
+Write-Output "Install xDB Reference Data done."

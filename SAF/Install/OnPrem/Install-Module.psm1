@@ -102,7 +102,7 @@ function InitializeItems {
 
             break
         }
-        "installOnPremMarketingAutomation-XP" {
+        "installOnPremAutomationOperations-XP" {
             $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
 
@@ -114,7 +114,7 @@ function InitializeItems {
 
             break
         }
-        "installOnPremMarketingAutomationReporting-XP" {
+        "installOnPremAutomationReporting-XP" {
             $installPackageDir = "$PSScriptRoot\..\..\temp\package"
             $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
 

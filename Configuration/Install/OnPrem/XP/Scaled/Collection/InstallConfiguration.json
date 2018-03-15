@@ -2,26 +2,26 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
     "serverRole": "Collection",
-    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
-    "license": "C:\\SAF_FILES\\license.xml",
-    "prefix": "xp",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
     "collection": {
-        "hostName": "collection.test.local",
-        "installDir": "C:\\XP\\Collection",
+        "hostName": "",
+        "installDir": "",
         "sslCert": ""
     },
     "xConnect": {
         "sslCert": "",
-        "environment": "Staging",
-        "logLevel": "Information"
+        "environment": "",
+        "logLevel": ""
     },
     "sql": {
-        "serverName": ".\\SQL2017",
-        "adminUsername": "FFWAdmin",
-        "adminPassword": "TestRoss123",
-        "sitecorePassword": "TestRoss123"
+        "serverName": "",
+        "adminUsername": "",
+        "adminPassword": "",
+        "sitecorePassword": ""
     },
     "ssl": {
-        "importCertPassword": "password"
+        "importCertPassword": ""
     }
 }

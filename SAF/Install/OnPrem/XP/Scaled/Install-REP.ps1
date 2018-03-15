@@ -6,13 +6,14 @@ $prefix = $global:Configuration.prefix
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
-$sqlUser = $global:Configuration.sql.adminUsername
-$sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $siteName = $global:Configuration.reporting.hostName
+$sslCert = $global:Configuration.reporting.sslCert
+if ([string]::IsNullOrEmpty($sslCert)) {
+    $sslCert = $siteName
+}
 $installDir = $global:Configuration.reporting.installDir
 $serviceApiKey = $global:Configuration.reporting.serviceApiKey
-$sslCert = $global:Configuration.reporting.sslCert
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *rep.scwdp.zip*
 
 Write-Output "Install Sitecore Reporting started..."

@@ -1,0 +1,25 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "AutomationReporting",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "automationReporting": {
+        "hostName": "",
+        "installDir": "",
+        "sslCert": ""
+    },
+    "xConnect": {
+        "sslCert": "",
+        "environment": "",
+        "logLevel": ""
+    },
+    "sql": {
+        "serverName": "",
+        "sitecorePassword": ""
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

@@ -7,9 +7,15 @@ $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $siteName = $global:Configuration.collectionSearch.hostName
-$installDir = $global:Configuration.collectionSearch.installDir
-$xConnectSslCert = $global:Configuration.xConnect.sslCert
 $sslCert = $global:Configuration.collectionSearch.sslCert
+if ([string]::IsNullOrEmpty($sslCert)) {
+    $sslCert = $siteName
+}
+$xConnectSslCert = $global:Configuration.xConnect.sslCert
+if ([string]::IsNullOrEmpty($xConnectSslCert)) {
+    $xConnectSslCert = $siteName
+}
+$installDir = $global:Configuration.collectionSearch.installDir
 $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel
 $solrUrl = $global:Configuration.search.solr.serviceUrl

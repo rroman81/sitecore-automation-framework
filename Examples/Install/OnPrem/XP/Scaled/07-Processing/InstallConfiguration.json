@@ -1,0 +1,34 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "PRC",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xp",
+    "processing": {
+        "hostName": "prc.xp.local",
+        "installDir": "C:\\SAF_FILES\\web\\xp\\Processing",
+        "sslCert": ""
+    },
+    "reporting": {
+        "serviceApiKey" : "abcde111112222233333444445555566"
+    },
+    "xConnect": {
+        "sslCert": "",
+        "collectionService": "https://coll.xp.local"
+    },
+    "search": {
+        "solr": {
+            "serviceUrl": "https://solr.xp.local:8911/solr"
+        }
+    },
+    "sql": {
+        "serverName": ".\\SQL2017",
+        "adminUsername": "FFWAdmin",
+        "adminPassword": "Pass123",
+        "sitecorePassword": "Pass123"
+    },
+    "ssl": {
+        "importCertPassword": "Pass123"
+    }
+}

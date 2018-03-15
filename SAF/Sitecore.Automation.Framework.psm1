@@ -52,7 +52,7 @@ function Initialize {
     }
 
     Write-Warning "SAF initialization will start after 3 seconds..."
-    Start-Sleep -s 3
+    #Start-Sleep -s 3
 
     ConfigurePSGallery
     ConfigureChoco
