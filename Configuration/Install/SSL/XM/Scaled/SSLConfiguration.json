@@ -1,10 +1,14 @@
 {
-    "sslCerts": {
-        "password": "",
-        "prefix": "",
-        "hostNames": [
-            "SOLR_HOST_NAME",
-            "CM_HOST_NAME"
-        ]
-    }
+    "prefix": "",
+    "password": "",
+    "sslCerts": [
+        {
+            "type": "SolrCert",
+            "hostNames": []
+        },
+        {
+            "type": "ContentCert",
+            "hostNames": []
+        }
+    ]
 }

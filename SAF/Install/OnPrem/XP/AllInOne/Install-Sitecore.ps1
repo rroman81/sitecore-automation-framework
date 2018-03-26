@@ -1,9 +1,11 @@
 Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Write-Output "Install Sitecore started..."
 
 $prefix = $global:Configuration.prefix
+$clientCert = BuildClientCertName -Prefix $prefix
 $license = $global:Configuration.license
 $siteName = $global:Configuration.sitecore.hostName
 $xConnectHostName = $global:Configuration.xConnect.hostName
@@ -15,9 +17,8 @@ $installDir = $global:Configuration.sitecore.installDir
 $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *single.scwdp.zip*
-$cert = $xConnectHostName
 
-$dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
+$dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
 
 $sitecoreParams = @{
@@ -52,7 +53,7 @@ $sitecoreParams = @{
     SqlMessagingPassword           = $sqlSitecorePassword
     SolrCorePrefix                 = $prefix
     SolrUrl                        = $solrUrl
-    XConnectCert                   = $cert
+    XConnectCert                   = $clientCert
     Sitename                       = $siteName
     XConnectCollectionService      = "https://$xConnectHostName"
     InstallDirectory               = $installDir

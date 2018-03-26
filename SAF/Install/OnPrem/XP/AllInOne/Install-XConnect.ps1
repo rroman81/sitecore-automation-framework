@@ -1,12 +1,15 @@
 Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\Common\Utils-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Write-Output "Install xConnect started..."
 
 $prefix = $global:Configuration.prefix
-$license = $global:Configuration.license
+$clientCert = BuildClientCertName -Prefix $prefix
 $xConnectHostName = $global:Configuration.xConnect.hostName
+$serverCert = BuildServerCertName -Prefix $prefix -Hostname $xConnectHostName
+$license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser =  $global:Configuration.sql.adminUsername
 $sqlAdminPassword =  $global:Configuration.sql.adminPassword
@@ -15,20 +18,17 @@ $installDir = $global:Configuration.xConnect.installDir
 $solrUrl = $global:Items.SolrServiceUrl
 $sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *xconnect.scwdp.zip*
-$cert = $xConnectHostName
 
-$dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData")
+$dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
-$services = @("IndexWorker", "MarketingAutomationService")
-DeleteServices -HostName $xConnectHostName -Services $services
 
 $xconnectParams = @{
     Path                           = "$sourcePackageDirectory\xconnect-xp0.json"
     Package                        = $package.FullName
     LicenseFile                    = $license
     Sitename                       = $xConnectHostName
-    SSLCert                        = $cert
-    XConnectCert                   = $cert
+    SSLCert                        = $serverCert
+    XConnectCert                   = $clientCert
     SqlDbPrefix                    = $prefix
     SqlServer                      = $sqlServer
     SqlAdminUser                   = $sqlUser

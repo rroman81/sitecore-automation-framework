@@ -26,9 +26,6 @@ $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *marketingau
 
 Write-Output "Install xDB Automation Operations started..."
 
-$services = @("marketingautomationservice")
-DeleteServices -HostName $siteName -Services $services
-
 $sitecoreParams = @{
     Path                           = "$sourcePackageDirectory\xconnect-xp1-MarketingAutomation.json"
     Package                        = $package.FullName

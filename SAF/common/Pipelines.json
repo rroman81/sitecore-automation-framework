@@ -633,16 +633,12 @@
     ],
     "newSSLCerts":[
         {
-            "name": "Install Sitecore Installation Framework (SIF)",
-            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
-        },
-        {
             "name": "Generate SSL Root CA Certificate",
             "script": "\\Common\\SSL\\Generate-RootCACert.ps1"
         },
         {
             "name": "Generate SSL Certificates",
-            "script": "\\Common\\SSL\\Generate-Cert.ps1"
+            "script": "\\Common\\SSL\\Generate-Certs.ps1"
         },
         {
             "name": "Export SSL Certificates",

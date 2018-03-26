@@ -13,9 +13,9 @@ Import-Module -Name "$rootDir\SAF\Sitecore.Automation.Framework.psm1" -Force
 ############### START XP0 ###################
 
 # XP AllInOne
-#Set-Location "$rootDir\Examples\Install\OnPrem\XP\AllInOne"
-#New-SSLCerts
-#Install-Sitecore
+Set-Location "$rootDir\Examples\Install\OnPrem\XP\AllInOne"
+New-SSLCerts
+Install-Sitecore
 
 ############### END XP0 ###################
 

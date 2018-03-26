@@ -38,7 +38,7 @@
         }
     },
     "sql": {
-        "serverName": ".\\SQL2017",
+        "serverName": ".\\SQLEXPRESS",
         "adminUsername": "SAFAdmin",
         "adminPassword": "Pass123",
         "sitecorePassword": "Pass123",

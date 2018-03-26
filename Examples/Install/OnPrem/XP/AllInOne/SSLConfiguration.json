@@ -1,10 +1,14 @@
 {
-    "sslCerts": {
-        "password": "Pass123",
-        "prefix": "all",
-        "hostNames": [
-            "solr.all.local",
-            "xconnect.all.local"
-        ]
-    }
+    "prefix": "all",
+    "password": "Pass123",
+    "sslCerts": [
+        {
+            "type": "SolrCertificate",
+            "hostNames": ["solr.all.local"]
+        },
+        {
+            "type": "xConnectCertificate",
+            "hostNames": ["xconnect.all.local"]
+        }
+    ]
 }

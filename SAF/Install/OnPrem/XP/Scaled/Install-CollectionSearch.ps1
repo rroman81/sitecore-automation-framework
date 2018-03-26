@@ -23,9 +23,6 @@ $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *collections
 
 Write-Output "Install xConnect Collection Search started..."
 
-$services = @("IndexWorker")
-DeleteServices -HostName $siteName -Services $services
-
 $sitecoreParams = @{
     Path                           = "$sourcePackageDirectory\xconnect-xp1-collectionsearch.json"
     Package                        = $package.FullName

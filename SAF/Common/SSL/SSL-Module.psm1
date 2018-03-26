@@ -1,96 +1,142 @@
 Import-Module "$PSScriptRoot\..\Run-Pipelines.psm1" -Force
 $ErrorActionPreference = "Stop"
 
+function BuildRootCertName {
+    [CmdletBinding()]
+    Param(
+        [string]$Prefix
+    )
+
+    $crt = "$($Prefix)_Root_SAF"
+    return $crt
+}
+
+function BuildClientCertName {
+    [CmdletBinding()]
+    Param(
+        [string]$Prefix
+    )
+
+    $crt = "$($Prefix)_xConnectClient_SAF"
+    return $crt
+}
+
+function BuildServerCertName {
+    [CmdletBinding()]
+    Param(
+        [string]$Prefix,
+        [string]$Hostname
+    )
+
+    $crt = "$($Prefix)_$($Hostname)_SAF"
+    return $crt
+}
+
 function CleanCertStore {
     [CmdletBinding()]
     Param(
-        [string]$RootCertName,
-        [string]$Store
+        [string]$Prefix
     )
 
-    Write-Output "Cleaning SSL Certificate Store '$Store' started..."
+    $rootCertName = BuildRootCertName -Prefix $Prefix
+    Write-Output "Cleaning Sitecore SSL Certificates started..."
 
-    $certs = Get-ChildItem -Path "cert:\$Store\My" | Where-Object { $_.Issuer -Like "CN=$RootCertName*" }
+    $certs = Get-ChildItem -Path "cert:\CurrentUser\My" | Where-Object { $_.Issuer -Like "CN=$rootCertName*" }
     if ($certs -ne $null) {
         foreach ($cert in $certs) {
-            Remove-Item -Path "cert:\$Store\My\$($cert.Thumbprint)" -DeleteKey -Force
+            Remove-Item -Path "cert:\CurrentUser\My\$($cert.Thumbprint)" -DeleteKey -Force
             Write-Output "Removed SSL Certificate with Subject = $($cert.Subject) and Thumbprint = $($cert.Thumbprint)"
         }
     }
 
-    $rootCert = Get-ChildItem -Path "cert:\$Store\Root" | Where-Object { $_.Subject -Like "CN=$RootCertName*" }
+    $rootCert = Get-ChildItem -Path "cert:\CurrentUser\Root" | Where-Object FriendlyName -eq $rootCertName
     if ($rootCert -ne $null) {
-        Remove-Item -Path "cert:\$Store\Root\$($rootCert.Thumbprint)" -DeleteKey -Force
+        Remove-Item -Path "cert:\CurrentUser\Root\$($rootCert.Thumbprint)" -DeleteKey -Force
         Write-Output "Removed SSL Certificate with Subject = $($rootCert.Subject) and Thumbprint = $($rootCert.Thumbprint)"
     }
 
-    Write-Output "Cleaning SSL Certificate Store '$Store' done."
+    Write-Output "Cleaning Sitecore SSL Certificates done."
 }
 
 function GenerateRootCert {
     [CmdletBinding()]
     Param(
-        [string]$RootCertName
+        [string]$Prefix,
+        [int]$ValidYears = 10
     )
 
-    Write-Output "Generating '$RootCertName' Root CA Certificate started..."
+    $rootCertName = BuildRootCertName -Prefix $Prefix
 
-    $certParams = @{
-        Path         = "$PSScriptRoot\create_rootcert.json"
-        CertPath     = $env:TEMP
-        RootCertName = $RootCertName
-    }
-
-    Install-SitecoreConfiguration @certParams
-
-    Write-Output "Generating '$RootCertName' Root CA Certificate done."
+    Write-Output "Generating '$rootCertName' Root CA Certificate started..."
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -DnsName "$rootCertName" -KeyusageProperty All -KeyUsage CertSign -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $rootCertName
+    Write-Output "Generating '$rootCertName' Root CA Certificate done."
 }
 
-function GenerateCert {
+function GenerateServerCert {
     [CmdletBinding()]
     Param(
-        [string]$CertName,
-        [string]$RootCertName
+        [string]$Prefix,
+        [string]$Type,
+        [string[]]$Hostnames,
+        [int]$ValidYears = 10
     )
 
-    Write-Output "Generating '$CertName' Certificate started..."
+    $rootCertName = BuildRootCertName -Prefix $Prefix
+    $rootCert = Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -eq $rootCertName
+    if ($rootCert -eq $null) {
+        throw "Can not find SSL Root CA Certificate with name '$rootCertName'..."
+    }
+    $serverCertName = BuildServerCertName -Prefix $Prefix -Hostname $Hostnames[0]
     
-    $certParams = @{
-        Path         = "$PSScriptRoot\create_cert.json"
-        CertPath     = $env:TEMP
-        RootCertName = $RootCertName
-        CertName     = $CertName
-    }
-
-    Install-SitecoreConfiguration @certParams
-
-    Write-Output "Generating '$CertName' Certificate done."
+    Write-Output "Generating '$serverCertName' Certificate started..."
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $serverCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage CertSign -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $serverCertName
+    Write-Output "Generating '$serverCertName' Certificate done."
 }
 
-function ExportCert {
+function GenerateClientCert {
     [CmdletBinding()]
     Param(
-        [string]$RootCertName,
+        [string]$Prefix,
+        [int]$ValidYears = 10
+    )
+
+    $rootCertName = BuildRootCertName -Prefix $Prefix
+    $rootCert = Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -eq $rootCertName
+    if ($rootCert -eq $null) {
+        throw "Can not find SSL Root CA Certificate with name '$rootCertName'..."
+    }
+    $clientCertName = BuildClientCertName -Prefix $Prefix
+
+    Write-Output "Generating '$clientCertName' Certificate started..."
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -DnsName $clientCertName -KeyusageProperty All -KeyUsage CertSign -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $clientCertName
+    Write-Output "Generating '$clientCertName' Certificate done."
+}
+
+function ExportCerts {
+    [CmdletBinding()]
+    Param(
+        [string]$Prefix,
         [string]$ExportPath,
         [string]$Password
     )
-    # Export PFX certificates along with private key
+
+    $rootCertName = BuildRootCertName -Prefix $Prefix
     
-    $certDestPath = Join-Path -Path $ExportPath -ChildPath "SitecoreSSLCertificates.pfx"
-    $rootCertDestPath = Join-Path -Path $ExportPath -ChildPath "SitecoreRootSSLCertificate.pfx"
+    # Export PFX certificates along with private key
+    $certDestPath = Join-Path -Path $ExportPath -ChildPath "SitecoreSSLCertificates_SAF.pfx"
+    $rootCertDestPath = Join-Path -Path $ExportPath -ChildPath "SitecoreRootSSLCertificate_SAF.pfx"
     $securePassword = ConvertTo-SecureString -String $Password -AsPlainText -Force
 
-    Write-Output "Exporting '$RootCertName' Root CA cetificate started..."
-    Get-ChildItem -Path cert:\CurrentUser\My | Where-Object { $_.Subject -Like "CN=$RootCertName*" } | Export-PfxCertificate -FilePath $rootCertDestPath -Password $securePassword | Out-Null
-    Write-Output "Exporting '$RootCertName' Root CA cetificate done."
+    Write-Output "Exporting '$rootCertName' Root CA cetificate started..."
+    Get-ChildItem -Path cert:\CurrentUser\My | Where-Object FriendlyName -eq $rootCertName | Export-PfxCertificate -FilePath $rootCertDestPath -Password $securePassword | Out-Null
+    Write-Output "Exporting '$rootCertName' Root CA cetificate done."
 
-    Write-Output "Exporting all certificates issued by '$RootCertName' started..."
-    Get-ChildItem -Path cert:\LocalMachine\My | Where-Object { $_.Issuer -Like "CN=$RootCertName*" } | Export-PfxCertificate -FilePath $certDestPath -Password $securePassword | Out-Null
-    Write-Output "Exporting all certificates issued by '$RootCertName' done."
+    Write-Output "Exporting all certificates issued by '$rootCertName' started..."
+    Get-ChildItem -Path cert:\CurrentUser\My | Where-Object { $_.Issuer -Like "CN=$rootCertName*" } | Export-PfxCertificate -FilePath $certDestPath -Password $securePassword | Out-Null
+    Write-Output "Exporting all certificates issued by '$rootCertName' done."
     
     try {
-        CleanCertStore -RootCertName $RootCertName -Store "LocalMachine"
-        CleanCertStore -RootCertName $RootCertName -Store "CurrentUser"
+        CleanCertStore -Prefix $Prefix
     }
     catch {
         Write-Warning "Exception occurred"
@@ -118,5 +164,8 @@ function StartSSLCertsCreation {
 
 Export-ModuleMember -Function "StartSSLCertsCreation"
 Export-ModuleMember -Function "GenerateRootCert"
-Export-ModuleMember -Function "GenerateCert"
-Export-ModuleMember -Function "ExportCert"
+Export-ModuleMember -Function "GenerateServerCert"
+Export-ModuleMember -Function "GenerateClientCert"
+Export-ModuleMember -Function "ExportCerts"
+Export-ModuleMember -Function "BuildClientCertName"
+Export-ModuleMember -Function "BuildServerCertName"

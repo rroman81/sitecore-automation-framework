@@ -136,6 +136,7 @@ function InstallSolr {
         [string]$InstallDir,
         [string]$HostName,
         [int]$Port,
+        [string]$SSLCert,
         [string]$ServiceDir,
         [string]$ServiceName,
         [string]$ServiceDisplayName,
@@ -170,7 +171,7 @@ function InstallSolr {
     if (!(Test-Path -Path "$ServiceDir\server\etc\solr-ssl.keystore.pfx")) {
         Write-Output "Exporting SSL Certificate for Solr to use..."
 
-        $cert = Get-ChildItem Cert:\LocalMachine\My | Where-Object FriendlyName -eq "$HostName"
+        $cert = Get-ChildItem Cert:\LocalMachine\My | Where-Object FriendlyName -eq $SSLCert
         $certStore = "$ServiceDir\server\etc\solr-ssl.keystore.pfx"
         $certPwd = ConvertTo-SecureString -String "secret" -Force -AsPlainText
         $cert | Export-PfxCertificate -FilePath $certStore -Password $certpwd | Out-Null

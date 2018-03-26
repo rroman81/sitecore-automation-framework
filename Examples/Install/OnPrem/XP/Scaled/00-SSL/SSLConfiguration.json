@@ -4,7 +4,7 @@
         "prefix": "xp",
         "hostNames": [
             "solr.xp.local",
-            "cm.xp.local",
+            "contentmanagement.xp.local",
             "reporting.xp.local",
             "processing.xp.local",
             "xconnectcollection.xp.local",

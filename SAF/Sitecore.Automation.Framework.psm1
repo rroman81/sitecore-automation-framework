@@ -1,4 +1,5 @@
 Import-Module "$PSScriptRoot\Common\Initialization-Module.psm1" -Force
+Import-Module "$PSScriptRoot\Common\Utils-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -10,14 +11,14 @@ $global:Pipelines = Get-Content -Raw -Path "$PSScriptRoot\common\Pipelines.json"
 function CheckSSLCertsPFX {
     $dir = Get-Location
 
-    $pfxRootCert = "$dir\SitecoreRootSSLCertificate.pfx"
+    $pfxRootCert = "$dir\SitecoreRootSSLCertificate_SAF.pfx"
     if (!(Test-Path $pfxRootCert)) {
-        throw "Please, provide 'SitecoreRootSSLCertificate.pfx' file."
+        throw "Please, provide 'SitecoreRootSSLCertificate_SAF.pfx' file."
     }
 
-    $pfxCert = "$dir\SitecoreSSLCertificates.pfx"
+    $pfxCert = "$dir\SitecoreSSLCertificates_SAF.pfx"
     if (!(Test-Path $pfxCert)) {
-        throw "Please, provide 'SitecoreSSLCertificates.pfx' file."
+        throw "Please, provide 'SitecoreSSLCertificates_SAF.pfx' file."
     }
 }
 
@@ -56,6 +57,7 @@ function Initialize {
 
     ConfigurePSGallery
     ConfigureChoco
+    RefreshEnvironment
     $global:Items = @{}
 
     Write-Warning "SAF initialization is done."
