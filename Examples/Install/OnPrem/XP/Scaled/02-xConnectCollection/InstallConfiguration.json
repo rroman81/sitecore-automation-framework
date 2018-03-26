@@ -6,7 +6,7 @@
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
     "collection": {
-        "hostName": "coll.xp.local",
+        "hostName": "xconnectcollection.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\xConnectCollection",
         "sslCert": ""
     },
@@ -17,7 +17,7 @@
     },
     "sql": {
         "serverName": ".\\SQL2017",
-        "adminUsername": "FFWAdmin",
+        "adminUsername": "SAFAdmin",
         "adminPassword": "Pass123",
         "sitecorePassword": "Pass123"
     },

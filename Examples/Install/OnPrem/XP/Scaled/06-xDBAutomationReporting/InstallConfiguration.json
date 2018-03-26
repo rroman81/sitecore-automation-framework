@@ -6,7 +6,7 @@
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
     "automationReporting": {
-        "hostName": "autoreport.xp.local",
+        "hostName": "xdbautomationreporting.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\xDBAutomationReporting",
         "sslCert": ""
     },

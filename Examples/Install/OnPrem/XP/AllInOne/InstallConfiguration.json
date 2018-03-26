@@ -34,7 +34,7 @@
     },
     "sql": {
         "serverName": ".\\SQL2017",
-        "adminUsername": "FFWAdmin",
+        "adminUsername": "SAFAdmin",
         "adminPassword": "Pass123",
         "sitecorePassword": "Pass123",
         "customDatabases": [

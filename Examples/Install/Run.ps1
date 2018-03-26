@@ -59,7 +59,15 @@ Import-Module -Name "$rootDir\SAF\Sitecore.Automation.Framework.psm1" -Force
 # Install-Sitecore
 
 # XP Sitecore Reporting
-Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\08-Reporting"
-Install-Sitecore
+# Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\08-Reporting"
+# Install-Sitecore
+
+# XP Content Management
+# Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\09-ContentManagement"
+# Install-Sitecore
+
+# XP Content Delivery
+# Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\10-ContentDelivery"
+# Install-Sitecore
 
 ############### END XP1 ###################

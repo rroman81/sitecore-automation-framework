@@ -5,13 +5,13 @@
         "hostNames": [
             "solr.xp.local",
             "cm.xp.local",
-            "rep.xp.local",
-            "prc.xp.local",
-            "coll.xp.local",
-            "collsearch.xp.local",
-            "refdata.xp.local",
-            "autooperations.xp.local",
-            "autoreport.xp.local"
+            "reporting.xp.local",
+            "processing.xp.local",
+            "xconnectcollection.xp.local",
+            "xconnectcollectionsearch.xp.local",
+            "xdbreferencedata.xp.local",
+            "xdbautomationoperations.xp.local",
+            "xdbautomationreporting.xp.local"
         ]
     }
 }

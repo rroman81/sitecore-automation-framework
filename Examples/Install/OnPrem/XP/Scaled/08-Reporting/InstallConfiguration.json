@@ -6,7 +6,7 @@
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
     "reporting": {
-        "hostName": "rep.xp.local",
+        "hostName": "reporting.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\Reporting",
         "serviceApiKey" : "abcde111112222233333444445555566",
         "sslCert": ""

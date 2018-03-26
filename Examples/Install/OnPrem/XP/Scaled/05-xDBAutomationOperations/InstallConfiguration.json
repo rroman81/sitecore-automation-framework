@@ -6,20 +6,20 @@
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
     "automationOperations": {
-        "hostName": "autooperations.xp.local",
+        "hostName": "xdbautomationoperations.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\xDBAutomationOperations",
         "sslCert": ""
     },
     "xConnect": {
         "sslCert": "",
-        "collectionService": "https://coll.xp.local",
-        "referenceDataService": "https://refdata.xp.local",
+        "collectionService": "https://xconnectcollection.xp.local",
+        "referenceDataService": "https://xdbreferencedata.xp.local",
         "environment": "Staging",
         "logLevel": "Information"
     },
     "sql": {
         "serverName": ".\\SQL2017",
-        "adminUsername": "FFWAdmin",
+        "adminUsername": "SAFAdmin",
         "adminPassword": "Pass123",
         "sitecorePassword": "Pass123"
     },

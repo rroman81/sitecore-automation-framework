@@ -2,55 +2,55 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
     "serverRole": "CM",
-    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
-    "license": "C:\\SAF_FILES\\license.xml",
-    "prefix": "xp",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
     "sitecore": [
         {
-            "hostName": "cm.test.local",
-            "installDir": "C:\\XP\\CM",
+            "hostName": "",
+            "installDir": "",
             "sslCert": ""
         }
     ],
     "processing": {
-        "serviceURL": "https://prc.test.local"
+        "serviceURL": ""
     },
     "reporting": {
-        "serviceURL": "https://rep.test.local",
-        "serviceApiKey": "abcde111112222233333444445555566"
+        "serviceURL": "",
+        "serviceApiKey": ""
     },
     "xConnect": {
         "sslCert": "",
-        "collectionSearchService": "https://collectionsearch.test.local",
-        "referenceDataService": "https://refdata.test.local"
+        "collectionSearchService": "",
+        "referenceDataService": ""
     },
     "automationOperations":{
-        "operationsService": "https://marketingautomation.test.local",
-        "reportingService": "https://marketingautomationreporting.test.local"
+        "operationsService": "",
+        "reportingService": ""
     },
     "exm":{
-        "cryptographicKey": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "authenticationKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        "cryptographicKey": "",
+        "authenticationKey": ""
     },
     "search": {
         "solr": {
-            "serviceUrl": "https://solrself:8999/solr"
+            "serviceUrl": ""
         }
     },
     "sql": {
-        "serverName": ".\\SQL2017",
-        "adminUsername": "FFWAdmin",
-        "adminPassword": "TestRoss123",
-        "sitecorePassword": "TestRoss123",
+        "serverName": "",
+        "adminUsername": "",
+        "adminPassword": "",
+        "sitecorePassword": "",
         "customDatabases": [
             {
-                "dacpack": "C:\\SAF_FILES\\CUSTOM.dacpac",
-                "loginUsername": "customuser",
-                "connectionStringName": "custom"
+                "dacpack": "",
+                "loginUsername": "",
+                "connectionStringName": ""
             }
         ]
     },
     "ssl": {
-        "importCertPassword": "password"
+        "importCertPassword": ""
     }
 }

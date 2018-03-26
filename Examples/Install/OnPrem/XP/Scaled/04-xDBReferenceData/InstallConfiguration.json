@@ -6,7 +6,7 @@
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
     "referenceData": {
-        "hostName": "refdata.xp.local",
+        "hostName": "xdbreferencedata.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\xDBReferenceData",
         "sslCert": ""
     },
@@ -17,7 +17,7 @@
     },
     "sql": {
         "serverName": ".\\SQL2017",
-        "adminUsername": "FFWAdmin",
+        "adminUsername": "SAFAdmin",
         "adminPassword": "Pass123",
         "sitecorePassword": "Pass123"
     },

@@ -1,0 +1,39 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "CD",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xp",
+    "sitecore": [
+        {
+            "hostName": "contentdelivery.xp.local",
+            "installDir": "C:\\SAF_FILES\\web\\xp\\ContentDelivery"
+        }
+    ],
+    "xConnect": {
+        "collectionService": "https://xconnectcollection.xp.local",
+        "referenceDataService": "https://xdbreferencedata.xp.local",
+        "sslCert": ""
+    },
+    "automationOperations":{
+        "operationsService": "https://xdbautomationoperations.xp.local",
+        "reportingService": "https://xdbautomationreporting.xp.local"
+    },
+    "exm":{
+        "cryptographicKey": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "authenticationKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "search": {
+        "solr": {
+            "serviceUrl": "https://solr.xp.local:8911/solr"
+         }
+    },
+    "sql": {
+        "serverName": ".\\SQL2017",
+        "sitecorePassword": "Pass123"
+    },
+    "ssl": {
+        "importCertPassword": "Pass123"
+    }
+}

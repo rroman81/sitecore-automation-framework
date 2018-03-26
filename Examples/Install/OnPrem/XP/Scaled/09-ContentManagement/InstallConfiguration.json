@@ -1,0 +1,56 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "CM",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xp",
+    "sitecore": [
+        {
+            "hostName": "contentmanagement.xp.local",
+            "installDir": "C:\\SAF_FILES\\web\\xp\\ContentManagement",
+            "sslCert": ""
+        }
+    ],
+    "processing": {
+        "serviceURL": "https://processing.xp.local"
+    },
+    "reporting": {
+        "serviceURL": "https://reporting.xp.local",
+        "serviceApiKey": "abcde111112222233333444445555566"
+    },
+    "xConnect": {
+        "collectionSearchService": "https://xconnectcollectionsearch.xp.local",
+        "referenceDataService": "https://xdbreferencedata.xp.local",
+        "sslCert": ""
+    },
+    "automationOperations":{
+        "operationsService": "https://xdbautomationoperations.xp.local",
+        "reportingService": "https://xdbautomationreporting.xp.local"
+    },
+    "exm":{
+        "cryptographicKey": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "authenticationKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "search": {
+        "solr": {
+            "serviceUrl": "https://solr.xp.local:8911/solr"
+        }
+    },
+    "sql": {
+        "serverName": ".\\SQL2017",
+        "adminUsername": "SAFAdmin",
+        "adminPassword": "Pass123",
+        "sitecorePassword": "Pass123",
+        "customDatabases": [
+            {
+                "dacpack": "C:\\SAF_FILES\\CUSTOM.dacpac",
+                "loginUsername": "customuser",
+                "connectionStringName": "custom"
+            }
+        ]
+    },
+    "ssl": {
+        "importCertPassword": "Pass123"
+    }
+}

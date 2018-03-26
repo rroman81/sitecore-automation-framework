@@ -6,7 +6,7 @@
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
     "collectionSearch": {
-        "hostName": "collsearch.xp.local",
+        "hostName": "xconnectcollectionsearch.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\xConnectCollectionSearch",
         "sslCert": ""
     },

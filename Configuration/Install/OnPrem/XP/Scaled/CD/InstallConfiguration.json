@@ -2,49 +2,49 @@
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
     "serverRole": "CD",
-    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
-    "license": "C:\\SAF_FILES\\license.xml",
-    "prefix": "xp",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
     "sitecore": [
         {
-            "hostName": "cd1.test.local",
-            "installDir": "C:\\XP\\CD1"
+            "hostName": "",
+            "installDir": ""
         },
         {
-            "hostName": "cd2.test.local",
-            "installDir": "C:\\XP\\CD2"
+            "hostName": "",
+            "installDir": ""
         }
     ],
     "xConnect": {
         "sslCert": "",
-        "collectionService": "https://collection.test.local",
-        "referenceDataService": "https://refdata.test.local"
+        "collectionService": "",
+        "referenceDataService": ""
     },
     "automationOperations":{
-        "operationsService": "https://marketingautomation.test.local",
-        "reportingService": "https://marketingautomationreporting.test.local"
+        "operationsService": "",
+        "reportingService": ""
     },
     "exm":{
-        "cryptographicKey": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "authenticationKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        "cryptographicKey": "",
+        "authenticationKey": ""
     },
     "search": {
         "solr": {
-            "serviceUrl": "https://solrself:8999/solr"
+            "serviceUrl": ""
          }
     },
     "sql": {
-        "serverName": ".\\SQL2017",
-        "sitecorePassword": "TestRoss123",
+        "serverName": "",
+        "sitecorePassword": "",
         "customDatabases": [
             {
-                "dacpack": "C:\\SAF_FILES\\CUSTOM.dacpac",
-                "loginUsername": "customuser",
-                "connectionStringName": "custom"
+                "dacpack": "",
+                "loginUsername": "",
+                "connectionStringName": ""
             }
         ]
     },
     "ssl": {
-        "importCertPassword": "password"
+        "importCertPassword": ""
     }
 }

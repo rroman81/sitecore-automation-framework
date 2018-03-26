@@ -6,7 +6,7 @@
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
     "processing": {
-        "hostName": "prc.xp.local",
+        "hostName": "processing.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\Processing",
         "sslCert": ""
     },
@@ -15,7 +15,7 @@
     },
     "xConnect": {
         "sslCert": "",
-        "collectionService": "https://coll.xp.local"
+        "collectionService": "https://xconnectcollection.xp.local"
     },
     "search": {
         "solr": {
@@ -24,7 +24,7 @@
     },
     "sql": {
         "serverName": ".\\SQL2017",
-        "adminUsername": "FFWAdmin",
+        "adminUsername": "SAFAdmin",
         "adminPassword": "Pass123",
         "sitecorePassword": "Pass123"
     },

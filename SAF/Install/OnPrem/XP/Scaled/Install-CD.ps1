@@ -21,6 +21,9 @@ $count = 1
 foreach ($cd in $global:Configuration.sitecore) {
     $siteName = $cd.hostName
     $installDir = $cd.installDir
+    if ([string]::IsNullOrEmpty($xConnectSslCert)) {
+        $xConnectSslCert = $siteName
+    }
 
     Write-Output "Testing installation of Sitecore CD$count..."
     if (TestURI -Uri "https://$siteName") {
