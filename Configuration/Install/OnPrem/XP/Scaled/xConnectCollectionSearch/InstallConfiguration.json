@@ -1,0 +1,27 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "CollectionSearch",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "xConnect": {
+        "collectionSearchHostName": "",
+        "installDir": "",
+        "environment": "",
+        "logLevel": "",
+        "sslCert": ""
+    },
+    "search": {
+        "solr": {
+            "serviceUrl": ""
+        }
+    },
+    "sql": {
+        "serverName": "",
+        "sitecorePassword": ""
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

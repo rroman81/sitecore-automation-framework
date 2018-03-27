@@ -1,0 +1,39 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "CD",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "sitecore": [
+        {
+            "hostNames": [],
+            "installDir": ""
+        }
+    ],
+    "xDB": {
+        "referenceDataService": "",
+        "automationOperationsService": "",
+        "automationReportingService": ""
+    },
+    "xConnect": {
+        "collectionService": "",
+        "sslCert": ""
+    },
+    "exm":{
+        "cryptographicKey": "",
+        "authenticationKey": ""
+    },
+    "search": {
+        "solr": {
+            "serviceUrl": ""
+         }
+    },
+    "sql": {
+        "serverName": "",
+        "sitecorePassword": ""
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

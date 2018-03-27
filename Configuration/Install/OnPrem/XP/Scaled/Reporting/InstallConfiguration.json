@@ -1,0 +1,21 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "REP",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "reporting": {
+        "hostName": "",
+        "installDir": "",
+        "serviceApiKey" : "",
+        "sslCert": ""
+    },
+    "sql": {
+        "serverName": "",
+        "sitecorePassword": ""
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

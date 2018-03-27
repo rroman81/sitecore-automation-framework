@@ -7,7 +7,7 @@ Write-Output "Install Sitecore started..."
 $prefix = $global:Configuration.prefix
 $clientCert = BuildClientCertName -Prefix $prefix
 $license = $global:Configuration.license
-$siteName = $global:Configuration.sitecore.hostName
+$siteName = $global:Configuration.sitecore.hostNames[0]
 $xConnectHostName = $global:Configuration.xConnect.hostName
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser =  $global:Configuration.sql.adminUsername

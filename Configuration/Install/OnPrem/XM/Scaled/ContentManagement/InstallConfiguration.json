@@ -1,0 +1,36 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XM",
+    "serverRole": "CM",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "sitecore": [
+        {
+            "hostNames": [],
+            "installDir": "",
+            "sslCert": ""
+        }
+    ],
+    "search": {
+        "solr": {
+            "serviceUrl": ""
+        }
+    },
+    "sql": {
+        "serverName": "",
+        "adminUsername": "",
+        "adminPassword": "",
+        "sitecorePassword": "",
+        "customDatabases": [
+            {
+                "dacpack": "",
+                "loginUsername": "",
+                "connectionStringName": ""
+            }
+        ]
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

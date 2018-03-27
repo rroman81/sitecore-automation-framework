@@ -1,0 +1,26 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XM",
+    "serverRole": "CD",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xm",
+    "sitecore": [
+        {
+            "hostNames": ["contentdelivery.xm.local"],
+            "installDir": "C:\\SAF_FILES\\web\\xm\\ContentDelivery"
+        }
+    ],
+    "search": {
+        "solr": {
+            "serviceUrl": "https://solr.xm.local:8910/solr"
+         }
+    },
+    "sql": {
+        "serverName": ".\\SQLEXPRESS",
+        "sitecorePassword": "Test123"
+    },
+    "ssl": {
+        "importCertPassword": "Pass123"
+    }
+}

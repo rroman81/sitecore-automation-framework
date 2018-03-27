@@ -108,7 +108,7 @@
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         },
         {
             "name": "Add custom databases (if any)",
@@ -158,11 +158,11 @@
         },
         {
             "name": "Install Sitecore CM",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-CM.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\ContentManagement\\Install-CM.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\ContentManagement\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         },
         {
             "name": "Add custom databases (if any)",
@@ -200,11 +200,11 @@
         },
         {
             "name": "Install Sitecore CD",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-CD.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\ContentDelivery\\Install-CD.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\ContentDelivery\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "installOnPremPRC-XP": [
@@ -246,11 +246,11 @@
         },
         {
             "name": "Install Sitecore Processing",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-PRC.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\Processing\\Install-PRC.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\Processing\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "installOnPremREP-XP": [
@@ -284,11 +284,11 @@
         },
         {
             "name": "Install Sitecore Reporting",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-REP.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\Reporting\\Install-REP.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\Reporting\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "installOnPremCollection-XP": [
@@ -330,11 +330,11 @@
         },
         {
             "name": "Install xConnect Collection",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-Collection.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xConnectCollection\\Install-Collection.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xConnectCollection\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "installOnPremCollectionSearch-XP": [
@@ -368,11 +368,11 @@
         },
         {
             "name": "Install xConnect Collection Search",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-CollectionSearch.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xConnectCollectionSearch\\Install-CollectionSearch.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xConnectCollectionSearch\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "installOnPremAutomationOperations-XP": [
@@ -414,11 +414,11 @@
         },
         {
             "name": "Install xDB Automation Operations",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-AutomationOperations.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xDBAutomationOperations\\Install-AutomationOperations.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xDBAutomationOperations\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "installOnPremAutomationReporting-XP": [
@@ -452,11 +452,11 @@
         },
         {
             "name": "Install xDB Automation Reporting",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-AutomationReporting.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xDBAutomationReporting\\Install-AutomationReporting.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xDBAutomationReporting\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "installOnPremReferenceData-XP": [
@@ -498,11 +498,11 @@
         },
         {
             "name": "Install xDB Reference Data",
-            "script": "\\Install\\OnPrem\\XP\\Scaled\\Install-ReferenceData.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xDBReferenceData\\Install-ReferenceData.ps1"
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XP\\Scaled\\xDBReferenceData\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "installOnPremSolr-XM": [
@@ -586,7 +586,7 @@
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XM\\Scaled\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         },
         {
             "name": "Add custom databases (if any)",
@@ -628,7 +628,7 @@
         },
         {
             "name": "Configure AppPool access to performance monitoring",
-            "script": "\\Install\\OnPrem\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
+            "script": "\\Install\\OnPrem\\XM\\Scaled\\Configure-AppPoolAccessToPerformanceMonitoring.ps1"
         }
     ],
     "newSSLCerts":[

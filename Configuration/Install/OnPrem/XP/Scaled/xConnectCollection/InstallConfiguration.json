@@ -1,0 +1,24 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "Collection",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "xConnect": {
+        "collectionHostName": "",
+        "installDir": "",
+        "environment": "",
+        "logLevel": "",
+        "sslCert": ""
+    },
+    "sql": {
+        "serverName": "",
+        "adminUsername": "",
+        "adminPassword": "",
+        "sitecorePassword": ""
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

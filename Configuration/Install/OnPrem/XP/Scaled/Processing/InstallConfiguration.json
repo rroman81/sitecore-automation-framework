@@ -1,0 +1,34 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "PRC",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "processing": {
+        "hostName": "",
+        "installDir": "",
+        "sslCert": ""
+    },
+    "reporting": {
+        "serviceApiKey": ""
+    },
+    "xConnect": {
+        "collectionService": "",
+        "sslCert": ""
+    },
+    "search": {
+        "solr": {
+            "serviceUrl": ""
+        }
+    },
+    "sql": {
+        "serverName": "",
+        "adminUsername": "",
+        "adminPassword": "",
+        "sitecorePassword": ""
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

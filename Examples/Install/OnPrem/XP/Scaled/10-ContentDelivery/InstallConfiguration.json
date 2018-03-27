@@ -7,18 +7,18 @@
     "prefix": "xp",
     "sitecore": [
         {
-            "hostName": "contentdelivery.xp.local",
+            "hostNames": ["contentdelivery.xp.local"],
             "installDir": "C:\\SAF_FILES\\web\\xp\\ContentDelivery"
         }
     ],
+    "xDB": {
+        "referenceDataService": "https://xdbreferencedata.xp.local",
+        "automationOperationsService": "https://xdbautomationoperations.xp.local",
+        "automationReportingService": "https://xdbautomationreporting.xp.local"
+    },
     "xConnect": {
         "collectionService": "https://xconnectcollection.xp.local",
-        "referenceDataService": "https://xdbreferencedata.xp.local",
         "sslCert": ""
-    },
-    "automationOperations":{
-        "operationsService": "https://xdbautomationoperations.xp.local",
-        "reportingService": "https://xdbautomationreporting.xp.local"
     },
     "exm":{
         "cryptographicKey": "0x0000000000000000000000000000000000000000000000000000000000000000",

@@ -10,9 +10,9 @@
             "installDir": "C:\\SAF_FILES\\web\\xp\\Solr",
             "hostName": "solr.xp.local",
             "port": "8911",
-            "serviceName": "xpsolr",
-            "serviceDisplayName": "solr XP",
-            "serviceDescription": "solr XP"
+            "serviceName": "solrxp",
+            "serviceDisplayName": "Solr XP",
+            "serviceDescription": "Solr XP"
         }
     },
     "ssl": {

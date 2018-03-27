@@ -4,31 +4,29 @@
     "serverRole": "AllInOne",
     "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP0 packages).zip",
     "license": "C:\\SAF_FILES\\license.xml",
-    "prefix": "all",
-    "sitecore": [
-        {
-            "hostName": "all.local",
-            "installDir": "C:\\SAF_FILES\\web\\AllInOne\\Website"
-        }
-    ],
+    "prefix": "allInOne",
+    "sitecore": {
+        "hostNames": ["allinone.local"],
+        "installDir": "C:\\SAF_FILES\\web\\allInOne\\Website"
+    },
     "xConnect": {
-        "hostName": "xconnect.all.local",
-        "installDir": "C:\\SAF_FILES\\web\\AllInOne\\XConnect"
+        "hostName": "xconnect.allinone.local",
+        "installDir": "C:\\SAF_FILES\\web\\allInOne\\XConnect"
     },
     "search": {
         "solr": {
             "version": "6.6.2",
-            "installDir": "C:\\SAF_FILES\\web\\AllInOne\\Solr",
-            "hostName": "solr.all.local",
-            "port": "8988",
-            "serviceName": "allsolr",
-            "serviceDisplayName": "solr AllInOne",
-            "serviceDescription": "solr AllInOne",
+            "installDir": "C:\\SAF_FILES\\web\\allInOne\\Solr",
+            "hostName": "solr.allinone.local",
+            "port": "8909",
+            "serviceName": "solrallinone",
+            "serviceDisplayName": "Solr AllInOne",
+            "serviceDescription": "Solr AllInOne",
             "customCores": [
-	            {
+                {
                     "name": "custom_index"
                 }
-	        ]
+            ]
         }
     },
     "sql": {

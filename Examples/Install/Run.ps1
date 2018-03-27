@@ -13,11 +13,32 @@ Import-Module -Name "$rootDir\SAF\Sitecore.Automation.Framework.psm1" -Force
 ############### START XP0 ###################
 
 # XP AllInOne
-Set-Location "$rootDir\Examples\Install\OnPrem\XP\AllInOne"
-New-SSLCerts
-Install-Sitecore
+# Set-Location "$rootDir\Examples\Install\OnPrem\XP\AllInOne"
+# New-SSLCerts
+# Install-Sitecore
 
 ############### END XP0 ###################
+
+
+############### START XM1 ###################
+
+# XM SSL
+# Set-Location "$rootDir\Examples\Install\OnPrem\XM\Scaled\00-SSL"
+# New-SSLCerts
+
+# XM Solr
+# Set-Location "$rootDir\Examples\Install\OnPrem\XM\Scaled\01-Solr"
+# Install-Sitecore
+
+# XM Content Management
+# Set-Location "$rootDir\Examples\Install\OnPrem\XM\Scaled\02-ContentManagement"
+# Install-Sitecore
+
+# XM Content Delivery
+# Set-Location "$rootDir\Examples\Install\OnPrem\XM\Scaled\03-ContentDelivery"
+# Install-Sitecore
+
+############### END XM1 ###################
 
 
 ############### START XP1 ###################
@@ -40,10 +61,6 @@ Install-Sitecore
 
 # XP xDB Reference Data
 # Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\04-xDBReferenceData"
-# Install-Sitecore
-
-# XP xDB Automation Operations
-# Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\05-xDBAutomationOperations"
 # Install-Sitecore
 
 # XP xDB Automation Operations

@@ -1,0 +1,26 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XM",
+    "serverRole": "CD",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "sitecore": [
+        {
+            "hostNames": [],
+            "installDir": ""
+        }
+    ],
+    "search": {
+        "solr": {
+            "serviceUrl": ""
+         }
+    },
+    "sql": {
+        "serverName": "",
+        "sitecorePassword": ""
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

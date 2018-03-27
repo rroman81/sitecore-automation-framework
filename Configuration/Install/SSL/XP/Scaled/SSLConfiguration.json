@@ -7,7 +7,7 @@
             "hostNames": []
         },
         {
-            "type": "ContentCert",
+            "type": "ContentManagementCert",
             "hostNames": []
         },
         {
@@ -31,11 +31,11 @@
             "hostNames": []
         },
         {
-            "type": "xDB Automation Operations SSL Server Certificate",
+            "type": "xDBAutomationOperationsCert",
             "hostNames": []
         },
         {
-            "type": "xDB Automation Reporting SSL Server Certificate",
+            "type": "xDBAutomationReportingCert",
             "hostNames": []
         }
     ]

@@ -5,15 +5,15 @@
     "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
-    "automationReporting": {
-        "hostName": "xdbautomationreporting.xp.local",
+    "xDB":{
+        "automationReportingHostName": "xdbautomationreporting.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\xDBAutomationReporting",
         "sslCert": ""
     },
     "xConnect": {
-        "sslCert": "",
         "environment": "Staging",
-        "logLevel": "Information"
+        "logLevel": "Information",
+        "sslCert": ""
     },
     "sql": {
         "serverName": ".\\SQLEXPRESS",

@@ -1,14 +1,14 @@
 {
-    "prefix": "all",
+    "prefix": "allInOne",
     "password": "Pass123",
     "sslCerts": [
         {
             "type": "SolrCertificate",
-            "hostNames": ["solr.all.local"]
+            "hostNames": ["solr.allinone.local"]
         },
         {
             "type": "xConnectCertificate",
-            "hostNames": ["xconnect.all.local"]
+            "hostNames": ["xconnect.allinone.local"]
         }
     ]
 }

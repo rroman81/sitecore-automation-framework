@@ -7,7 +7,7 @@
     "prefix": "xp",
     "sitecore": [
         {
-            "hostName": "contentmanagement.xp.local",
+            "hostNames": ["contentmanagement.xp.local"],
             "installDir": "C:\\SAF_FILES\\web\\xp\\ContentManagement",
             "sslCert": ""
         }
@@ -19,14 +19,14 @@
         "serviceURL": "https://reporting.xp.local",
         "serviceApiKey": "abcde111112222233333444445555566"
     },
+    "xDB": {
+        "referenceDataService": "https://xdbreferencedata.xp.local",
+        "automationOperationsService": "https://xdbautomationoperations.xp.local",
+        "automationReportingService": "https://xdbautomationreporting.xp.local"
+    },
     "xConnect": {
         "collectionSearchService": "https://xconnectcollectionsearch.xp.local",
-        "referenceDataService": "https://xdbreferencedata.xp.local",
         "sslCert": ""
-    },
-    "automationOperations":{
-        "operationsService": "https://xdbautomationoperations.xp.local",
-        "reportingService": "https://xdbautomationreporting.xp.local"
     },
     "exm":{
         "cryptographicKey": "0x0000000000000000000000000000000000000000000000000000000000000000",

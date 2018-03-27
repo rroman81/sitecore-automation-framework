@@ -11,11 +11,11 @@
         "sslCert": ""
     },
     "reporting": {
-        "serviceApiKey" : "abcde111112222233333444445555566"
+        "serviceApiKey": "abcde111112222233333444445555566"
     },
     "xConnect": {
-        "sslCert": "",
-        "collectionService": "https://xconnectcollection.xp.local"
+        "collectionService": "https://xconnectcollection.xp.local",
+        "sslCert": ""
     },
     "search": {
         "solr": {

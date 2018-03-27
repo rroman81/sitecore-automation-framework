@@ -12,7 +12,7 @@ $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *cd.scwdp.zi
 $count = 1
 
 foreach ($cd in $global:Configuration.sitecore) {
-    $siteName = $cd.hostName
+    $siteName = $cd.hostNames[0]
     $installDir = $cd.installDir
 
     Write-Output "Testing installation of Sitecore CD$count..."

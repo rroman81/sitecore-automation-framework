@@ -1,0 +1,32 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "serverRole": "ReferenceData",
+    "installPackage": "",
+    "license": "",
+    "prefix": "",
+    "referenceData": {
+        "hostName": "",
+        "installDir": "",
+        "sslCert": ""
+    },
+    "xDB":{
+        "referenceDataHostName": "",
+        "installDir": "",
+        "sslCert": ""
+    },
+    "xConnect": {
+        "environment": "",
+        "logLevel": "",
+        "sslCert": ""
+    },
+    "sql": {
+        "serverName": "",
+        "adminUsername": "",
+        "adminPassword": "",
+        "sitecorePassword": ""
+    },
+    "ssl": {
+        "importCertPassword": ""
+    }
+}

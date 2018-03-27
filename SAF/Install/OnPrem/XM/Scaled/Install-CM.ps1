@@ -1,5 +1,6 @@
 Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\Common\Utils-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 $prefix = $global:Configuration.prefix
@@ -15,11 +16,11 @@ $package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *cm.scwdp.zi
 $count = 1
 
 foreach ($cm in $global:Configuration.sitecore) {
-    $siteName = $cm.hostName
+    $siteName = $cm.hostNames[0]
     $installDir = $cm.installDir
     $sslCert = $cm.sslCert
     if ([string]::IsNullOrEmpty($sslCert)) {
-        $sslCert = $siteName
+        $sslCert = BuildServerCertName -Prefix $prefix -Hostname $siteName
     }
 
     Write-Output "Testing installation of Sitecore CM$count..."

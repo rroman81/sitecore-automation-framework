@@ -1,0 +1,36 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XM",
+    "serverRole": "CM",
+    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
+    "license": "C:\\SAF_FILES\\license.xml",
+    "prefix": "xm",
+    "sitecore": [
+        {
+            "hostNames": ["contentmanagement.xm.local"],
+            "installDir": "C:\\SAF_FILES\\web\\xm\\ContentManagement",
+            "sslCert": ""
+        }
+    ],
+    "search": {
+        "solr": {
+            "serviceUrl": "https://solr.xm.local:8910/solr"
+        }
+    },
+    "sql": {
+        "serverName": ".\\SQLEXPRESS",
+        "adminUsername": "SAFAdmin",
+        "adminPassword": "Pass123",
+        "sitecorePassword": "Pass123",
+        "customDatabases": [
+            {
+                "dacpack": "C:\\SAF_FILES\\CUSTOM.dacpac",
+                "loginUsername": "customuser",
+                "connectionStringName": "custom"
+            }
+        ]
+    },
+    "ssl": {
+        "importCertPassword": "Pass123"
+    }
+}

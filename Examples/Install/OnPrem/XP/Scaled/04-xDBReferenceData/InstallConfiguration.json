@@ -10,10 +10,15 @@
         "installDir": "C:\\SAF_FILES\\web\\xp\\xDBReferenceData",
         "sslCert": ""
     },
+    "xDB":{
+        "referenceDataHostName": "xdbreferencedata.xp.local",
+        "installDir": "C:\\SAF_FILES\\web\\xp\\xDBReferenceData",
+        "sslCert": ""
+    },
     "xConnect": {
-        "sslCert": "",
         "environment": "Staging",
-        "logLevel": "Information"
+        "logLevel": "Information",
+        "sslCert": ""
     },
     "sql": {
         "serverName": ".\\SQLEXPRESS",

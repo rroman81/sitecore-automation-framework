@@ -1,0 +1,14 @@
+{
+    "prefix": "xm",
+    "password": "Pass123",
+    "sslCerts": [
+        {
+            "type": "SolrCert",
+            "hostNames": ["solr.xm.local"]
+        },
+        {
+            "type": "ContentManagementCert",
+            "hostNames": ["contentmanagement.xm.local"]
+        }
+    ]
+}

@@ -5,12 +5,10 @@
     "installPackage": "",
     "license": "",
     "prefix": "",
-    "sitecore": [
-        {
-            "hostName": "",
-            "installDir": ""
-        }
-    ],
+    "sitecore": {
+        "hostNames": [],
+        "installDir": ""
+    },
     "xConnect": {
         "hostName": "",
         "installDir": ""
@@ -25,11 +23,10 @@
             "serviceDisplayName": "",
             "serviceDescription": "",
             "customCores": [
-	            {
+                {
                     "name": ""
                 }
-               
-	        ]
+            ]
         }
     },
     "sql": {
