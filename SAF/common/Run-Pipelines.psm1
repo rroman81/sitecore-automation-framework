@@ -7,8 +7,7 @@ function RemoveTemp {
 
 function CreateTemp {
     $tempFolder = "$PSScriptRoot\..\temp"
-    If(!(Test-Path $tempFolder))
-    {
+    if (!(Test-Path $tempFolder)) {
         New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
     }
 }
@@ -23,7 +22,7 @@ function ShowSteps {
     Write-Output "`n`nSAF will run '$Pipeline' pipeline:`n"
     
     foreach ($step in $global:Pipelines.$Pipeline) {
-        if(($step.skip -eq $true) -or (IsStepCompleted -Pipeline $Pipeline -Step $step.name)) {
+        if (($step.skip -eq $true) -or (IsStepCompleted -Pipeline $Pipeline -Step $step.name)) {
             Write-Warning "SKIP $($step.name)"
         }
         else {
@@ -33,7 +32,7 @@ function ShowSteps {
     Write-Output ""
     Write-Warning "Starting after 13 seconds..."
     Write-Output ""
-    #Start-Sleep -s 13
+    Start-Sleep -s 13
 }
 
 function RunSteps {
@@ -55,7 +54,7 @@ function RunSteps {
     try {
         foreach ($step in ($global:Pipelines.$Pipeline)) {
             
-            if(($step.skip -eq $true) -or (IsStepCompleted -Pipeline $Pipeline -Step $step.name)) { continue }
+            if (($step.skip -eq $true) -or (IsStepCompleted -Pipeline $Pipeline -Step $step.name)) { continue }
 
             if ($step.script.StartsWith("/") -or $step.script.StartsWith("\")) {
                 & "$PSScriptRoot\..$($step.script)"

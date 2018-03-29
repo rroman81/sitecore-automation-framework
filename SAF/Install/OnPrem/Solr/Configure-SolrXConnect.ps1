@@ -1,17 +1,16 @@
+. "$PSScriptRoot\..\..\InstallParams.ps1"
+. "$PSScriptRoot\SolrParams.ps1"
 $ErrorActionPreference = "Stop"
 
 Write-Output "Add xConnect Solr cores started..."
 
 $prefix = $global:Configuration.prefix
-$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
-$solrUrl = $global:Items.SolrServiceUrl
-$solrRoot = $global:Items.SolrServiceDir
 $solrService = $global:Configuration.search.solr.serviceName
 
 $solrParams = @{
-    Path        = "$sourcePackageDirectory\xconnect-solr.json"
-    SolrUrl     = $solrUrl
-    SolrRoot    = $solrRoot
+    Path        = "$SAFInstallPackageDir\xconnect-solr.json"
+    SolrUrl     = $SolrServiceUrl
+    SolrRoot    = $SolrServiceDir
     SolrService = $solrService
     CorePrefix  = $prefix
 }

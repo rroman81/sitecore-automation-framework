@@ -1,3 +1,4 @@
+Import-Module "$PSScriptRoot\WebAdministration-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 function RefreshEnvironment {
@@ -5,41 +6,6 @@ function RefreshEnvironment {
     refreshenv
 }
 
-function TestURI {
-    [CmdletBinding(DefaultParameterSetName = "Default")]
-    Param(
-        [Parameter(Position = 0, Mandatory, HelpMessage = "Enter the URI path starting with HTTP or HTTPS")]
-        [ValidatePattern( "^(http|https)://" )]
-        [string]$URI,
-        [ValidateScript( {$_ -ge 0})]
-        [int]$Timeout = 30
-    )
-     
-    try {
-        
-        $paramHash = @{
-            UseBasicParsing  = $true
-            DisableKeepAlive = $true
-            Uri              = $URI
-            Method           = 'Head'
-            ErrorAction      = 'Stop'
-            TimeoutSec       = $Timeout
-        }
-     
-        $test = Invoke-WebRequest @paramHash
-       
-        if ($test.statuscode -ne 200) {
-            return $false
-        }
-        else {
-            return $true
-        }
-    }
-    catch {
-        return $false
-    }
-}
-    
 function DownloadAndUnzip {
     [CmdletBinding()]
     Param(
@@ -65,67 +31,20 @@ function DeleteServices {
     [CmdletBinding()]
     Param
     (
-        [string]$HostName,
         [string[]]$Services
     )
 
     Write-Output "Deleting existing services..."
 
     foreach ($service in $Services) {
-        $serviceName = "$HostName-$service"
-        if (Get-Service $serviceName -ErrorAction SilentlyContinue) {
-            nssm stop $serviceName | Out-Null
+        if (Get-Service $service -ErrorAction SilentlyContinue) {
+            nssm stop $service | Out-Null
             taskkill /F /IM mmc.exe | Out-Null
-            nssm remove $serviceName confirm
+            nssm remove $service confirm
         }
     }
 
     Write-Output "Deleting existing services done."
-}
-
-function AddConnectionString {
-    [CmdletBinding()]
-    Param
-    (
-        [string]$SqlServer,
-        [string]$Database,
-        [string]$Username,
-        [string]$Password,
-        [string]$WebsiteRootDir,
-        [string]$ConnStringName
-    )
-
-    Write-Output "Adding a new connection string with name '$ConnStringName'..."
-    $connStrFile = Join-Path -Path $WebsiteRootDir -ChildPath "\App_Config\ConnectionStrings.config"
-    $connStr = "Data Source=$SqlServer;Initial Catalog=$Database;User ID=$Username;Password=$Password"
-    
-    $xmlDoc = [System.Xml.XmlDocument](Get-Content $connStrFile)
-    $newConnStrElement = $xmlDoc.CreateElement("add")
-    $newConnStr = $xmlDoc.connectionStrings.AppendChild($newConnStrElement)
-    $newConnStr.SetAttribute("name", $ConnStringName)
-    $newConnStr.SetAttribute("connectionString", $connStr)
-    $xmlDoc.Save($connStrFile)
-    Write-Output "Adding a new connection string with name '$ConnStringName' done"
-}
-
-function IISReset {
-    [CmdletBinding(SupportsShouldProcess = $true)]
-    Param
-    (
-        [string]$Reason,
-        [int]$TryNumber = 0,
-        [switch]$Force
-    )
-
-    if ($Force -or $PSCmdlet.ShouldProcess("IIS", $Reason)) {
-        $process = Start-Process "iisreset.exe" -NoNewWindow -Wait -PassThru
-
-        if (($process.ExitCode -gt 0) -and ($TryNumber -lt 3) ) {
-            Write-Warning "IIS Reset failed. Retrying..."
-            $newTryNumber = $TryNumber + 1
-            IISReset -Reason $Reason -TryNumber $newTryNumber -Force
-        }
-    }
 }
 
 function InstallSolr {
@@ -159,12 +78,7 @@ function InstallSolr {
     }
     
     if ($HostName -ne "localhost") {
-        $HostNameFileName = "c:\\windows\system32\drivers\etc\hosts"
-        $HostNameFile = [System.Io.File]::ReadAllText($HostNameFileName)
-        if (!($HostNameFile -like "*$HostName*")) {
-            Write-Output "Updating host file..."
-            "`r`n127.0.0.1`t$HostName" | Add-Content $HostNameFileName
-        }
+        AddHostFileEntry -IP "127.0.0.1" -HostName $HostName
     }
 
     # Export the cert to pfx using solr's default password
@@ -209,47 +123,7 @@ function InstallSolr {
     Write-Output "Solr installation done."
 }
 
-function AddAppPoolUserToGroups {
-    [CmdletBinding()]
-    Param
-    (
-        [string[]]$AppPools,
-        [string[]]$Groups
-    )
-
-    $needIISReset = $false
-
-    foreach ($gr in $Groups) {
-        $group = [ADSI]"WinNT://$Env:ComputerName/$gr,group"
-        $members = $group.psbase.invoke("Members") | ForEach-Object {$_.GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null)}
-
-        foreach($pool in $AppPools){
-            if ($members -contains $pool) {
-                Write-Warning "'$pool' AppPool user exists in '$gr' group"
-            }
-            else {
-                Write-Output "Adding '$pool' AppPool user to '$gr' group..."
-        
-                $ntAccount = New-Object System.Security.Principal.NTAccount("IIS APPPOOL\$pool")
-                $strSID = $ntAccount.Translate([System.Security.Principal.SecurityIdentifier])
-                $user = [ADSI]"WinNT://$strSID"
-                $group.Add($user.Path)
-                $needIISReset = $true
-    
-                Write-Output "Adding '$pool' AppPool user to '$gr' group done."
-            }
-        }
-    }
-
-    if ($needIISReset -eq $true) {
-        IISReset -Reason "Groups changes will take effect after IIS Reset. Do it now?" -Confirm
-    }
-}
-
 Export-ModuleMember -Function "DeleteServices"
-Export-ModuleMember -Function "AddConnectionString"
-Export-ModuleMember -Function "AddAppPoolUserToGroups"
 Export-ModuleMember -Function "DownloadAndUnzip"
 Export-ModuleMember -Function "InstallSolr"
-Export-ModuleMember -Function "TestURI"
 Export-ModuleMember -Function "RefreshEnvironment"

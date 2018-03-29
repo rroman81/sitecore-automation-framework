@@ -7,7 +7,7 @@
     "prefix": "xp",
     "sitecore": [
         {
-            "hostNames": ["contentdelivery.xp.local"],
+            "hostNames": ["contentdelivery.xp.local","sub.contentdelivery.xp.local"],
             "installDir": "C:\\SAF_FILES\\web\\xp\\ContentDelivery"
         }
     ],

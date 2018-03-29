@@ -7,7 +7,7 @@
     "prefix": "xm",
     "sitecore": [
         {
-            "hostNames": ["contentdelivery.xm.local"],
+            "hostNames": ["contentdelivery.xm.local", "sub.contentdelivery.xm.local"],
             "installDir": "C:\\SAF_FILES\\web\\xm\\ContentDelivery"
         }
     ],

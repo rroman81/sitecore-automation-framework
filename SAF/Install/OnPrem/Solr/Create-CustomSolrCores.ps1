@@ -1,3 +1,5 @@
+. "$PSScriptRoot\..\..\InstallParams.ps1"
+. "$PSScriptRoot\SolrParams.ps1"
 $ErrorActionPreference = "Stop"
 
 Write-Output "Add custom Solr cores started..."
@@ -8,15 +10,13 @@ if (($global:Configuration.search.solr.customCores -eq $null) -or ($global:Confi
 else {
     $prefix = $global:Configuration.prefix
     $configPath = "$PSScriptRoot\custom-solr.json"
-    $solrUrl = $global:Items.SolrServiceUrl
-    $solrRoot = $global:Items.SolrServiceDir
     $solrService = $global:Configuration.search.solr.serviceName
 
     foreach ($index in $global:Configuration.search.solr.customCores) {
         $solrParams = @{
             Path        = $configPath
-            SolrUrl     = $solrUrl
-            SolrRoot    = $solrRoot
+            SolrUrl     = $SolrServiceUrl
+            SolrRoot    = $SolrServiceDir
             SolrService = $solrService
             CorePrefix  = $prefix  
             CoreName    = $index.name

@@ -7,7 +7,7 @@
     "prefix": "xp",
     "sitecore": [
         {
-            "hostNames": ["contentmanagement.xp.local"],
+            "hostNames": ["contentmanagement.xp.local", "sub.contentmanagement.xp.local"],
             "installDir": "C:\\SAF_FILES\\web\\xp\\ContentManagement",
             "sslCert": ""
         }

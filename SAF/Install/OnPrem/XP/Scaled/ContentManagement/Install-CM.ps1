@@ -1,10 +1,10 @@
+. "$PSScriptRoot\..\..\..\..\InstallParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\..\SQL\SQL-Module.psm1" -Force
-Import-Module "$PSScriptRoot\..\..\..\..\..\Common\Utils-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\..\Common\WebAdministration-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 $prefix = $global:Configuration.prefix
-$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser = $global:Configuration.sql.adminUsername
@@ -20,17 +20,18 @@ $marketingAutomationOperationsService = $global:Configuration.xDB.automationOper
 $marketingAutomationReportingService = $global:Configuration.xDB.automationReportingService
 $exmCryptographicKey = $global:Configuration.exm.cryptographicKey
 $exmAuthenticationKey = $global:Configuration.exm.authenticationKey
-$package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *cm.scwdp.zip*
+$package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *cm.scwdp.zip*
 
 $count = 1
 
 foreach ($cm in $global:Configuration.sitecore) {
-    $siteName = $cm.hostNames[0]
+    $hostNames = $cm.hostNames
+    $siteName = $hostNames[0]
     $installDir = $cm.installDir
 
     $sslCert = $cm.sslCert
     if ([string]::IsNullOrEmpty($sslCert)) {
-        $sslCert = BuildServerCertName -Prefix $prefix -Hostname $siteName
+        $sslCert = BuildServerCertName -Prefix $prefix
     }
     $xConnectSslCert = $global:Configuration.xConnect.sslCert
     if ([string]::IsNullOrEmpty($xConnectSslCert)) {
@@ -55,7 +56,7 @@ foreach ($cm in $global:Configuration.sitecore) {
         # },
 
         $sitecoreParams = @{
-            Path                                 = "$sourcePackageDirectory\sitecore-XP1-cm.json"
+            Path                                 = "$SAFInstallPackageDir\sitecore-XP1-cm.json"
             Package                              = $package.FullName
             LicenseFile                          = $license
             SqlDbPrefix                          = $prefix
@@ -94,9 +95,8 @@ foreach ($cm in $global:Configuration.sitecore) {
             EXMAuthenticationKey                 = $exmAuthenticationKey
             InstallDirectory                     = $installDir
         }
-
         Install-SitecoreConfiguration @sitecoreParams
-
+        AddWebBindings -SiteName $siteName -HostNames $hostNames -SSLCert $sslCert -Secure
         Write-Output "Install Sitecore CM$count done."
     }
 

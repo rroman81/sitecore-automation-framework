@@ -1,9 +1,9 @@
-Import-Module "$PSScriptRoot\..\..\..\..\..\Common\Utils-Module.psm1" -Force
+. "$PSScriptRoot\..\..\..\..\InstallParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\..\Common\WebAdministration-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 $prefix = $global:Configuration.prefix
-$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
@@ -14,12 +14,13 @@ $marketingAutomationOperationsService = $global:Configuration.xDB.automationOper
 $marketingAutomationReportingService = $global:Configuration.xDB.automationReportingService
 $exmCryptographicKey = $global:Configuration.exm.cryptographicKey
 $exmAuthenticationKey = $global:Configuration.exm.authenticationKey
-$package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *cd.scwdp.zip*
+$package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *cd.scwdp.zip*
 
 $count = 1
 
 foreach ($cd in $global:Configuration.sitecore) {
-    $siteName = $cd.hostNames[0]
+    $hostNames = $cd.hostNames
+    $siteName = $hostNames[0]
     $installDir = $cd.installDir
 
     $xConnectSslCert = $global:Configuration.xConnect.sslCert
@@ -35,7 +36,7 @@ foreach ($cd in $global:Configuration.sitecore) {
         Write-Output "Install Sitecore CD$count started..."
 
         $sitecoreParams = @{
-            Path                                 = "$sourcePackageDirectory\sitecore-XP1-cd.json"
+            Path                                 = "$SAFInstallPackageDir\sitecore-XP1-cd.json"
             Package                              = $package.FullName
             LicenseFile                          = $license
             SqlDbPrefix                          = $prefix
@@ -62,9 +63,8 @@ foreach ($cd in $global:Configuration.sitecore) {
             EXMAuthenticationKey                 = $exmAuthenticationKey
             InstallDirectory                     = $installDir
         }
-
         Install-SitecoreConfiguration @sitecoreParams
-
+        AddWebBindings -SiteName $siteName -HostNames $hostNames
         Write-Output "Install Sitecore CD$count done."
     }
 

@@ -1,17 +1,16 @@
+. "$PSScriptRoot\..\..\InstallParams.ps1"
+. "$PSScriptRoot\SolrParams.ps1"
 $ErrorActionPreference = "Stop"
 
 Write-Output "Add Sitecore Solr cores started..."
 
 $prefix = $global:Configuration.prefix
 $solrService = $global:Configuration.search.solr.serviceName
-$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
-$solrUrl = $global:Items.SolrServiceUrl
-$solrRoot = $global:Items.SolrServiceDir
 
 $solrParams = @{
-    Path        = "$sourcePackageDirectory\sitecore-solr.json"
-    SolrUrl     = $solrUrl
-    SolrRoot    = $solrRoot
+    Path        = "$SAFInstallPackageDir\sitecore-solr.json"
+    SolrUrl     = $SolrServiceUrl
+    SolrRoot    = $SolrServiceDir
     SolrService = $solrService
     CorePrefix  = $prefix
 }

@@ -5,11 +5,6 @@
     "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP1 packages).zip",
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "xp",
-    "referenceData": {
-        "hostName": "xdbreferencedata.xp.local",
-        "installDir": "C:\\SAF_FILES\\web\\xp\\xDBReferenceData",
-        "sslCert": ""
-    },
     "xDB":{
         "referenceDataHostName": "xdbreferencedata.xp.local",
         "installDir": "C:\\SAF_FILES\\web\\xp\\xDBReferenceData",

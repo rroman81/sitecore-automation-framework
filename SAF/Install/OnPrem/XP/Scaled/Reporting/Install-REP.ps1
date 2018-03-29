@@ -1,5 +1,5 @@
+. "$PSScriptRoot\..\..\..\..\InstallParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\..\SQL\SQL-Module.psm1" -Force
-Import-Module "$PSScriptRoot\..\..\..\..\..\Common\Utils-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
@@ -7,20 +7,19 @@ $prefix = $global:Configuration.prefix
 $siteName = $global:Configuration.reporting.hostName
 $sslCert = $global:Configuration.reporting.sslCert
 if ([string]::IsNullOrEmpty($sslCert)) {
-    $sslCert = BuildServerCertName -Prefix $prefix -Hostname $siteName
+    $sslCert = BuildServerCertName -Prefix $prefix
 }
-$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.reporting.installDir
 $serviceApiKey = $global:Configuration.reporting.serviceApiKey
-$package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *rep.scwdp.zip*
+$package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *rep.scwdp.zip*
 
 Write-Output "Install Sitecore Reporting started..."
 
 $sitecoreParams = @{
-    Path                   = "$sourcePackageDirectory\sitecore-XP1-rep.json"
+    Path                   = "$SAFInstallPackageDir\sitecore-XP1-rep.json"
     Package                = $package.FullName
     LicenseFile            = $license
     Sitename               = $siteName
@@ -38,7 +37,6 @@ $sitecoreParams = @{
     ReportingServiceApiKey = $serviceApiKey 
     InstallDirectory       = $installDir
 }
-
 Install-SitecoreConfiguration @sitecoreParams
 
 Write-Output "Install Sitecore Reporting done."

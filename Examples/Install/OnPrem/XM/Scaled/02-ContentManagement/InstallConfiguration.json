@@ -7,7 +7,7 @@
     "prefix": "xm",
     "sitecore": [
         {
-            "hostNames": ["contentmanagement.xm.local"],
+            "hostNames": ["contentmanagement.xm.local", "sub.contentmanagement.xm.local"],
             "installDir": "C:\\SAF_FILES\\web\\xm\\ContentManagement",
             "sslCert": ""
         }

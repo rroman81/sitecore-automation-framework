@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\..\..\..\..\..\Common\Utils-Module.psm1" -Force
+. "$PSScriptRoot\..\..\..\..\InstallParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
@@ -6,13 +6,12 @@ $prefix = $global:Configuration.prefix
 $siteName = $global:Configuration.xConnect.collectionSearchHostName
 $sslCert = $global:Configuration.xConnect.sslCert
 if ([string]::IsNullOrEmpty($sslCert)) {
-    $sslCert = BuildServerCertName -Prefix $prefix -Hostname $siteName
+    $sslCert = BuildServerCertName -Prefix $prefix
 }
 $xConnectSslCert = $global:Configuration.xConnect.sslCert
 if ([string]::IsNullOrEmpty($xConnectSslCert)) {
     $xConnectSslCert = BuildClientCertName -Prefix $prefix
 }
-$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
@@ -20,12 +19,12 @@ $installDir = $global:Configuration.xConnect.installDir
 $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel
 $solrUrl = $global:Configuration.search.solr.serviceUrl
-$package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *collectionsearch.scwdp.zip*
+$package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *collectionsearch.scwdp.zip*
 
 Write-Output "Install xConnect Collection Search started..."
 
 $sitecoreParams = @{
-    Path                           = "$sourcePackageDirectory\xconnect-xp1-collectionsearch.json"
+    Path                           = "$SAFInstallPackageDir\xconnect-xp1-collectionsearch.json"
     Package                        = $package.FullName
     LicenseFile                    = $license
     Sitename                       = $siteName

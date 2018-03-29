@@ -1,0 +1,34 @@
+﻿{
+    "Parameters": {
+        "SiteName": {
+            "Type": "string"
+        },
+        "HostName": {
+            "Type": "string"
+        },
+        "SSLCert": {
+            "Type": "string"
+        }
+    },
+    "Variables": {
+        "Security.CertificateStore": "Cert:\\Localmachine\\My",
+        "Security.SSL.CertificateThumbprint": "[GetCertificateThumbprint(parameter('SSLCert'), variable('Security.CertificateStore'))]"
+    },
+    "Tasks": {
+        "CreateBindingsWithThumprint": {
+            "Type": "WebBinding",
+            "Params": {
+                "SiteName": "[parameter('SiteName')]",
+                "Add": [
+                    {
+                        "HostHeader": "[parameter('HostName')]",
+                        "Protocol": "https",
+                        "SSLFlags": 1,
+                        "Thumbprint": "[variable('Security.SSL.CertificateThumbprint')]"
+                    }
+                ]
+            },
+            "Skip": "[not(parameter('SSLCert'))]"
+        }
+    }
+}

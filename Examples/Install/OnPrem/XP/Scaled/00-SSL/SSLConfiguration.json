@@ -1,42 +1,16 @@
 {
     "prefix": "xp",
     "password": "Pass123",
-    "sslCerts": [
-        {
-            "type": "SolrCert",
-            "hostNames": ["solr.xp.local"]
-        },
-        {
-            "type": "ContentManagementCert",
-            "hostNames": ["contentmanagement.xp.local"]
-        },
-        {
-            "type": "ReportingCert",
-            "hostNames": ["reporting.xp.local"]
-        },
-        {
-            "type": "ProcessingCert",
-            "hostNames": ["processing.xp.local"]
-        },
-        {
-            "type": "xConnectCollectionCert",
-            "hostNames": ["xconnectcollection.xp.local"]
-        },
-        {
-            "type": "xConnectCollectionSearchCert",
-            "hostNames": ["xconnectcollectionsearch.xp.local"]
-        },
-        {
-            "type": "xDBReferenceDataCert",
-            "hostNames": ["xdbreferencedata.xp.local"]
-        },
-        {
-            "type": "xDBAutomationOperationsCert",
-            "hostNames": ["xdbautomationoperations.xp.local"]
-        },
-        {
-            "type": "xDBAutomationReportingCert",
-            "hostNames": ["xdbautomationreporting.xp.local"]
-        }
+    "hostNames": [
+        "solr.xp.local",
+        "contentmanagement.xp.local",
+        "*.contentmanagement.xp.local",
+        "reporting.xp.local",
+        "processing.xp.local",
+        "xconnectcollection.xp.local",
+        "xconnectcollectionsearch.xp.local",
+        "xdbreferencedata.xp.local",
+        "xdbautomationoperations.xp.local",
+        "xdbautomationreporting.xp.local"
     ]
 }

@@ -1,9 +1,12 @@
 Import-Module "$PSScriptRoot\..\..\Common\Run-Pipelines.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\Common\WebAdministration-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 function ImportSIF {
     Write-Output "Import Sitecore Installation Framework (SIF) started..."
 
+    EnableIISAdministration
+    
     $repositoryUrl = "https://sitecore.myget.org/F/sc-powershell/api/v2"
     $repositoryName = "SitecoreGallery"
 
@@ -41,117 +44,6 @@ function ResolvePipeline {
     }
 }
 
-# TODO: Refactor Items initialization. This switch is not OK.
-function InitializeItems {
-    [CmdletBinding()]
-    Param
-    (
-        [string]$Pipeline
-    )
-
-    switch ($Pipeline) {
-        "installOnPremSolr-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            $solrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
-            $global:Items.Add("SolrServiceDir", $solrServiceDir)
-            
-            $global:Items.Add("SolrServiceUrl", "https://$($global:Configuration.search.solr.hostName):$($global:Configuration.search.solr.port)/solr")
-
-            break
-        }
-        "installOnPremAllInOne-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-    
-            $solrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
-            $global:Items.Add("SolrServiceDir", $solrServiceDir)
-    
-            $global:Items.Add("SolrServiceUrl", "https://$($global:Configuration.search.solr.hostName):$($global:Configuration.search.solr.port)/solr")
-    
-            break
-        }
-        "installOnPremCM-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremCD-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremPRC-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremCollection-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremCollectionSearch-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremAutomationOperations-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremReferenceData-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremAutomationReporting-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremREP-XP" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-        "installOnPremSolr-XM" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-            
-            $solrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
-            $global:Items.Add("SolrServiceDir", $solrServiceDir)
-
-            $global:Items.Add("SolrServiceUrl", "https://$($global:Configuration.search.solr.hostName):$($global:Configuration.search.solr.port)/solr")
-            
-            break
-        }
-        "installOnPremCM-XM" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-            
-            break
-        }
-        "installOnPremCD-XM" {
-            $installPackageDir = "$PSScriptRoot\..\..\temp\package"
-            $global:Items.Add("SAFInstallPackageDir", $installPackageDir)
-
-            break
-        }
-    }
-}
-
 function StartInstall {
     [CmdletBinding()]
     Param
@@ -160,7 +52,6 @@ function StartInstall {
     )
     
     $pipeline = ResolvePipeline
-    InitializeItems -Pipeline $pipeline
 
     if ($PSBoundParameters["Force"]) {
         RunSteps -Pipeline $pipeline -Force

@@ -21,10 +21,6 @@
             "script": "\\Install\\OnPrem\\Solr\\Process-InstallPackage.ps1"
         },
         {
-            "name": "Configure IIS",
-            "script": "\\Install\\OnPrem\\Configure-IIS.ps1"
-        },
-        {
             "name": "Install Sitecore Installation Framework (SIF)",
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
@@ -527,10 +523,6 @@
             "script": "\\Install\\OnPrem\\Solr\\Process-InstallPackage.ps1"
         },
         {
-            "name": "Configure IIS",
-            "script": "\\Install\\OnPrem\\Configure-IIS.ps1"
-        },
-        {
             "name": "Install Sitecore Installation Framework (SIF)",
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
@@ -643,6 +635,28 @@
         {
             "name": "Export SSL Certificates",
             "script": "\\Common\\SSL\\Export-Certs.ps1"
+        }
+    ],
+    "uninstallSitecore":[
+        {
+            "name": "Delete Services",
+            "script": "\\Install\\OnPrem\\Uninstall\\Delete-Services.ps1"
+        },
+        {
+            "name": "Delete IIS Websites and App Pools",
+            "script": "\\Install\\OnPrem\\Uninstall\\Delete-IISWebsitesAndAppPools.ps1"
+        },
+        {
+            "name": "Delete SQL databases",
+            "script": "\\Install\\OnPrem\\Uninstall\\Delete-SQLDatabases.ps1"
+        },
+        {
+            "name": "Delete folders from file system",
+            "script": "\\Install\\OnPrem\\Uninstall\\Delete-Folders.ps1"
+        },
+        {
+            "name": "Delete Sitecore SSL Certificates",
+            "script": "\\Install\\OnPrem\\Uninstall\\Delete-SSLCerts.ps1"
         }
     ]
 }

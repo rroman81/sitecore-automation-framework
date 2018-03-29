@@ -1,5 +1,6 @@
+. "$PSScriptRoot\..\..\..\InstallParams.ps1"
+. "$PSScriptRoot\..\..\Solr\SolrParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
-Import-Module "$PSScriptRoot\..\..\..\..\Common\Utils-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
@@ -8,22 +9,20 @@ Write-Output "Install xConnect started..."
 $prefix = $global:Configuration.prefix
 $clientCert = BuildClientCertName -Prefix $prefix
 $xConnectHostName = $global:Configuration.xConnect.hostName
-$serverCert = BuildServerCertName -Prefix $prefix -Hostname $xConnectHostName
+$serverCert = BuildServerCertName -Prefix $prefix
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser =  $global:Configuration.sql.adminUsername
 $sqlAdminPassword =  $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.xConnect.installDir
-$solrUrl = $global:Items.SolrServiceUrl
-$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
-$package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *xconnect.scwdp.zip*
+$package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *xconnect.scwdp.zip*
 
 $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
 
 $xconnectParams = @{
-    Path                           = "$sourcePackageDirectory\xconnect-xp0.json"
+    Path                           = "$SAFInstallPackageDir\xconnect-xp0.json"
     Package                        = $package.FullName
     LicenseFile                    = $license
     Sitename                       = $xConnectHostName
@@ -44,7 +43,7 @@ $xconnectParams = @{
     SqlMessagingUser               = "$($prefix)_messaginguser"
     SqlMessagingPassword           = $sqlSitecorePassword
     SolrCorePrefix                 = $prefix
-    SolrURL                        = $solrUrl
+    SolrURL                        = $SolrServiceUrl
     InstallDirectory               = $installDir
 }
 Install-SitecoreConfiguration @xconnectParams

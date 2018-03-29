@@ -1,5 +1,5 @@
 Import-Module "$PSScriptRoot\Sql-Module.psm1" -Force
-Import-Module "$PSScriptRoot\..\common\Utils-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\common\WebAdministration-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Write-Output "Add custom databases started..."
@@ -19,7 +19,7 @@ else {
         $dacpac = $db.dacpack
         $localDbUserName = "$($prefix)_$($db.loginUsername)"
         $connStrName = $db.connectionStringName
-        $dacpackName = [System.IO.Path]::GetFileNameWithoutExtension($db.dacpack)
+        $dacpackName = [System.IO.Path]::GetFileNameWithoutExtension($dacpac)
         $targetDatabaseName = "$($prefix)_$dacpackName"
         
         DeployDacpac -SqlServer $sqlServer -Username $sqlUser -Password $sqlAdminPassword -LocalDbUsername $localDbUserName -LocalDbPassword $sqlSitecorePassword -Dacpac $dacpac -TargetDatabaseName $targetDatabaseName

@@ -7,7 +7,7 @@ function BuildRootCertName {
         [string]$Prefix
     )
 
-    $crt = "$($Prefix)_Root_SAF"
+    $crt = "$($Prefix)_SitecoreRoot_SAF"
     return $crt
 }
 
@@ -17,41 +17,71 @@ function BuildClientCertName {
         [string]$Prefix
     )
 
-    $crt = "$($Prefix)_xConnectClient_SAF"
+    $crt = "$($Prefix)_SitecoreClient_SAF"
     return $crt
 }
 
 function BuildServerCertName {
     [CmdletBinding()]
     Param(
-        [string]$Prefix,
-        [string]$Hostname
+        [string]$Prefix
     )
 
-    $crt = "$($Prefix)_$($Hostname)_SAF"
+    $crt = "$($Prefix)_SitecoreServer_SAF"
     return $crt
+}
+
+function FindCert {
+    [CmdletBinding()]
+    Param(
+        [string]$Cert
+    )
+
+    try {
+        $cert = Get-ChildItem -Path "cert:\LocalMachine\My" | Where-Object FriendlyName -eq $Cert
+    
+        if ($cert -eq $null) {
+            $cert = Get-ChildItem -Path "cert:\LocalMachine\Root" | Where-Object FriendlyName -eq $Cert
+        }
+
+        if ($cert -eq $null) {
+            $cert = Get-Item "cert:\LocalMachine\My\$Cert"
+        }
+        if ($cert -eq $null) {
+            $cert = Get-Item "cert:\LocalMachine\Root\$Cert"
+        }
+
+        return $cert
+    }
+    catch {
+        Write-Warning "Exception occurred while looking for SSLCert."
+        $exception = $_.Exception | Format-List -Force | Out-String
+        Write-Warning $exception
+        return null
+    }
 }
 
 function CleanCertStore {
     [CmdletBinding()]
     Param(
-        [string]$Prefix
+        [string]$Prefix,
+        [string]$Store
     )
 
     $rootCertName = BuildRootCertName -Prefix $Prefix
     Write-Output "Cleaning Sitecore SSL Certificates started..."
 
-    $certs = Get-ChildItem -Path "cert:\CurrentUser\My" | Where-Object { $_.Issuer -Like "CN=$rootCertName*" }
+    $certs = Get-ChildItem -Path "cert:\$Store\My" | Where-Object { $_.Issuer -Like "CN=$rootCertName*" }
     if ($certs -ne $null) {
         foreach ($cert in $certs) {
-            Remove-Item -Path "cert:\CurrentUser\My\$($cert.Thumbprint)" -DeleteKey -Force
+            Remove-Item -Path "cert:\$Store\My\$($cert.Thumbprint)" -DeleteKey -Force
             Write-Output "Removed SSL Certificate with Subject = $($cert.Subject) and Thumbprint = $($cert.Thumbprint)"
         }
     }
 
-    $rootCert = Get-ChildItem -Path "cert:\CurrentUser\Root" | Where-Object FriendlyName -eq $rootCertName
+    $rootCert = Get-ChildItem -Path "cert:\$Store\Root" | Where-Object FriendlyName -eq $rootCertName
     if ($rootCert -ne $null) {
-        Remove-Item -Path "cert:\CurrentUser\Root\$($rootCert.Thumbprint)" -DeleteKey -Force
+        Remove-Item -Path "cert:\$Store\Root\$($rootCert.Thumbprint)" -DeleteKey -Force
         Write-Output "Removed SSL Certificate with Subject = $($rootCert.Subject) and Thumbprint = $($rootCert.Thumbprint)"
     }
 
@@ -86,7 +116,7 @@ function GenerateServerCert {
     if ($rootCert -eq $null) {
         throw "Can not find SSL Root CA Certificate with name '$rootCertName'..."
     }
-    $serverCertName = BuildServerCertName -Prefix $Prefix -Hostname $Hostnames[0]
+    $serverCertName = BuildServerCertName -Prefix $Prefix
     
     Write-Output "Generating '$serverCertName' Certificate started..."
     New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $serverCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage CertSign -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $serverCertName
@@ -136,7 +166,7 @@ function ExportCerts {
     Write-Output "Exporting all certificates issued by '$rootCertName' done."
     
     try {
-        CleanCertStore -Prefix $Prefix
+        CleanCertStore -Prefix $Prefix -Store "CurrentUser"
     }
     catch {
         Write-Warning "Exception occurred"
@@ -169,3 +199,5 @@ Export-ModuleMember -Function "GenerateClientCert"
 Export-ModuleMember -Function "ExportCerts"
 Export-ModuleMember -Function "BuildClientCertName"
 Export-ModuleMember -Function "BuildServerCertName"
+Export-ModuleMember -Function "FindCert"
+Export-ModuleMember -Function "CleanCertStore"

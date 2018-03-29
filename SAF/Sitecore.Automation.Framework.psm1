@@ -5,7 +5,6 @@ $ErrorActionPreference = "Stop"
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 $global:Configuration = $null
-$global:Items = $null
 $global:Pipelines = Get-Content -Raw -Path "$PSScriptRoot\common\Pipelines.json" | ConvertFrom-Json
 
 function CheckSSLCertsPFX {
@@ -53,12 +52,11 @@ function Initialize {
     }
 
     Write-Warning "SAF initialization will start after 3 seconds..."
-    #Start-Sleep -s 3
+    Start-Sleep -s 3
 
     ConfigurePSGallery
     ConfigureChoco
     RefreshEnvironment
-    $global:Items = @{}
 
     Write-Warning "SAF initialization is done."
 }
@@ -84,6 +82,14 @@ function Install-Sitecore {
     }
 }
 
+function Uninstall-Sitecore {
+    Initialize
+    LoadCofigurations -ConfigName "InstallConfiguration"
+
+    Import-Module "$PSScriptRoot\Install\OnPrem\Uninstall-Module.psm1" -Force
+    StartUninstall
+}
+
 function New-SSLCerts {
     [CmdletBinding()]
     Param
@@ -105,4 +111,5 @@ function New-SSLCerts {
 }
 
 Export-ModuleMember -Function "Install-Sitecore"
+Export-ModuleMember -Function "Uninstall-Sitecore"
 Export-ModuleMember -Function "New-SSLCerts"

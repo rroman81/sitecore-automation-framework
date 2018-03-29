@@ -1,0 +1,1 @@
+$SAFInstallPackageDir = "$PSScriptRoot\..\temp\package"

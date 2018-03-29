@@ -6,7 +6,7 @@
     "license": "C:\\SAF_FILES\\license.xml",
     "prefix": "allInOne",
     "sitecore": {
-        "hostNames": ["allinone.local"],
+        "hostNames": ["allinone.local", "sub.allinone.local"],
         "installDir": "C:\\SAF_FILES\\web\\allInOne\\Website"
     },
     "xConnect": {

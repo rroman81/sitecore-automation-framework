@@ -2,13 +2,7 @@
     "prefix": "",
     "password": "",
     "sslCerts": [
-        {
-            "type": "SolrCert",
-            "hostNames": []
-        },
-        {
-            "type": "xConnectCert",
-            "hostNames": []
-        }
+        "SOLR_HOST_NAME", 
+        "CONTENT_MANAGEMENT_HOST_NAME"
     ]
 }

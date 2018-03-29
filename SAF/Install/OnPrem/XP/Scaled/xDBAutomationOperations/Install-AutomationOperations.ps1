@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\..\..\..\..\..\Common\Utils-Module.psm1" -Force
+. "$PSScriptRoot\..\..\..\..\InstallParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
@@ -6,13 +6,12 @@ $prefix = $global:Configuration.prefix
 $siteName = $global:Configuration.xDB.automationOperationsHostName
 $sslCert = $global:Configuration.xDB.sslCert
 if ([string]::IsNullOrEmpty($sslCert)) {
-    $sslCert = BuildServerCertName -Prefix $prefix -Hostname $siteName
+    $sslCert = BuildServerCertName -Prefix $prefix
 }
 $xConnectSslCert = $global:Configuration.xConnect.sslCert
 if ([string]::IsNullOrEmpty($xConnectSslCert)) {
     $xConnectSslCert = BuildClientCertName -Prefix $prefix
 }
-$sourcePackageDirectory = $global:Items.SAFInstallPackageDir
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlUser = $global:Configuration.sql.adminUsername
@@ -23,12 +22,12 @@ $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel
 $collectionService = $global:Configuration.xConnect.collectionService
 $referenceDataService = $global:Configuration.xDB.referenceDataService
-$package = Get-ChildItem -Path "$sourcePackageDirectory\*" -Include *marketingautomation.scwdp.zip*
+$package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *marketingautomation.scwdp.zip*
 
 Write-Output "Install xDB Automation Operations started..."
 
 $sitecoreParams = @{
-    Path                           = "$sourcePackageDirectory\xconnect-xp1-MarketingAutomation.json"
+    Path                           = "$SAFInstallPackageDir\xconnect-xp1-MarketingAutomation.json"
     Package                        = $package.FullName
     LicenseFile                    = $license
     Sitename                       = $siteName
