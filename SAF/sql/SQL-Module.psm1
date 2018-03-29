@@ -35,7 +35,9 @@ DROP DATABASE [$DatabaseName]
 END
 "@
     Push-Location
+    Write-Output "Deleting SQL Database '$DatabaseName'..."
     Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer -Username $Username -Password $Password
+    Write-Output "Done."
     Pop-Location
 }
 

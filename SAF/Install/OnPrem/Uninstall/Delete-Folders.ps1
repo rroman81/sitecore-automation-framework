@@ -8,7 +8,7 @@ Write-Output "Deleting folders started..."
 $dirs = @("$solrRootDir", "$sitecoreRootDir", "$xConnectRootDir")
 foreach ($dir in $dirs) {
     if (Test-Path $dir) {
-        Write-Output "Deleting '$dir'"
+        Write-Output "Deleting '$dir'..."
         Remove-Item -Path $dir -Recurse -Force | Out-Null
     }
 }
