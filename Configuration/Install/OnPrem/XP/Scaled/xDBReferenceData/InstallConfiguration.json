@@ -5,11 +5,6 @@
     "installPackage": "",
     "license": "",
     "prefix": "",
-    "referenceData": {
-        "hostName": "",
-        "installDir": "",
-        "sslCert": ""
-    },
     "xDB":{
         "referenceDataHostName": "",
         "installDir": "",

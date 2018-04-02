@@ -3,6 +3,7 @@
     "password": "",
     "sslCerts": [
         "SOLR_HOST_NAME", 
-        "CONTENT_MANAGEMENT_HOST_NAME"
+        "XCONNECT_HOST_NAME",
+        "ANY_CUSTOM_HOSTNAMES_THAT_NEED_HTTPS..."
     ]
 }
