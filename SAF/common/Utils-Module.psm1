@@ -36,9 +36,10 @@ function DeleteServices {
 
     Write-Output "Deleting existing services..."
 
+    taskkill /F /IM mmc.exe 2> nul
+
     foreach ($service in $Services) {
         if (Get-Service $service -ErrorAction SilentlyContinue) {
-            taskkill /F /IM mmc.exe
             Write-Output "Stopping '$service' service..."
             nssm stop $service
             Write-Output "Deleting '$service' service..."
