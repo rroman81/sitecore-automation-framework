@@ -83,11 +83,23 @@ function Install-Sitecore {
 }
 
 function Uninstall-Sitecore {
+    [CmdletBinding()]
+    Param
+    (
+        [switch]$Force
+    )
+
     Initialize
     LoadCofigurations -ConfigName "InstallConfiguration"
 
     Import-Module "$PSScriptRoot\Install\OnPrem\Uninstall-Module.psm1" -Force
-    StartUninstall
+   
+    if ($PSBoundParameters["Force"]) {
+        StartUninstall -Force
+    }
+    else {
+        StartUninstall
+    }
 }
 
 function New-SSLCerts {

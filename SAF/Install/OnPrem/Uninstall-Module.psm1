@@ -20,9 +20,21 @@ function CheckXP0 {
 }
 
 function StartUninstall {
+    [CmdletBinding()]
+    Param
+    (
+        [switch]$Force
+    )
+    
     CheckXP0
     $pipeline = "uninstallSitecore"
-    RunSteps -Pipeline $pipeline
+
+    if ($PSBoundParameters["Force"]) {
+        RunSteps -Pipeline $pipeline -Force
+    }
+    else {
+        RunSteps -Pipeline $pipeline
+    }
 }
 
 Export-ModuleMember -Function "StartUninstall"
