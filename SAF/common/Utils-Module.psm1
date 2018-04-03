@@ -2,7 +2,7 @@ Import-Module "$PSScriptRoot\WebAdministration-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 function RefreshEnvironment {
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User") 
     refreshenv
 }
 
@@ -38,9 +38,14 @@ function DeleteServices {
 
     foreach ($service in $Services) {
         if (Get-Service $service -ErrorAction SilentlyContinue) {
-            nssm stop $service | Out-Null
-            taskkill /F /IM mmc.exe | Out-Null
+            taskkill /F /IM mmc.exe
+            Write-Output "Stopping '$service' service..."
+            nssm stop $service
+            Write-Output "Deleting '$service' service..."
             nssm remove $service confirm
+        }
+        else {
+            Write-Warning "Service '$service' not found..."
         }
     }
 

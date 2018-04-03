@@ -639,6 +639,10 @@
     ],
     "uninstallSitecore":[
         {
+            "name": "Install Non-Sucking Service Manager",
+            "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
+        },
+        {
             "name": "Delete Services",
             "script": "\\Install\\OnPrem\\Uninstall\\Delete-Services.ps1"
         },

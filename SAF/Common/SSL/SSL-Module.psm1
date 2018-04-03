@@ -98,7 +98,7 @@ function GenerateRootCert {
     $rootCertName = BuildRootCertName -Prefix $Prefix
 
     Write-Output "Generating '$rootCertName' Root CA Certificate started..."
-    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -DnsName "$rootCertName" -KeyusageProperty All -KeyUsage CertSign -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $rootCertName
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -DnsName "$rootCertName" -KeyusageProperty All -KeyUsage CertSign -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $rootCertName
     Write-Output "Generating '$rootCertName' Root CA Certificate done."
 }
 
@@ -119,7 +119,7 @@ function GenerateServerCert {
     $serverCertName = BuildServerCertName -Prefix $Prefix
     
     Write-Output "Generating '$serverCertName' Certificate started..."
-    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $serverCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage CertSign -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $serverCertName
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $serverCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage CertSign -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $serverCertName
     Write-Output "Generating '$serverCertName' Certificate done."
 }
 
@@ -138,7 +138,7 @@ function GenerateClientCert {
     $clientCertName = BuildClientCertName -Prefix $Prefix
 
     Write-Output "Generating '$clientCertName' Certificate started..."
-    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -DnsName $clientCertName -KeyusageProperty All -KeyUsage CertSign -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $clientCertName
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -DnsName $clientCertName -KeyusageProperty All -KeyUsage CertSign -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $clientCertName
     Write-Output "Generating '$clientCertName' Certificate done."
 }
 
