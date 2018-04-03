@@ -74,15 +74,21 @@ function CleanCertStore {
     $certs = Get-ChildItem -Path "cert:\$Store\My" | Where-Object { $_.Issuer -Like "CN=$rootCertName*" }
     if ($certs -ne $null) {
         foreach ($cert in $certs) {
+            Write-Output "Removing SSL Certificate with Subject = '$($cert.Subject)' and Thumbprint = '$($cert.Thumbprint)'..."
             Remove-Item -Path "cert:\$Store\My\$($cert.Thumbprint)" -DeleteKey -Force
-            Write-Output "Removed SSL Certificate with Subject = $($cert.Subject) and Thumbprint = $($cert.Thumbprint)"
         }
+    }
+    else {
+        Write-Warning "SSL Certificates issued by '$rootCertName' not found..."
     }
 
     $rootCert = Get-ChildItem -Path "cert:\$Store\Root" | Where-Object FriendlyName -eq $rootCertName
     if ($rootCert -ne $null) {
+        Write-Output "Removing SSL Root Certificate with Subject = '$($rootCert.Subject)' and Thumbprint = '$($rootCert.Thumbprint)'..."
         Remove-Item -Path "cert:\$Store\Root\$($rootCert.Thumbprint)" -DeleteKey -Force
-        Write-Output "Removed SSL Certificate with Subject = $($rootCert.Subject) and Thumbprint = $($rootCert.Thumbprint)"
+    }
+    else {
+        Write-Warning "'$rootCertName' SSL Root Certificate not found..."
     }
 
     Write-Output "Cleaning Sitecore SSL Certificates done."
@@ -98,7 +104,7 @@ function GenerateRootCert {
     $rootCertName = BuildRootCertName -Prefix $Prefix
 
     Write-Output "Generating '$rootCertName' Root CA Certificate started..."
-    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -DnsName "$rootCertName" -KeyusageProperty All -KeyUsage DigitalSignature,CertSign -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $rootCertName -Verbose
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -DnsName "$rootCertName" -KeyusageProperty All -KeyUsage DigitalSignature, CertSign -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $rootCertName -Verbose
     Write-Output "Generating '$rootCertName' Root CA Certificate done."
 }
 
@@ -119,7 +125,7 @@ function GenerateServerCert {
     $serverCertName = BuildServerCertName -Prefix $Prefix
     
     Write-Output "Generating '$serverCertName' Certificate started..."
-    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $serverCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage KeyEncipherment,DigitalSignature -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $serverCertName
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $serverCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage KeyEncipherment, DigitalSignature -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $serverCertName
     Write-Output "Generating '$serverCertName' Certificate done."
 }
 
@@ -138,7 +144,7 @@ function GenerateClientCert {
     $clientCertName = BuildClientCertName -Prefix $Prefix
 
     Write-Output "Generating '$clientCertName' Certificate started..."
-    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -DnsName $clientCertName -KeyusageProperty All -KeyUsage KeyEncipherment,DigitalSignature -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $clientCertName
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -DnsName $clientCertName -KeyusageProperty All -KeyUsage KeyEncipherment, DigitalSignature -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $clientCertName
     Write-Output "Generating '$clientCertName' Certificate done."
 }
 

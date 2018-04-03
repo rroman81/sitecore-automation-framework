@@ -15,16 +15,22 @@ function ImportSIF {
 
     # If not, register it
     if ($existing -eq $null) {
-        Register-PSRepository -Name $repositoryName -SourceLocation $repositoryUrl -InstallationPolicy Trusted 
+        Write-Output "Registering $repositoryName '$repositoryUrl'..."
+        Register-PSRepository -Name $repositoryName -SourceLocation $repositoryUrl -InstallationPolicy Trusted
+    }
+    else {
+        Write-Warning "$repositoryName '$repositoryUrl' is already registered."
     }
 
     # Ensure Trusted, so that users are not prompted before installing modules from that source.
     Set-PSRepository -Name $repositoryName -InstallationPolicy Trusted
 
     if (Get-Module "SitecoreInstallFramework" -ListAvailable) {
+        Write-Warning "SitecoreInstallFramework is installed. Updating..."
         Update-Module "SitecoreInstallFramework"
     }
     else {
+        Write-Output "Installing SitecoreInstallFramework..."
         Install-Module "SitecoreInstallFramework"
     }
 

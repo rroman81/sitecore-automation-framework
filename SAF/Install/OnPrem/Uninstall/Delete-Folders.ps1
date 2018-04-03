@@ -11,5 +11,8 @@ foreach ($dir in $dirs) {
         Write-Output "Deleting '$dir'..."
         Remove-Item -Path $dir -Recurse -Force | Out-Null
     }
+    else {
+        Write-Warning "'$dir' doesn't exist..."
+    }
 }
 Write-Output "Deleting folders done." 
