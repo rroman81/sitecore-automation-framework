@@ -3,11 +3,17 @@ Import-Module "$PSScriptRoot\..\..\Common\WebAdministration-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 function ImportSIF {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$RepositoryURL,
+        [string]$Version
+    )
+    
     Write-Output "Import Sitecore Installation Framework (SIF) started..."
 
     EnableIISAdministration
     
-    $repositoryUrl = "https://sitecore.myget.org/F/sc-powershell/api/v2"
     $repositoryName = "SitecoreGallery"
 
     # Check to see whether that location is registered already
@@ -15,11 +21,11 @@ function ImportSIF {
 
     # If not, register it
     if ($existing -eq $null) {
-        Write-Output "Registering $repositoryName '$repositoryUrl'..."
-        Register-PSRepository -Name $repositoryName -SourceLocation $repositoryUrl -InstallationPolicy Trusted
+        Write-Output "Registering $repositoryName '$RepositoryURL'..."
+        Register-PSRepository -Name $repositoryName -SourceLocation $RepositoryURL -InstallationPolicy Trusted
     }
     else {
-        Write-Warning "$repositoryName '$repositoryUrl' is already registered."
+        Write-Warning "$repositoryName '$RepositoryURL' is already registered."
     }
 
     # Ensure Trusted, so that users are not prompted before installing modules from that source.
@@ -34,10 +40,7 @@ function ImportSIF {
         Install-Module "SitecoreInstallFramework"
     }
 
-    if (!(Get-Module "SitecoreInstallFramework")) {
-        Import-Module "SitecoreInstallFramework"
-    }
-
+    Import-Module "SitecoreInstallFramework" -RequiredVersion $Version
     Write-Output "Import Sitecore Installation Framework (SIF) done."
 }
 
