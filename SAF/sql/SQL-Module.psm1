@@ -3,16 +3,17 @@ $ErrorActionPreference = "Stop"
 # Private functions
 function ImportSqlModule {
     
-    if (Get-Module "SqlServer" -ListAvailable) {
-        Update-Module "SqlServer"
+    if (Get-Module -Name SqlServer -ListAvailable) {
+        Write-Warning "SqlServer module is installed. Updating..."
+        Update-Module -Name SqlServer
     }
     else {
-        Install-Module "SqlServer" -AllowClobber
+        Write-Output "Installing SqlServer module..."
+        Install-Module -Name SqlServer -AllowClobber
     }
 
-    if (!(Get-Module "SqlServer")) {
-        Import-Module "SqlServer"
-    }
+    Get-Module -Name SqlServer | Remove-Module
+    Import-Module -Name SqlServer
 }
 
 function DeleteDb {

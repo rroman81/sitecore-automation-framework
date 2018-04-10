@@ -31,16 +31,18 @@ function ImportSIF {
     # Ensure Trusted, so that users are not prompted before installing modules from that source.
     Set-PSRepository -Name $repositoryName -InstallationPolicy Trusted
 
-    if (Get-Module "SitecoreInstallFramework" -ListAvailable) {
-        Write-Warning "SitecoreInstallFramework is installed. Updating..."
-        Update-Module "SitecoreInstallFramework"
+    if (Get-Module SitecoreInstallFramework -ListAvailable) {
+        Write-Warning "SitecoreInstallFramework module is installed. Updating..."
+        Update-Module -Name SitecoreInstallFramework -RequiredVersion $Version
     }
     else {
-        Write-Output "Installing SitecoreInstallFramework..."
-        Install-Module "SitecoreInstallFramework"
+        Write-Output "Installing SitecoreInstallFramework module..."
+        Install-Module -Name SitecoreInstallFramework -RequiredVersion $Version
     }
 
-    Import-Module "SitecoreInstallFramework" -RequiredVersion $Version
+    Get-Module -Name SitecoreInstallFramework | Remove-Module 
+    Import-Module -Name SitecoreInstallFramework -RequiredVersion $Version
+
     Write-Output "Import Sitecore Installation Framework (SIF) done."
 }
 

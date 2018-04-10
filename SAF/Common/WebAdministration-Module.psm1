@@ -17,9 +17,8 @@ function EnableIISAdministration {
         }
     }
 
-    if (!(Get-Module "WebAdministration")) {
-        Import-Module "WebAdministration"
-    }
+    Get-Module -Name WebAdministration | Remove-Module
+    Import-Module -Name WebAdministration
 }
 
 function IISReset {
