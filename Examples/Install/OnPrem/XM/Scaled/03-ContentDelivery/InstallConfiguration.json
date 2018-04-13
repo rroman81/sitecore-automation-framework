@@ -21,7 +21,7 @@
          }
     },
     "sql": {
-        "serverName": ".\\SQLEXPRESS",
+        "serverName": ".\\SQL2017",
         "sitecorePassword": "Test123"
     },
     "ssl": {

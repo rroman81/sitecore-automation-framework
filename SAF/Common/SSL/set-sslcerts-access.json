@@ -1,0 +1,36 @@
+{
+    "Parameters": {
+        "XConnectCert": {
+            "Type": "string",
+            "Description": "The certificate."
+        },
+        "AppPoolName": {
+            "Type": "string",
+            "Description": "The name of the AppPool."
+        }
+    },
+    "Variables": {
+        "Security.CertificateStore": "Cert:\\Localmachine\\My",
+        "Security.XConnect.CertificateThumbprint": "[GetCertificateThumbprint(parameter('XConnectCert'), variable('Security.CertificateStore'))]",
+        "Security.XConnect.CertificatePath": "[joinpath(variable('Security.CertificateStore'), variable('Security.XConnect.CertificateThumbprint'))]"
+    },
+    "Tasks": {
+        "SetCertStorePermissions": {
+            "Type": "FilePermissions",
+            "Params": {
+                "Path": "[ResolveCertificatePath(variable('Security.XConnect.CertificatePath'))]",
+                "Rights": [
+                    {
+                        "User": "[concat('IIS AppPool\\', parameter('AppPoolName'))]",
+                        "FileSystemRights": [
+                            "Read"
+                        ],
+                        "InheritanceFlags": [
+                            "None"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -27,6 +27,7 @@ Write-Output "Install xConnect Collection started..."
 
 $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
+DeleteLogin -SqlServer $sqlServer -SqlLogin "$($prefix)_collectionuser" -Username $sqlUser -Password $sqlAdminPassword
 
 $sitecoreParams = @{
     Path                           = "$SAFInstallPackageDir\xconnect-xp1-collection.json"

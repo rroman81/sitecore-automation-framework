@@ -3,6 +3,8 @@
     "password": "Pass123",
     "hostNames": [
         "solr.allinone.local",
-        "xconnect.allinone.local"
+        "xconnect.allinone.local",
+        "allinone.local",
+        "sub.allinone.local"
     ]
 }

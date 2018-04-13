@@ -5,4 +5,4 @@ $prefix = $global:Configuration.prefix
 $hostNames = $global:Configuration.hostNames
 
 GenerateServerCert -Prefix $prefix -Hostnames $hostNames
-GenerateClientCert -Prefix $prefix
+GenerateClientCert -Prefix $prefix -Hostnames $hostNames

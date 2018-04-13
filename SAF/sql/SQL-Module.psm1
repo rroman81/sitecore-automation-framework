@@ -16,41 +16,6 @@ function ImportSqlModule {
     Import-Module -Name SqlServer
 }
 
-function DeleteDb {
-    [CmdletBinding()]
-    Param
-    (
-        [string]$SqlServer,
-        [string]$DatabaseName,
-        [string]$Username,
-        [string]$Password
-    )
-
-    $cmd = 
-    @"
-IF DB_ID('$DatabaseName') IS NOT NULL
-BEGIN
-ALTER DATABASE [$DatabaseName] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
-EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'$DatabaseName'
-DROP DATABASE [$DatabaseName]
-END
-"@
-    Push-Location
-    Write-Output "Deleting SQL Database '$DatabaseName'..."
-    Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer -Username $Username -Password $Password
-    Pop-Location
-}
-
-function LoadDacfx {
-    $dacfxPath = "C:\Program Files (x86)\Microsoft SQL Server\140\DAC\bin\Microsoft.SqlServer.Dac.dll"
-
-    if (-not (Test-Path $dacfxPath)) {
-        throw "Microsoft.SqlServer.Dac.dll doesn't exist '$dacfxPath'"
-    }
-
-    Add-Type -Path $dacfxPath
-}
-
 function DatabaseExists {
     [CmdletBinding()]
     Param
@@ -80,6 +45,68 @@ function DatabaseExists {
     }
 
     return $exists
+}
+
+function SqlLoginExists {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$SqlServer,
+        [string]$SqlLogin
+    )
+
+    # Load the SMO assembly and create a Server object
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SMO') | Out-Null
+    $server = New-Object ('Microsoft.SqlServer.Management.Smo.Server') $SqlServer
+    
+    if (($server.logins).Name -Contains $SqlLogin) {
+        return $true
+    }
+    else {
+        return $false
+    }
+}
+
+function DeleteDb {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$SqlServer,
+        [string]$DatabaseName,
+        [string]$Username,
+        [string]$Password
+    )
+
+    $cmd = 
+    @"
+IF DB_ID('$DatabaseName') IS NOT NULL
+BEGIN
+ALTER DATABASE [$DatabaseName] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'$DatabaseName'
+DROP DATABASE [$DatabaseName]
+END
+"@
+
+    if (!(DatabaseExists -SqlServer $SqlServer -DatabaseName $DatabaseName -Username $Username -Password $Password)) {
+        Write-Warning "'$DatabaseName' doesn't exist. Skipping delete..."
+    }
+    else {
+        Push-Location
+        Write-Output "Deleting SQL Database '$DatabaseName'..."
+        Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer -Username $Username -Password $Password
+        Write-Output "Done."
+        Pop-Location
+    }
+}
+
+function LoadDacfx {
+    $dacfxPath = "C:\Program Files (x86)\Microsoft SQL Server\140\DAC\bin\Microsoft.SqlServer.Dac.dll"
+
+    if (-not (Test-Path $dacfxPath)) {
+        throw "Microsoft.SqlServer.Dac.dll doesn't exist '$dacfxPath'"
+    }
+
+    Add-Type -Path $dacfxPath
 }
 
 function CreateDbUser {
@@ -123,22 +150,24 @@ function SetDbOwner {
     Param
     (
         [string]$SqlServer,
+        [string]$SqlLogin,
+        [string]$DatabaseName,
         [string]$Username,
-        [string]$DatabaseName
+        [string]$Password
     )
 
-    if (!(DatabaseExists -SqlServer $SqlServer -DatabaseName $DatabaseName)) {
-        Write-Warning "'$TargetDatabaseName' doesn't exist. Setting db_owner won't be executed."
+    if (!(DatabaseExists -SqlServer $SqlServer -DatabaseName $DatabaseName -Username $Username -Password $Password)) {
+        Write-Warning "'$DatabaseName' doesn't exist. Skipping set db_owner..."
     }
     else {
-        Write-Output "Setting db_owner = '$Username' for '$DatabaseName' database..."
+        Write-Output "Setting db_owner = '$SqlLogin' for '$DatabaseName' database..."
         $server = New-Object ("Microsoft.SqlServer.Management.Smo.Server") $SqlServer
         foreach ($db in $server.databases) {  
             if ($db.name -eq $DatabaseName) {
-                Invoke-Sqlcmd -ServerInstance $SqlServer -Database $DatabaseName -Query "EXEC sp_changedbowner '$Username'"
+                Invoke-Sqlcmd -ServerInstance $SqlServer -Database $DatabaseName -Query "EXEC sp_changedbowner '$SqlLogin'"
             }
         }
-        Write-Output "Setting db_owner = '$Username' for '$DatabaseName' database done."
+        Write-Output "Setting db_owner = '$SqlLogin' for '$DatabaseName' database done."
     }
 }
 
@@ -185,15 +214,51 @@ function DeleteDatabases {
 
     ImportSqlModule
 
-    Write-Output "Clean existing databases started..."
+    Write-Output "Delete existing databases started..."
 
     foreach ($db in $Databases) {
         $dbName = "$($Prefix)_$db"
         DeleteDb -SqlServer $SqlServer -DatabaseName $dbName -Username $Username -Password $Password
     }
 
-    Write-Output "Clean existing databases done."
+    Write-Output "Delete existing databases done."
 
+}
+
+function DeleteLogin {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$SqlServer,
+        [string]$SqlLogin,
+        [string]$Username,
+        [string]$Password
+    )
+
+    ImportSqlModule
+
+    Write-Output "Delete SQL Login '$SqlLogin' started..."
+
+    $cmd = 
+    @"
+USE [master]
+GO
+DROP LOGIN [$SqlLogin]
+GO
+"@
+
+    if (!(SqlLoginExists -SqlServer $SqlServer -SqlLogin $SqlLogin)) {
+        Write-Warning "'$SqlLogin' doesn't exist. Skipping delete..."
+    }
+    else {
+        Push-Location
+        Write-Output "Deleting SQL Login '$SqlLogin'..."
+        Invoke-Sqlcmd $cmd -QueryTimeout 3600 -ServerInstance $SqlServer -Username $Username -Password $Password
+        Write-Output "Done."
+        Pop-Location
+    }
+
+    Write-Output "Delete SQL Login '$SqlLogin' done."
 }
 
 function DeployDacpac {
@@ -236,5 +301,6 @@ function DeployDacpac {
 }
 
 Export-ModuleMember -Function "DeleteDatabases"
+Export-ModuleMember -Function "DeleteLogin"
 Export-ModuleMember -Function "DeployDacpac"
 Export-ModuleMember -Function "EnableContainedDatabaseAuth"

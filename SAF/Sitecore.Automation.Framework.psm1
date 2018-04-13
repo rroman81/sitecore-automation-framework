@@ -7,20 +7,6 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 $global:Configuration = $null
 $global:Pipelines = Get-Content -Raw -Path "$PSScriptRoot\common\Pipelines.json" | ConvertFrom-Json
 
-function CheckSSLCertsPFX {
-    $dir = Get-Location
-
-    $pfxRootCert = "$dir\SitecoreRootSSLCertificate_SAF.pfx"
-    if (!(Test-Path $pfxRootCert)) {
-        throw "Please, provide 'SitecoreRootSSLCertificate_SAF.pfx' file."
-    }
-
-    $pfxCert = "$dir\SitecoreSSLCertificates_SAF.pfx"
-    if (!(Test-Path $pfxCert)) {
-        throw "Please, provide 'SitecoreSSLCertificates_SAF.pfx' file."
-    }
-}
-
 function LoadCofigurations {
     [CmdletBinding()]
     Param
@@ -70,7 +56,6 @@ function Install-Sitecore {
 
     Initialize
     LoadCofigurations -ConfigName "InstallConfiguration"
-    CheckSSLCertsPFX
 
     Import-Module "$PSScriptRoot\Install\OnPrem\Install-Module.psm1" -Force
 
@@ -122,6 +107,24 @@ function New-SSLCerts {
     }
 }
 
+function Import-SSLCerts {
+    Initialize
+    LoadCofigurations -ConfigName "SSLConfiguration"
+
+    Import-Module "$PSScriptRoot\Common\SSL\SSL-Module.psm1" -Force
+    ImportCerts -Password $global:Configuration.password
+}
+
+function Set-SSLCertsAppPoolsAccess {
+    Initialize
+    LoadCofigurations -ConfigName "SSLConfiguration"
+
+    Import-Module "$PSScriptRoot\Common\SSL\SSL-Module.psm1" -Force
+    SetSSLCertsAppPoolsAccess -Prefix $global:Configuration.prefix -Hostnames $global:Configuration.hostNames 
+}
+
 Export-ModuleMember -Function "Install-Sitecore"
 Export-ModuleMember -Function "Uninstall-Sitecore"
 Export-ModuleMember -Function "New-SSLCerts"
+Export-ModuleMember -Function "Import-SSLCerts"
+Export-ModuleMember -Function "Set-SSLCertsAppPoolsAccess"

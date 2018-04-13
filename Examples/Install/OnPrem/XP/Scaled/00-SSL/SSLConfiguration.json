@@ -3,14 +3,16 @@
     "password": "Pass123",
     "hostNames": [
         "solr.xp.local",
-        "contentmanagement.xp.local",
-        "*.contentmanagement.xp.local",
-        "reporting.xp.local",
-        "processing.xp.local",
         "xconnectcollection.xp.local",
         "xconnectcollectionsearch.xp.local",
         "xdbreferencedata.xp.local",
         "xdbautomationoperations.xp.local",
-        "xdbautomationreporting.xp.local"
+        "xdbautomationreporting.xp.local",
+        "processing.xp.local",
+        "reporting.xp.local",
+        "contentmanagement.xp.local",
+        "sub.contentmanagement.xp.local",
+        "contentdelivery.xp.local",
+        "sub.contentdelivery.xp.local"
     ]
 }

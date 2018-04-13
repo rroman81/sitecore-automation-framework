@@ -9,10 +9,6 @@
             "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
         },
         {
-            "name": "Import SSL certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
-        },
-        {
             "name": "Install Solr",
             "script": "\\Install\\OnPrem\\Solr\\Install-Solr.ps1"
         },
@@ -69,10 +65,6 @@
         {
             "name": "Install Non-Sucking Service Manager",
             "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
-        },
-        {
-            "name": "Import SSL certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Solr",
@@ -149,10 +141,6 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
-        },
-        {
             "name": "Install Sitecore CM",
             "script": "\\Install\\OnPrem\\XP\\Scaled\\ContentManagement\\Install-CM.ps1"
         },
@@ -189,10 +177,6 @@
         {
             "name": "Install Sitecore Installation Framework (SIF)",
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
-        },
-        {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Sitecore CD",
@@ -237,10 +221,6 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
-        },
-        {
             "name": "Install Sitecore Processing",
             "script": "\\Install\\OnPrem\\XP\\Scaled\\Processing\\Install-PRC.ps1"
         },
@@ -273,10 +253,6 @@
         {
             "name": "Install Sitecore Installation Framework (SIF)",
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
-        },
-        {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Sitecore Reporting",
@@ -321,10 +297,6 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
-        },
-        {
             "name": "Install xConnect Collection",
             "script": "\\Install\\OnPrem\\XP\\Scaled\\xConnectCollection\\Install-Collection.ps1"
         },
@@ -357,10 +329,6 @@
         {
             "name": "Install Sitecore Installation Framework (SIF)",
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
-        },
-        {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install xConnect Collection Search",
@@ -405,10 +373,6 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
-        },
-        {
             "name": "Install xDB Automation Operations",
             "script": "\\Install\\OnPrem\\XP\\Scaled\\xDBAutomationOperations\\Install-AutomationOperations.ps1"
         },
@@ -441,10 +405,6 @@
         {
             "name": "Install Sitecore Installation Framework (SIF)",
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
-        },
-        {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install xDB Automation Reporting",
@@ -489,10 +449,6 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
-        },
-        {
             "name": "Install xDB Reference Data",
             "script": "\\Install\\OnPrem\\XP\\Scaled\\xDBReferenceData\\Install-ReferenceData.ps1"
         },
@@ -509,10 +465,6 @@
         {
             "name": "Install Non-Sucking Service Manager",
             "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
-        },
-        {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
         },
         {
             "name": "Install Solr",
@@ -569,10 +521,6 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
-        },
-        {
             "name": "Install Sitecore CM",
             "script": "\\Install\\OnPrem\\XM\\Scaled\\Install-CM.ps1"
         },
@@ -611,10 +559,6 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Import SSL Certificates",
-            "script": "\\Install\\OnPrem\\ImportSSLCerts.ps1"
-        },
-        {
             "name": "Install Sitecore CD",
             "script": "\\Install\\OnPrem\\XM\\Scaled\\Install-CD.ps1"
         },
@@ -651,8 +595,8 @@
             "script": "\\Install\\OnPrem\\Uninstall\\Delete-IISWebsitesAndAppPools.ps1"
         },
         {
-            "name": "Delete SQL databases",
-            "script": "\\Install\\OnPrem\\Uninstall\\Delete-SQLDatabases.ps1"
+            "name": "Delete SQL databases and logins",
+            "script": "\\Install\\OnPrem\\Uninstall\\Delete-SQLDatabasesAndLogins.ps1"
         },
         {
             "name": "Delete folders from file system",

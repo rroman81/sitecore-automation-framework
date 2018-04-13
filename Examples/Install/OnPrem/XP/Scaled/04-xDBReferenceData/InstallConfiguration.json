@@ -20,7 +20,7 @@
         "sslCert": ""
     },
     "sql": {
-        "serverName": ".\\SQLEXPRESS",
+        "serverName": ".\\SQL2017",
         "adminUsername": "SAFAdmin",
         "adminPassword": "Pass123",
         "sitecorePassword": "Pass123"

@@ -4,6 +4,8 @@
     "hostNames": [
         "solr.xm.local",
         "contentmanagement.xm.local",
-        "*.contentmanagement.xm.local"
+        "sub.contentmanagement.xm.local",
+        "contentdelivery.xm.local",
+        "sub.contentdelivery.xm.local"
     ]
 }

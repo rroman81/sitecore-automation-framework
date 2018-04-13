@@ -20,6 +20,7 @@ $package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *xconnect.scwd
 
 $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
+DeleteLogin -SqlServer $sqlServer -SqlLogin "$($prefix)_collectionuser" -Username $sqlUser -Password $sqlAdminPassword
 
 $xconnectParams = @{
     Path                           = "$SAFInstallPackageDir\xconnect-xp0.json"

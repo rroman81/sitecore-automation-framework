@@ -13,10 +13,11 @@ Import-Module -Name "$rootDir\SAF\Sitecore.Automation.Framework.psm1" -Force
 ############### START XP0 ###################
 
 # XP AllInOne
-Set-Location "$rootDir\Examples\Install\OnPrem\XP\AllInOne"
+# Set-Location "$rootDir\Examples\Install\OnPrem\XP\AllInOne"
 # New-SSLCerts
+# Import-SSLCerts
 # Install-Sitecore
-Uninstall-Sitecore
+# Uninstall-Sitecore
 
 ############### END XP0 ###################
 
@@ -44,9 +45,13 @@ Uninstall-Sitecore
 
 ############### START XP1 ###################
 
-# XP SSL
+# XP New-SSLCerts
 # Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\00-SSL"
 # New-SSLCerts
+
+# XP Import-SSLCerts
+# Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\00-SSL"
+# Import-SSLCerts
 
 # XP Solr
 # Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\01-Solr"
@@ -87,5 +92,9 @@ Uninstall-Sitecore
 # XP Content Delivery
 # Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\10-ContentDelivery"
 # Install-Sitecore
+
+# XP Set-SSLCertsAppPoolsAccess
+# Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\00-SSL"
+# Set-SSLCertsAppPoolsAccess
 
 ############### END XP1 ###################

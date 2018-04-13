@@ -1,6 +1,19 @@
 Import-Module "$PSScriptRoot\..\Run-Pipelines.psm1" -Force
 $ErrorActionPreference = "Stop"
 
+function IsInstallWithSAFCerts {
+    $dir = Get-Location
+    $pfxRootCert = "$dir\SitecoreRootSSLCertificate_SAF.pfx"
+    if (!(Test-Path $pfxRootCert)) {
+        $return $false
+    }
+    $pfxCert = "$dir\SitecoreSSLCertificates_SAF.pfx"
+    if (!(Test-Path $pfxCert)) {
+        return $false
+    }
+    return $true
+}
+
 function BuildRootCertName {
     [CmdletBinding()]
     Param(
@@ -17,7 +30,11 @@ function BuildClientCertName {
         [string]$Prefix
     )
 
-    $crt = "$($Prefix)_SitecoreClient_SAF"
+    $crt = ""
+    if (IsInstallWithSAFCerts) {
+        $crt = "$($Prefix)_SitecoreClient_SAF"
+    }
+   
     return $crt
 }
 
@@ -27,7 +44,11 @@ function BuildServerCertName {
         [string]$Prefix
     )
 
-    $crt = "$($Prefix)_SitecoreServer_SAF"
+    $crt = ""
+    if (IsInstallWithSAFCerts) {
+        $crt = "$($Prefix)_SitecoreServer_SAF"
+    }
+
     return $crt
 }
 
@@ -78,17 +99,11 @@ function CleanCertStore {
             Remove-Item -Path "cert:\$Store\My\$($cert.Thumbprint)" -DeleteKey -Force
         }
     }
-    else {
-        Write-Warning "SSL Certificates issued by '$rootCertName' not found..."
-    }
 
     $rootCert = Get-ChildItem -Path "cert:\$Store\Root" | Where-Object FriendlyName -eq $rootCertName
     if ($rootCert -ne $null) {
         Write-Output "Removing SSL Root Certificate with Subject = '$($rootCert.Subject)' and Thumbprint = '$($rootCert.Thumbprint)'..."
         Remove-Item -Path "cert:\$Store\Root\$($rootCert.Thumbprint)" -DeleteKey -Force
-    }
-    else {
-        Write-Warning "'$rootCertName' SSL Root Certificate not found..."
     }
 
     Write-Output "Cleaning Sitecore SSL Certificates done."
@@ -133,6 +148,7 @@ function GenerateClientCert {
     [CmdletBinding()]
     Param(
         [string]$Prefix,
+        [string[]]$Hostnames,
         [int]$ValidYears = 10
     )
 
@@ -144,7 +160,7 @@ function GenerateClientCert {
     $clientCertName = BuildClientCertName -Prefix $Prefix
 
     Write-Output "Generating '$clientCertName' Certificate started..."
-    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -DnsName $clientCertName -KeyusageProperty All -KeyUsage KeyEncipherment, DigitalSignature -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $clientCertName
+    New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $clientCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage KeyEncipherment, DigitalSignature -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $clientCertName
     Write-Output "Generating '$clientCertName' Certificate done."
 }
 
@@ -181,6 +197,55 @@ function ExportCerts {
     }
 }
 
+function ImportCerts {
+    [CmdletBinding()]
+    Param(
+        [string]$Password
+    )
+
+    Write-Output "Importing SSL Certificates started..."
+
+    $securePassword = ConvertTo-SecureString -String $Password -AsPlainText -Force
+
+    $dir = Get-Location
+
+    $pfxRootCert = "$dir\SitecoreRootSSLCertificate_SAF.pfx"
+    Import-PfxCertificate -FilePath $pfxRootCert -CertStoreLocation "Cert:\LocalMachine\Root" -Password $securePassword -Exportable -Verbose
+
+    $pfxCert = "$dir\SitecoreSSLCertificates_SAF.pfx"
+    Import-PfxCertificate -FilePath $pfxCert -CertStoreLocation "Cert:\LocalMachine\My" -Password $securePassword -Exportable -Verbose
+
+    Write-Output "Importing SSL Certificates done."
+}
+
+function SetSSLCertsAppPoolsAccess {
+    [CmdletBinding()]
+    Param(
+        [string]$Prefix,
+        [string[]]$Hostnames
+    )
+
+    Write-Output "Set SSL Certificates AppPools access started..."
+    
+    $clientCertName = BuildClientCertName -Prefix $Prefix
+    
+    foreach ($hostName in $Hostnames) {
+        if (Test-Path "IIS:\AppPools\$hostName") {
+            $params = @{
+                Path         = "$PSScriptRoot\set-sslcerts-access.json"
+                XConnectCert = $clientCertName
+                AppPoolName  = $hostName
+            }
+            Install-SitecoreConfiguration @params
+        }
+        else {
+            Write-Warning -Message "Could not find IIS AppPool '$hostName'. Skipping set access..."
+        }
+    }
+
+    Write-Output "Set SSL Certificates AppPools access done."
+}
+
 function StartSSLCertsCreation {
     [CmdletBinding()]
     Param
@@ -207,3 +272,5 @@ Export-ModuleMember -Function "BuildClientCertName"
 Export-ModuleMember -Function "BuildServerCertName"
 Export-ModuleMember -Function "FindCert"
 Export-ModuleMember -Function "CleanCertStore"
+Export-ModuleMember -Function "ImportCerts"
+Export-ModuleMember -Function "SetSSLCertsAppPoolsAccess"
