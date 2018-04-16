@@ -1,18 +1,37 @@
 Import-Module "$PSScriptRoot\..\Run-Pipelines.psm1" -Force
 $ErrorActionPreference = "Stop"
 
-function IsInstallWithSAFCerts {
-    $dir = Get-Location
-    $pfxRootCert = "$dir\SitecoreRootSSLCertificate_SAF.pfx"
-    if (!(Test-Path $pfxRootCert)) {
-        $return $false
+function IsCertInstalled {
+    [CmdletBinding()]
+    Param(
+        [string]$Cert
+    )
+
+    try {
+
+        $certItem = Get-ChildItem -Path "cert:\LocalMachine\My" | Where-Object FriendlyName -eq $Cert
+    
+        if ($certItem -eq $null) {
+            $certItem = Get-ChildItem -Path "cert:\LocalMachine\Root" | Where-Object FriendlyName -eq $Cert
+        }
+
+        if ($certItem -eq $null) {
+            $certItem = Get-Item "cert:\LocalMachine\My\$Cert"
+        }
+        if ($certItem -eq $null) {
+            $certItem = Get-Item "cert:\LocalMachine\Root\$Cert"
+        }
+
+        return !($certItem -eq $null)
     }
-    $pfxCert = "$dir\SitecoreSSLCertificates_SAF.pfx"
-    if (!(Test-Path $pfxCert)) {
+    catch {
+        Write-Warning "Exception occurred while looking for SSLCert."
+        $exception = $_.Exception | Format-List -Force | Out-String
+        Write-Warning $exception
         return $false
     }
-    return $true
 }
+
 
 function BuildRootCertName {
     [CmdletBinding()]
@@ -26,60 +45,34 @@ function BuildRootCertName {
 
 function BuildClientCertName {
     [CmdletBinding()]
-    Param(
-        [string]$Prefix
+    Param
+    (
+        [string]$Prefix,
+        [switch]$Force
     )
 
-    $crt = ""
-    if (IsInstallWithSAFCerts) {
-        $crt = "$($Prefix)_SitecoreClient_SAF"
+    $crt = "$($Prefix)_SitecoreClient_SAF"
+    if (($Force.IsPresent) -or (IsCertInstalled -Cert $crt)) {
+        return $crt
     }
    
-    return $crt
+    return ""
 }
 
 function BuildServerCertName {
     [CmdletBinding()]
-    Param(
-        [string]$Prefix
+    Param
+    (
+        [string]$Prefix,
+        [switch]$Force
     )
 
-    $crt = ""
-    if (IsInstallWithSAFCerts) {
-        $crt = "$($Prefix)_SitecoreServer_SAF"
+    $crt = "$($Prefix)_SitecoreServer_SAF"
+    if (($Force.IsPresent) -or (IsCertInstalled -Cert $crt)) {
+        return $crt
     }
 
-    return $crt
-}
-
-function FindCert {
-    [CmdletBinding()]
-    Param(
-        [string]$Cert
-    )
-
-    try {
-        $cert = Get-ChildItem -Path "cert:\LocalMachine\My" | Where-Object FriendlyName -eq $Cert
-    
-        if ($cert -eq $null) {
-            $cert = Get-ChildItem -Path "cert:\LocalMachine\Root" | Where-Object FriendlyName -eq $Cert
-        }
-
-        if ($cert -eq $null) {
-            $cert = Get-Item "cert:\LocalMachine\My\$Cert"
-        }
-        if ($cert -eq $null) {
-            $cert = Get-Item "cert:\LocalMachine\Root\$Cert"
-        }
-
-        return $cert
-    }
-    catch {
-        Write-Warning "Exception occurred while looking for SSLCert."
-        $exception = $_.Exception | Format-List -Force | Out-String
-        Write-Warning $exception
-        return null
-    }
+    return ""
 }
 
 function CleanCertStore {
@@ -137,7 +130,7 @@ function GenerateServerCert {
     if ($rootCert -eq $null) {
         throw "Can not find SSL Root CA Certificate with name '$rootCertName'..."
     }
-    $serverCertName = BuildServerCertName -Prefix $Prefix
+    $serverCertName = BuildServerCertName -Prefix $Prefix -Force
     
     Write-Output "Generating '$serverCertName' Certificate started..."
     New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $serverCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage KeyEncipherment, DigitalSignature -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $serverCertName
@@ -157,7 +150,7 @@ function GenerateClientCert {
     if ($rootCert -eq $null) {
         throw "Can not find SSL Root CA Certificate with name '$rootCertName'..."
     }
-    $clientCertName = BuildClientCertName -Prefix $Prefix
+    $clientCertName = BuildClientCertName -Prefix $Prefix -Force
 
     Write-Output "Generating '$clientCertName' Certificate started..."
     New-SelfSignedCertificate -CertStoreLocation cert:\CurrentUser\My -Signer $rootCert -Subject $clientCertName -DnsName $Hostnames -KeyusageProperty All -KeyUsage KeyEncipherment, DigitalSignature -KeyExportPolicy Exportable -NotAfter (Get-Date).AddYears($ValidYears) -FriendlyName $clientCertName
@@ -197,6 +190,17 @@ function ExportCerts {
     }
 }
 
+function SSLCertsExistInCurrentDir {
+    $dir = Get-Location
+    if (!(Test-Path "$dir\SitecoreRootSSLCertificate_SAF.pfx")) {
+        return $false
+    }
+    if (!(Test-Path "$dir\SitecoreSSLCertificates_SAF.pfx")) {
+        return $false
+    }
+    return $true
+}
+
 function ImportCerts {
     [CmdletBinding()]
     Param(
@@ -204,6 +208,10 @@ function ImportCerts {
     )
 
     Write-Output "Importing SSL Certificates started..."
+
+    if (!(SSLCertsExistInCurrentDir)) {
+        throw "Please, provide SAF SSL Certificates for import..."
+    }
 
     $securePassword = ConvertTo-SecureString -String $Password -AsPlainText -Force
 
@@ -255,7 +263,7 @@ function StartSSLCertsCreation {
     
     $pipeline = "newSSLCerts"
 
-    if ($PSBoundParameters["Force"]) {
+    if ($Force.IsPresent) {
         RunSteps -Pipeline $pipeline -Force
     }
     else {
@@ -270,7 +278,6 @@ Export-ModuleMember -Function "GenerateClientCert"
 Export-ModuleMember -Function "ExportCerts"
 Export-ModuleMember -Function "BuildClientCertName"
 Export-ModuleMember -Function "BuildServerCertName"
-Export-ModuleMember -Function "FindCert"
 Export-ModuleMember -Function "CleanCertStore"
 Export-ModuleMember -Function "ImportCerts"
 Export-ModuleMember -Function "SetSSLCertsAppPoolsAccess"

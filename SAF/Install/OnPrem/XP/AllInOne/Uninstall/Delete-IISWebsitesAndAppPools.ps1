@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\..\..\..\Common\WebAdministration-Module.psm1" -Force
+Import-Module "$PSScriptRoot\..\..\..\..\..\Common\WebAdministration-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
 Write-Output "Deleting IIS Websites and AppPools started..."

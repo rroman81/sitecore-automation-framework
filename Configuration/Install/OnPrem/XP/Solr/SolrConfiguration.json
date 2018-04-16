@@ -1,15 +1,16 @@
 {
     "hosting": "OnPrem",
-    "sitecoreMode": "XM",
-    "serverRole": "Solr",
+    "sitecoreMode": "XP",
+    "offlineMode": false,
     "sif": {
         "repositoryURL": "https://sitecore.myget.org/F/sc-powershell/api/v2",
         "version": "1.2.0"
     },
-    "installPackage": "",
     "prefix": "",
-    "search": {
-        "solr": {
+    "solr": {
+        "serviceURL": "",
+        "install": {
+            "installPackage": "",
             "version": "",
             "installDir": "",
             "hostName": "",
@@ -17,9 +18,11 @@
             "serviceName": "",
             "serviceDisplayName": "",
             "serviceDescription": ""
-        }
-    },
-    "ssl": {
-        "importCertPassword": ""
+        },
+        "customCores": [
+            {
+                "name": ""
+            }
+        ]
     }
 }

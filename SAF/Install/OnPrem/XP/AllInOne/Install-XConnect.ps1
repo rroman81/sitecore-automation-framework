@@ -1,5 +1,4 @@
 . "$PSScriptRoot\..\..\..\InstallParams.ps1"
-. "$PSScriptRoot\..\..\Solr\SolrParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
@@ -16,6 +15,7 @@ $sqlUser =  $global:Configuration.sql.adminUsername
 $sqlAdminPassword =  $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.xConnect.installDir
+$solrServiceURL = $global:Configuration.search.solr.serviceURL
 $package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *xconnect.scwdp.zip*
 
 $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
@@ -44,7 +44,7 @@ $xconnectParams = @{
     SqlMessagingUser               = "$($prefix)_messaginguser"
     SqlMessagingPassword           = $sqlSitecorePassword
     SolrCorePrefix                 = $prefix
-    SolrURL                        = $SolrServiceUrl
+    SolrURL                        = $solrServiceURL
     InstallDirectory               = $installDir
 }
 Install-SitecoreConfiguration @xconnectParams

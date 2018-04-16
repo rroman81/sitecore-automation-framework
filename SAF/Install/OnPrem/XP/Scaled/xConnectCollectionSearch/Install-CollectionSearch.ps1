@@ -18,7 +18,7 @@ $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.xConnect.installDir
 $environment = $global:Configuration.xConnect.environment
 $logLevel = $global:Configuration.xConnect.logLevel
-$solrUrl = $global:Configuration.search.solr.serviceUrl
+$solrURL = $global:Configuration.search.solr.serviceURL
 $package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *collectionsearch.scwdp.zip*
 
 Write-Output "Install xConnect Collection Search started..."
@@ -41,7 +41,7 @@ $sitecoreParams = @{
     SqlMessagingUser               = "$($prefix)_messaginguser"
     SqlMessagingPassword           = $sqlSitecorePassword
     SqlServer                      = $sqlServer
-    SolrUrl                        = $solrUrl
+    SolrUrl                        = $solrURL
     XConnectEnvironment            = $environment
     XConnectLogLevel               = $logLevel
     InstallDirectory               = $installDir

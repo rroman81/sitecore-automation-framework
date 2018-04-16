@@ -40,9 +40,15 @@ function Initialize {
     Write-Warning "SAF initialization will start after 3 seconds..."
     Start-Sleep -s 3
 
-    ConfigurePSGallery
-    ConfigureChoco
-    RefreshEnvironment
+    if ($global:Configuration.offlineMode -eq $false) {
+        ConfigurePSGallery
+        ConfigureChoco
+        RefreshEnvironment
+    }
+    else {
+        Write-Warning "SAF is running in offline mode. It won't use PSGallery and Chocolatey. That means you'll have more to do by yourself ;)"
+        Start-Sleep -s 5
+    }
 
     Write-Warning "SAF initialization is done."
 }
@@ -54,12 +60,12 @@ function Install-Sitecore {
         [switch]$Force
     )
 
-    Initialize
     LoadCofigurations -ConfigName "InstallConfiguration"
+    Initialize
 
     Import-Module "$PSScriptRoot\Install\OnPrem\Install-Module.psm1" -Force
 
-    if ($PSBoundParameters["Force"]) {
+    if ($Force.IsPresent) {
         StartInstall -Force
     }
     else {
@@ -74,16 +80,36 @@ function Uninstall-Sitecore {
         [switch]$Force
     )
 
-    Initialize
     LoadCofigurations -ConfigName "InstallConfiguration"
+    Initialize
 
     Import-Module "$PSScriptRoot\Install\OnPrem\Uninstall-Module.psm1" -Force
    
-    if ($PSBoundParameters["Force"]) {
-        StartUninstall -Force
+    if ($Force.IsPresent) {
+        StartUninstallSitecore -Force
     }
     else {
-        StartUninstall
+        StartUninstallSitecore
+    }
+}
+
+function Uninstall-Solr {
+    [CmdletBinding()]
+    Param
+    (
+        [switch]$Force
+    )
+
+    LoadCofigurations -ConfigName "SolrConfiguration"
+    Initialize
+
+    Import-Module "$PSScriptRoot\Install\OnPrem\Uninstall-Module.psm1" -Force
+   
+    if ($Force.IsPresent) {
+        StartUninstallSolr -Force
+    }
+    else {
+        StartUninstallSolr
     }
 }
 
@@ -94,12 +120,12 @@ function New-SSLCerts {
         [switch]$Force
     )
 
-    Initialize
     LoadCofigurations -ConfigName "SSLConfiguration"
+    Initialize
 
     Import-Module "$PSScriptRoot\Common\SSL\SSL-Module.psm1" -Force
 
-    if ($PSBoundParameters["Force"]) {
+    if ($Force.IsPresent) {
         StartSSLCertsCreation -Force
     }
     else {
@@ -108,23 +134,45 @@ function New-SSLCerts {
 }
 
 function Import-SSLCerts {
-    Initialize
     LoadCofigurations -ConfigName "SSLConfiguration"
+    Initialize
 
     Import-Module "$PSScriptRoot\Common\SSL\SSL-Module.psm1" -Force
     ImportCerts -Password $global:Configuration.password
 }
 
 function Set-SSLCertsAppPoolsAccess {
-    Initialize
     LoadCofigurations -ConfigName "SSLConfiguration"
+    Initialize
 
     Import-Module "$PSScriptRoot\Common\SSL\SSL-Module.psm1" -Force
     SetSSLCertsAppPoolsAccess -Prefix $global:Configuration.prefix -Hostnames $global:Configuration.hostNames 
 }
 
+function Initialize-Solr {
+    [CmdletBinding()]
+    Param
+    (
+        [switch]$Force
+    )
+
+    LoadCofigurations -ConfigName "SolrConfiguration"
+    Initialize
+
+    Import-Module "$PSScriptRoot\Install\OnPrem\Solr\Solr-Module.psm1" -Force
+   
+    if ($Force.IsPresent) {
+        StartSetup -Force
+    }
+    else {
+        StartSetup
+    }
+}
+
 Export-ModuleMember -Function "Install-Sitecore"
 Export-ModuleMember -Function "Uninstall-Sitecore"
+Export-ModuleMember -Function "Uninstall-Solr"
 Export-ModuleMember -Function "New-SSLCerts"
 Export-ModuleMember -Function "Import-SSLCerts"
 Export-ModuleMember -Function "Set-SSLCertsAppPoolsAccess"
+Export-ModuleMember -Function "Initialize-Solr"

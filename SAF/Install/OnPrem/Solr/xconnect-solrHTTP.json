@@ -1,0 +1,42 @@
+{
+    "Parameters": {
+        "SolrUrl": {
+            "Type": "string",
+            "Description": "The Solr instance url."
+        },
+        "CorePrefix": {
+            "Type": "string",
+            "Description": "The prefix for each of the created indexes."
+        }
+    },
+    "Variables": {
+        "Xdb.Name": "[concat(parameter('CorePrefix'), '_xdb')]",
+        "Xdb.Rebuild.Name": "[concat(variable('Xdb.Name'), '_rebuild')]",
+    },
+    "Tasks": {
+        "CreateXDBSolrCore": {
+            "Type": "ManageSolrCore",
+            "Params": {
+                "Action": "Create",
+                "Address": "[parameter('SolrUrl')]",
+                "Arguments": {
+                    "name": "[variable('Xdb.Name')]",
+                    "instanceDir": "[variable('Xdb.Name')]",
+                    "configSet": "basic_configs"
+                }
+            }
+        },
+        "CreateXDBRebuildSolrCore": {
+            "Type": "ManageSolrCore",
+            "Params": {
+                "Action": "Create",
+                "Address": "[parameter('SolrUrl')]",
+                "Arguments": {
+                    "name": "[variable('Xdb.Rebuild.Name')]",
+                    "instanceDir": "[variable('Xdb.Rebuild.Name')]",
+                    "configSet": "basic_configs"
+                }
+            }
+        }
+    }
+}

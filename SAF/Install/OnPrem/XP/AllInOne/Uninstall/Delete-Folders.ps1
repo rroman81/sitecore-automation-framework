@@ -1,11 +1,11 @@
 $ErrorActionPreference = "Stop"
 
-$solrRootDir = $global:Configuration.search.solr.installDir
 $sitecoreRootDir = $global:Configuration.sitecore.installDir
 $xConnectRootDir = $global:Configuration.xConnect.installDir
 
-Write-Output "Deleting folders started..." 
-$dirs = @("$solrRootDir", "$sitecoreRootDir", "$xConnectRootDir")
+Write-Output "Deleting folders started..."
+
+$dirs = @("$sitecoreRootDir", "$xConnectRootDir")
 foreach ($dir in $dirs) {
     if (Test-Path $dir) {
         Write-Output "Deleting '$dir'..."
@@ -15,4 +15,5 @@ foreach ($dir in $dirs) {
         Write-Warning "'$dir' doesn't exist..."
     }
 }
+
 Write-Output "Deleting folders done." 

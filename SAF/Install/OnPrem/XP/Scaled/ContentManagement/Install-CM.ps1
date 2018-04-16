@@ -10,7 +10,7 @@ $sqlServer = $global:Configuration.sql.serverName
 $sqlUser = $global:Configuration.sql.adminUsername
 $sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
-$solrUrl = $global:Configuration.search.solr.serviceUrl
+$solrURL = $global:Configuration.search.solr.serviceURL
 $processingServiceURL = $global:Configuration.processing.serviceURL
 $reportingServiceURL = $global:Configuration.reporting.serviceURL
 $reportingServiceApiKey = $global:Configuration.reporting.serviceApiKey
@@ -80,7 +80,7 @@ foreach ($cm in $global:Configuration.sitecore) {
             SqlMessagingUser                     = "$($prefix)_messaginguser"
             SqlMessagingPassword                 = $sqlSitecorePassword
             SolrCorePrefix                       = $prefix
-            SolrUrl                              = $solrUrl
+            SolrUrl                              = $solrURL
             Sitename                             = $siteName
             XConnectCert                         = $xConnectSslCert
             SSLCert                              = $sslCert

@@ -33,6 +33,24 @@
             "script": "\\Install\\OnPrem\\Solr\\Create-CustomSolrCores.ps1"
         }
     ],
+    "setupOnPremSolrCoresViaHTTP-XP": [
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
+            "name": "Add Sitecore Solr cores via HTTP",
+            "script": "\\Install\\OnPrem\\Solr\\Configure-SolrSitecoreHTTP.ps1"
+        },
+        {
+            "name": "Add xConnect Solr cores via HTTP",
+            "script": "\\Install\\OnPrem\\Solr\\Configure-SolrXConnectHTTP.ps1"
+        },
+        {
+            "name": "Add custom Solr cores via HTTP (if any)",
+            "script": "\\Install\\OnPrem\\Solr\\Create-CustomSolrCoresHTTP.ps1"
+        }
+    ],
     "installOnPremAllInOne-XP": [
         {
             "name": "Install .Net Framework",
@@ -59,18 +77,6 @@
             "script": "\\SQL\\Enable-ContainedDatabaseAuth.ps1"
         },
         {
-            "name": "Configure Java Runtime Environment",
-            "script": "\\Install\\OnPrem\\Solr\\Install-JRE.ps1"
-        },
-        {
-            "name": "Install Non-Sucking Service Manager",
-            "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
-        },
-        {
-            "name": "Install Solr",
-            "script": "\\Install\\OnPrem\\Solr\\Install-Solr.ps1"
-        },
-        {
             "name": "Process Sitecore installation package",
             "script": "\\Install\\OnPrem\\XP\\AllInOne\\Process-InstallPackage.ps1"
         },
@@ -79,16 +85,8 @@
             "script": "\\Install\\OnPrem\\Install-SIF.ps1"
         },
         {
-            "name": "Add xConnect Solr cores",
-            "script": "\\Install\\OnPrem\\Solr\\Configure-SolrXConnect.ps1"
-        },
-        {
             "name": "Install xConnect",
             "script": "\\Install\\OnPrem\\XP\\AllInOne\\Install-XConnect.ps1"
-        },
-        {
-            "name": "Add Sitecore Solr cores",
-            "script": "\\Install\\OnPrem\\Solr\\Configure-SolrSitecore.ps1"
         },
         {
             "name": "Install Sitecore",
@@ -101,10 +99,6 @@
         {
             "name": "Add custom databases (if any)",
             "script": "\\SQL\\Deploy-CustomDatabases.ps1"
-        },
-        {
-            "name": "Add custom Solr cores (if any)",
-            "script": "\\Install\\OnPrem\\Solr\\Create-CustomSolrCores.ps1"
         }
     ],
     "installOnPremCM-XP": [
@@ -487,6 +481,20 @@
             "script": "\\Install\\OnPrem\\Solr\\Create-CustomSolrCores.ps1"
         }
     ],
+    "setupOnPremSolrCoresViaHTTP-XM": [
+        {
+            "name": "Install Sitecore Installation Framework (SIF)",
+            "script": "\\Install\\OnPrem\\Install-SIF.ps1"
+        },
+        {
+            "name": "Add Sitecore Solr cores via HTTP",
+            "script": "\\Install\\OnPrem\\Solr\\Configure-SolrSitecoreHTTP.ps1"
+        },
+        {
+            "name": "Add custom Solr cores via HTTP (if any)",
+            "script": "\\Install\\OnPrem\\Solr\\Create-CustomSolrCoresHTTP.ps1"
+        }
+    ],
     "installOnPremCM-XM": [
         {
             "name": "Install .Net Framework",
@@ -588,23 +596,37 @@
         },
         {
             "name": "Delete Services",
-            "script": "\\Install\\OnPrem\\Uninstall\\Delete-Services.ps1"
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Uninstall\\Delete-Services.ps1"
         },
         {
             "name": "Delete IIS Websites and App Pools",
-            "script": "\\Install\\OnPrem\\Uninstall\\Delete-IISWebsitesAndAppPools.ps1"
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Uninstall\\Delete-IISWebsitesAndAppPools.ps1"
         },
         {
             "name": "Delete SQL databases and logins",
-            "script": "\\Install\\OnPrem\\Uninstall\\Delete-SQLDatabasesAndLogins.ps1"
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Uninstall\\Delete-SQLDatabasesAndLogins.ps1"
         },
         {
             "name": "Delete folders from file system",
-            "script": "\\Install\\OnPrem\\Uninstall\\Delete-Folders.ps1"
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Uninstall\\Delete-Folders.ps1"
         },
         {
             "name": "Delete Sitecore SSL Certificates",
-            "script": "\\Install\\OnPrem\\Uninstall\\Delete-SSLCerts.ps1"
+            "script": "\\Install\\OnPrem\\XP\\AllInOne\\Uninstall\\Delete-SSLCerts.ps1"
+        }
+    ],
+    "uninstallSolr":[
+        {
+            "name": "Install Non-Sucking Service Manager",
+            "script": "\\Install\\OnPrem\\Install-NSSM.ps1"
+        },
+        {
+            "name": "Delete Solr service",
+            "script": "\\Install\\OnPrem\\Solr\\Uninstall\\Delete-Services.ps1"
+        },
+        {
+            "name": "Delete Solr service install folder",
+            "script": "\\Install\\OnPrem\\Solr\\Uninstall\\Delete-Folders.ps1"
         }
     ]
 }

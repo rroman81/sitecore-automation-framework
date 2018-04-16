@@ -1,0 +1,33 @@
+{
+    "Parameters": {
+        "SolrUrl": {
+            "Type": "string",
+            "Description": "The Solr instance url."
+        },
+        "CorePrefix": {
+            "Type": "string",
+            "Description": "The prefix for each of the created indexes."
+        },
+        "CoreName": {
+            "Type": "string",
+            "Description": "Name of custom core."
+        }
+    },
+    "Variables": {
+        "Custom.Name": "[concat(parameter('CorePrefix'), '_', parameter('CoreName'))]"
+    },
+    "Tasks": {
+        "CreateCustomSolrCore": {
+            "Type": "ManageSolrCore",
+            "Params": {
+                "Action": "Create",
+                "Address": "[parameter('SolrUrl')]",
+                "Arguments": {
+                    "name": "[variable('Custom.Name')]",
+                    "instanceDir": "[variable('Custom.Namee')]",
+                    "configSet": "basic_configs"
+                }
+            }
+        }
+    }
+}

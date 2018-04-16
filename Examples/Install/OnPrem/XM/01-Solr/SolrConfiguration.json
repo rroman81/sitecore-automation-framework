@@ -1,15 +1,17 @@
 {
     "hosting": "OnPrem",
     "sitecoreMode": "XM",
+    "offlineMode": false,
     "serverRole": "Solr",
     "sif": {
         "repositoryURL": "https://sitecore.myget.org/F/sc-powershell/api/v2",
         "version": "1.2.0"
     },
-    "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
     "prefix": "xm",
-    "search": {
-        "solr": {
+    "solr": {
+        "serviceURL": "",
+        "install": {
+            "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XM1 packages).zip",
             "version": "6.6.2",
             "installDir": "C:\\SAF_FILES\\web\\xm\\Solr",
             "hostName": "solr.xm.local",
@@ -17,9 +19,11 @@
             "serviceName": "solrxm",
             "serviceDisplayName": "Solr XM",
             "serviceDescription": "Solr XM"
-        }
-    },
-    "ssl": {
-        "importCertPassword": "Pass123"
+        },
+        "customCores": [
+            {
+                "name": "custom_index"
+            }
+        ]
     }
 }

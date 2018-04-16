@@ -1,2 +1,10 @@
-$SolrServiceDir = "$($global:Configuration.search.solr.installDir)\solr-$($global:Configuration.search.solr.version)"
-$SolrServiceUrl = "https://$($global:Configuration.search.solr.hostName):$($global:Configuration.search.solr.port)/solr"
+$SolrServiceDir = ""
+$SolrServiceURL = ""
+
+if([string]::IsNullOrEmpty($global:Configuration.solr.serviceURL)) {
+    $SolrServiceDir = "$($global:Configuration.solr.install.installDir)\solr-$($global:Configuration.solr.install.version)"
+    $SolrServiceURL = "https://$($global:Configuration.solr.install.hostName):$($global:Configuration.solr.install.port)/solr"
+}
+else {
+    $SolrServiceURL = $global:Configuration.solr.serviceURL
+}

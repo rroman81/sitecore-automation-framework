@@ -10,7 +10,7 @@ $sqlServer = $global:Configuration.sql.serverName
 $sqlUser = $global:Configuration.sql.adminUsername
 $sqlAdminPassword = $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
-$solrUrl = $global:Configuration.search.solr.serviceUrl
+$solrURL = $global:Configuration.search.solr.serviceURL
 $package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *cm.scwdp.zip*
 
 $count = 1
@@ -51,7 +51,7 @@ foreach ($cm in $global:Configuration.sitecore) {
             SqlFormsUser      = "$($prefix)_formsuser"
             SqlFormsPassword  = $sqlSitecorePassword
             SolrCorePrefix    = $prefix
-            SolrUrl           = $solrUrl
+            SolrUrl           = $solrURL
             Sitename          = $siteName
             SSLCert           = $sslCert
             InstallDirectory  = $installDir

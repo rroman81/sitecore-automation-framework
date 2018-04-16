@@ -7,7 +7,7 @@ $prefix = $global:Configuration.prefix
 $license = $global:Configuration.license
 $sqlServer = $global:Configuration.sql.serverName
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
-$solrUrl = $global:Configuration.search.solr.serviceUrl
+$solrURL = $global:Configuration.search.solr.serviceURL
 $xConnectCollectionService = $global:Configuration.xConnect.collectionService
 $xConnectReferenceDataService = $global:Configuration.xDB.referenceDataService
 $marketingAutomationOperationsService = $global:Configuration.xDB.automationOperationsService
@@ -52,7 +52,7 @@ foreach ($cd in $global:Configuration.sitecore) {
             SqlMessagingUser                     = "$($prefix)_messaginguser"
             SqlMessagingPassword                 = $sqlSitecorePassword
             SolrCorePrefix                       = $prefix
-            SolrUrl                              = $solrUrl
+            SolrUrl                              = $solrURL
             Sitename                             = $siteName
             XConnectCert                         = $xConnectSslCert
             XConnectCollectionService            = $xConnectCollectionService

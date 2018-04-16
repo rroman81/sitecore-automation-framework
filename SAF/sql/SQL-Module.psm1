@@ -2,14 +2,19 @@ $ErrorActionPreference = "Stop"
 
 # Private functions
 function ImportSqlModule {
-    
-    if (Get-Module -Name SqlServer -ListAvailable) {
-        Write-Warning "SqlServer module is installed. Updating..."
-        Update-Module -Name SqlServer
+    if ($global:Configuration.offlineMode -eq $false) {
+        if (Get-Module -Name SqlServer -ListAvailable) {
+            Write-Warning "SqlServer module is installed. Updating..."
+            Update-Module -Name SqlServer
+        }
+        else {
+            Write-Output "Installing SqlServer module..."
+            Install-Module -Name SqlServer -AllowClobber
+        }
     }
     else {
-        Write-Output "Installing SqlServer module..."
-        Install-Module -Name SqlServer -AllowClobber
+        Write-Warning "SAF is running in offline mode. It assumes that you have installed SqlServer Powershell module latest version manually!"
+        Start-Sleep -s 5
     }
 
     Get-Module -Name SqlServer | Remove-Module

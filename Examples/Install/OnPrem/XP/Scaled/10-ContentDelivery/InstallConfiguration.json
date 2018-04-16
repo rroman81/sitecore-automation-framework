@@ -1,6 +1,7 @@
 {
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
+    "offlineMode": false,
     "serverRole": "CD",
     "sif": {
         "repositoryURL": "https://sitecore.myget.org/F/sc-powershell/api/v2",
@@ -30,14 +31,11 @@
     },
     "search": {
         "solr": {
-            "serviceUrl": "https://solr.xp.local:8911/solr"
+            "serviceURL": "https://solr.xp.local:8911/solr"
          }
     },
     "sql": {
         "serverName": ".\\SQL2017",
         "sitecorePassword": "Pass123"
-    },
-    "ssl": {
-        "importCertPassword": "Pass123"
     }
 }

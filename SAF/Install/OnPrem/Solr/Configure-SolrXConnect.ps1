@@ -5,11 +5,11 @@ $ErrorActionPreference = "Stop"
 Write-Output "Add xConnect Solr cores started..."
 
 $prefix = $global:Configuration.prefix
-$solrService = $global:Configuration.search.solr.serviceName
+$solrService = $global:Configuration.solr.install.serviceName
 
 $solrParams = @{
     Path        = "$SAFInstallPackageDir\xconnect-solr.json"
-    SolrUrl     = $SolrServiceUrl
+    SolrUrl     = $SolrServiceURL
     SolrRoot    = $SolrServiceDir
     SolrService = $solrService
     CorePrefix  = $prefix

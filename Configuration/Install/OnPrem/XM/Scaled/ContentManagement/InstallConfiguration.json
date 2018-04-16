@@ -1,6 +1,7 @@
 {
     "hosting": "OnPrem",
     "sitecoreMode": "XM",
+    "offlineMode": false,
     "serverRole": "CM",
     "sif": {
         "repositoryURL": "https://sitecore.myget.org/F/sc-powershell/api/v2",
@@ -18,7 +19,7 @@
     ],
     "search": {
         "solr": {
-            "serviceUrl": ""
+            "serviceURL": ""
         }
     },
     "sql": {
@@ -33,8 +34,5 @@
                 "connectionStringName": ""
             }
         ]
-    },
-    "ssl": {
-        "importCertPassword": ""
     }
 }

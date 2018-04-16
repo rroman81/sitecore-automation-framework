@@ -14,30 +14,36 @@ function ImportSIF {
 
     EnableIISAdministration
     
-    $repositoryName = "SitecoreGallery"
+    if ($global:Configuration.offlineMode -eq $false) {
+        $repositoryName = "SitecoreGallery"
 
-    # Check to see whether that location is registered already
-    $existing = Get-PSRepository -Name $repositoryName -ErrorAction Ignore
-
-    # If not, register it
-    if ($existing -eq $null) {
-        Write-Output "Registering $repositoryName '$RepositoryURL'..."
-        Register-PSRepository -Name $repositoryName -SourceLocation $RepositoryURL -InstallationPolicy Trusted
+        # Check to see whether that location is registered already
+        $existing = Get-PSRepository -Name $repositoryName -ErrorAction Ignore
+    
+        # If not, register it
+        if ($existing -eq $null) {
+            Write-Output "Registering $repositoryName '$RepositoryURL'..."
+            Register-PSRepository -Name $repositoryName -SourceLocation $RepositoryURL -InstallationPolicy Trusted
+        }
+        else {
+            Write-Warning "$repositoryName '$RepositoryURL' is already registered."
+        }
+    
+        # Ensure Trusted, so that users are not prompted before installing modules from that source.
+        Set-PSRepository -Name $repositoryName -InstallationPolicy Trusted
+    
+        if (Get-Module SitecoreInstallFramework -ListAvailable) {
+            Write-Warning "SitecoreInstallFramework module is installed. Updating..."
+            Update-Module -Name SitecoreInstallFramework -RequiredVersion $Version
+        }
+        else {
+            Write-Output "Installing SitecoreInstallFramework module..."
+            Install-Module -Name SitecoreInstallFramework -RequiredVersion $Version
+        }
     }
     else {
-        Write-Warning "$repositoryName '$RepositoryURL' is already registered."
-    }
-
-    # Ensure Trusted, so that users are not prompted before installing modules from that source.
-    Set-PSRepository -Name $repositoryName -InstallationPolicy Trusted
-
-    if (Get-Module SitecoreInstallFramework -ListAvailable) {
-        Write-Warning "SitecoreInstallFramework module is installed. Updating..."
-        Update-Module -Name SitecoreInstallFramework -RequiredVersion $Version
-    }
-    else {
-        Write-Output "Installing SitecoreInstallFramework module..."
-        Install-Module -Name SitecoreInstallFramework -RequiredVersion $Version
+        Write-Warning "SAF is running in offline mode. It assumes that you have installed SIF v.$Version manually!"
+        Start-Sleep -s 5
     }
 
     Get-Module -Name SitecoreInstallFramework | Remove-Module 
@@ -64,7 +70,7 @@ function StartInstall {
     
     $pipeline = ResolvePipeline
 
-    if ($PSBoundParameters["Force"]) {
+    if ($Force.IsPresent) {
         RunSteps -Pipeline $pipeline -Force
     }
     else {

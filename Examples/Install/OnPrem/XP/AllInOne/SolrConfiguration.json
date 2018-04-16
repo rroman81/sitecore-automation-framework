@@ -1,0 +1,28 @@
+{
+    "hosting": "OnPrem",
+    "sitecoreMode": "XP",
+    "offlineMode": false,
+    "sif": {
+        "repositoryURL": "https://sitecore.myget.org/F/sc-powershell/api/v2",
+        "version": "1.2.0"
+    },
+    "prefix": "allInOne",
+    "solr": {
+        "serviceURL": "",
+        "install": {
+            "installPackage": "C:\\SAF_FILES\\Sitecore 9.0.1 rev. 171219 (WDP XP0 packages).zip",
+            "version": "6.6.2",
+            "installDir": "C:\\SAF_FILES\\web\\allInOne\\Solr",
+            "hostName": "solr.allinone.local",
+            "port": "8909",
+            "serviceName": "solrallinone",
+            "serviceDisplayName": "Solr AllInOne",
+            "serviceDescription": "Solr AllInOne"
+        },
+        "customCores": [
+            {
+                "name": "custom_index"
+            }
+        ]
+    }
+}

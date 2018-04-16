@@ -1,6 +1,7 @@
 {
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
+    "offlineMode": false,
     "serverRole": "ReferenceData",
     "sif": {
         "repositoryURL": "https://sitecore.myget.org/F/sc-powershell/api/v2",
@@ -24,8 +25,5 @@
         "adminUsername": "SAFAdmin",
         "adminPassword": "Pass123",
         "sitecorePassword": "Pass123"
-    },
-    "ssl": {
-        "importCertPassword": "Pass123"
     }
 }

@@ -45,7 +45,7 @@ function RunSteps {
 
     CreateTemp
 
-    if ($PSBoundParameters["Force"]) {
+    if ($Force.IsPresent) {
         EraseHistoryLog -Pipeline $Pipeline
     }
 

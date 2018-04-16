@@ -16,8 +16,10 @@ Import-Module -Name "$rootDir\SAF\Sitecore.Automation.Framework.psm1" -Force
 # Set-Location "$rootDir\Examples\Install\OnPrem\XP\AllInOne"
 # New-SSLCerts
 # Import-SSLCerts
+# Initialize-Solr
 # Install-Sitecore
 # Uninstall-Sitecore
+# Uninstall-Solr
 
 ############### END XP0 ###################
 
@@ -25,19 +27,20 @@ Import-Module -Name "$rootDir\SAF\Sitecore.Automation.Framework.psm1" -Force
 ############### START XM1 ###################
 
 # XM SSL
-# Set-Location "$rootDir\Examples\Install\OnPrem\XM\Scaled\00-SSL"
+# Set-Location "$rootDir\Examples\Install\OnPrem\XM\00-SSL"
 # New-SSLCerts
+# Import-SSLCerts
 
 # XM Solr
-# Set-Location "$rootDir\Examples\Install\OnPrem\XM\Scaled\01-Solr"
-# Install-Sitecore
+# Set-Location "$rootDir\Examples\Install\OnPrem\XM\01-Solr"
+# Initialize-Solr
 
 # XM Content Management
-# Set-Location "$rootDir\Examples\Install\OnPrem\XM\Scaled\02-ContentManagement"
+# Set-Location "$rootDir\Examples\Install\OnPrem\XM\02-ContentManagement"
 # Install-Sitecore
 
 # XM Content Delivery
-# Set-Location "$rootDir\Examples\Install\OnPrem\XM\Scaled\03-ContentDelivery"
+# Set-Location "$rootDir\Examples\Install\OnPrem\XM\03-ContentDelivery"
 # Install-Sitecore
 
 ############### END XM1 ###################
@@ -45,17 +48,14 @@ Import-Module -Name "$rootDir\SAF\Sitecore.Automation.Framework.psm1" -Force
 
 ############### START XP1 ###################
 
-# XP New-SSLCerts
+# XP SSL Certs
 # Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\00-SSL"
 # New-SSLCerts
-
-# XP Import-SSLCerts
-# Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\00-SSL"
 # Import-SSLCerts
 
 # XP Solr
 # Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\01-Solr"
-# Install-Sitecore
+# Initialize-Solr
 
 # XP xConnect Collection
 # Set-Location "$rootDir\Examples\Install\OnPrem\XP\Scaled\02-xConnectCollection"

@@ -1,5 +1,4 @@
 . "$PSScriptRoot\..\..\..\InstallParams.ps1"
-. "$PSScriptRoot\..\..\Solr\SolrParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\Common\WebAdministration-Module.psm1" -Force
@@ -18,6 +17,7 @@ $sqlUser =  $global:Configuration.sql.adminUsername
 $sqlAdminPassword =  $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.sitecore.installDir
+$solrServiceURL = $global:Configuration.search.solr.serviceURL
 $package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *single.scwdp.zip*
 
 $dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web")
@@ -54,7 +54,7 @@ $sitecoreParams = @{
     SqlMessagingUser               = "$($prefix)_messaginguser"
     SqlMessagingPassword           = $sqlSitecorePassword
     SolrCorePrefix                 = $prefix
-    SolrUrl                        = $SolrServiceUrl
+    SolrUrl                        = $solrServiceURL
     XConnectCert                   = $clientCert
     Sitename                       = $siteName
     XConnectCollectionService      = "https://$xConnectHostName"

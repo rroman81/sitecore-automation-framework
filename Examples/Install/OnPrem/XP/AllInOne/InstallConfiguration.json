@@ -1,6 +1,7 @@
 {
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
+    "offlineMode": false,
     "serverRole": "AllInOne",
     "sif": {
         "repositoryURL": "https://sitecore.myget.org/F/sc-powershell/api/v2",
@@ -19,18 +20,7 @@
     },
     "search": {
         "solr": {
-            "version": "6.6.2",
-            "installDir": "C:\\SAF_FILES\\web\\allInOne\\Solr",
-            "hostName": "solr.allinone.local",
-            "port": "8909",
-            "serviceName": "solrallinone",
-            "serviceDisplayName": "Solr AllInOne",
-            "serviceDescription": "Solr AllInOne",
-            "customCores": [
-                {
-                    "name": "custom_index"
-                }
-            ]
+            "serviceURL": "https://solr.allinone.local:8909/solr"
         }
     },
     "sql": {
@@ -45,8 +35,5 @@
                 "connectionStringName": "custom"
             }
         ]
-    },
-    "ssl": {
-        "importCertPassword": "Pass123"
     }
 }

@@ -1,6 +1,7 @@
 {
     "hosting": "OnPrem",
     "sitecoreMode": "XP",
+    "offlineMode": false,
     "serverRole": "REP",
     "sif": {
         "repositoryURL": "https://sitecore.myget.org/F/sc-powershell/api/v2",
@@ -18,8 +19,5 @@
     "sql": {
         "serverName": ".\\SQL2017",
         "sitecorePassword": "Pass123"
-    },
-    "ssl": {
-        "importCertPassword": "Pass123"
     }
 }
