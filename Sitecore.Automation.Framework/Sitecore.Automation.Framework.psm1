@@ -2,7 +2,7 @@ Import-Module "$PSScriptRoot\Common\Initialization-Module.psm1" -Force
 Import-Module "$PSScriptRoot\Common\Utils-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
-Set-ExecutionPolicy Bypass -Scope Process -Force
+# Set-ExecutionPolicy Bypass -Scope Process -Force
 
 $global:Configuration = $null
 $global:Pipelines = Get-Content -Raw -Path "$PSScriptRoot\common\Pipelines.json" | ConvertFrom-Json
