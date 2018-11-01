@@ -2,7 +2,16 @@ Import-Module "$PSScriptRoot\Common\Initialization-Module.psm1" -Force
 Import-Module "$PSScriptRoot\Common\Utils-Module.psm1" -Force
 $ErrorActionPreference = "Stop"
 
-# Set-ExecutionPolicy Bypass -Scope Process -Force
+if (( (Get-ExecutionPolicy -Scope MachinePolicy) -eq 'Undefined') -or ( (Get-ExecutionPolicy -Scope UserPolicy) -eq 'Undefined')) {
+    if ( (Get-ExecutionPolicy -Scope Process) -in 'AllSigned', 'Restricted')  {
+        Set-ExecutionPolicy Bypass -Scope Process -Force
+    } 
+    else {
+        Write-Verbose 'Skipping resetting Execution Policy as computer has current session policy set to RemoteSigned or Unrestricted already.'
+    }
+} else {
+    Write-Verbose 'Skipping resetting Execution Policy as computer has GPO set for either User or Machine policy portion'
+}
 
 $global:Configuration = $null
 $global:Pipelines = Get-Content -Raw -Path "$PSScriptRoot\common\Pipelines.json" | ConvertFrom-Json
