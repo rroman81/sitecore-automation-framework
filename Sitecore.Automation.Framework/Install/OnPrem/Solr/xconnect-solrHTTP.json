@@ -11,7 +11,7 @@
     },
     "Variables": {
         "Xdb.Name": "[concat(parameter('CorePrefix'), '_xdb')]",
-        "Xdb.Rebuild.Name": "[concat(variable('Xdb.Name'), '_rebuild')]",
+        "Xdb.Rebuild.Name": "[concat(variable('Xdb.Name'), '_rebuild')]"
     },
     "Tasks": {
         "CreateXDBSolrCore": {

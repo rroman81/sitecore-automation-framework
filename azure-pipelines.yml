@@ -1,0 +1,16 @@
+name: 'Sitecore.Automation.Framework-Fork-CI'
+resources:
+  repositories:
+    - repository: 'Romas Github'
+      type: 'github'
+      name: 'Sitecore.Automation.Framework'
+      endpoint: 'git@github.com:rroman81/sitecore-automation-framework.git'
+
+jobs:
+  - job: Build_PowerShell
+    pool:
+      vmImage: vs2017-win2016
+    steps:
+    - powershell: |
+        .\build.cmd
+      displayName: 'Build and Test'
