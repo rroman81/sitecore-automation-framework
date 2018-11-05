@@ -58,7 +58,7 @@ $sitecoreParams = @{
     XConnectCert                   = $clientCert
     Sitename                       = $siteName
     XConnectCollectionService      = "https://$xConnectHostName"
-    InstallDirectory               = $installDir
+    # InstallDirectory               = $installDir
 }
 Install-SitecoreConfiguration @sitecoreParams
 AddWebBindings -SiteName $siteName -HostNames $hostNames 

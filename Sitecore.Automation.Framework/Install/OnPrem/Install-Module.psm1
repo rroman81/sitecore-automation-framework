@@ -14,14 +14,14 @@ function ImportSIF {
 
     EnableIISAdministration
     
-    if ($global:Configuration.offlineMode -eq $false) {
+    if (-not $global:Configuration.offlineMode) {
         $repositoryName = "SitecoreGallery"
 
         # Check to see whether that location is registered already
         $existing = Get-PSRepository -Name $repositoryName -ErrorAction Ignore
     
         # If not, register it
-        if ($existing -eq $null) {
+        if ($null -eq $existing) {
             Write-Output "Registering $repositoryName '$RepositoryURL'..."
             Register-PSRepository -Name $repositoryName -SourceLocation $RepositoryURL -InstallationPolicy Trusted
         }
@@ -50,6 +50,28 @@ function ImportSIF {
     Import-Module -Name SitecoreInstallFramework -RequiredVersion $Version
 
     Write-Output "Import Sitecore Installation Framework (SIF) done."
+}
+
+function ImportAzureRM {
+    [CmdletBinding()]
+    Param
+    (
+        [string]$RepositoryName = "PSGallery"
+    )
+    Write-Output "Import AzureRM Module started..."
+
+    if (-not $global:Configuration.offlineMode) {
+        if ($null -eq (Get-Module -Name AzureRM)) {
+            Install-Module -Name AzureRM -Repository $RepositoryName
+        } else {
+            Write-Warning "AzureRM is already installed on the system. Skipping the installation"
+        }
+
+        Import-Module AzureRM
+    } else {
+        Write-Warning "SAF is running in offline mode. Assumption is that AzureRM Module is already installed."
+    }
+
 }
 
 function ResolvePipeline {

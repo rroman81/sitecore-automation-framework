@@ -1,0 +1,9 @@
+{
+    "prefix": "allInOne",
+    "password": "Pass123",
+    "hostNames": [
+        "xconnect.allinone.local",
+        "allinone.local",
+        "sub.allinone.local"
+    ]
+}

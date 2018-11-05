@@ -30,7 +30,7 @@ function InstallSolr {
 
     $downloadFolder = "~\Downloads"
     $solrPackage = "https://archive.apache.org/dist/lucene/solr/$Version/solr-$Version.zip"
-    $solrZip = "$downloadFolder\$ServiceName.zip"
+    $solrZip = "$downloadFolder\solr-$Version.zip"
     DownloadAndUnzip "Solr" $ServiceDir $solrZip $solrPackage $InstallDir
     
     $JREVersion = Get-ChildItem "HKLM:\SOFTWARE\JavaSoft\Java Runtime Environment" | Select-Object -expa pschildname -Last 1
