@@ -8,6 +8,8 @@ if (Test-Path $SAFInstallPackageDir) {
 }
 Expand-Archive -Path $global:Configuration.solr.install.installPackage -DestinationPath "$SAFInstallPackageDir" -Force
 $configFilesZip = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *Configuration*
-Expand-Archive -Path $configFilesZip.FullName -DestinationPath "$SAFInstallPackageDir" -Force
+if ($configFilesZip)) {
+    Expand-Archive -Path $configFilesZip.FullName -DestinationPath "$SAFInstallPackageDir" -Force
+}
 
 Write-Output "Processing Sitecore installation package done."

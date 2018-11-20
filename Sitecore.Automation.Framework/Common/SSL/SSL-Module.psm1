@@ -11,18 +11,18 @@ function IsCertInstalled {
 
         $certItem = Get-ChildItem -Path "cert:\LocalMachine\My" | Where-Object FriendlyName -eq $Cert
     
-        if ($certItem -eq $null) {
+        if (-not $certItem) {
             $certItem = Get-ChildItem -Path "cert:\LocalMachine\Root" | Where-Object FriendlyName -eq $Cert
         }
 
-        if ($certItem -eq $null) {
+        if (-not $certItem) {
             $certItem = Get-Item "cert:\LocalMachine\My\$Cert"
         }
-        if ($certItem -eq $null) {
+        if (-not $certItem) {
             $certItem = Get-Item "cert:\LocalMachine\Root\$Cert"
         }
 
-        return !($certItem -eq $null)
+        return -not (-not $certItem)
     }
     catch {
         Write-Warning "Exception occurred while looking for SSLCert."

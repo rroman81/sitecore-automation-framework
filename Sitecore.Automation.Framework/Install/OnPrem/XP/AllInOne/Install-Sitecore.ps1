@@ -18,14 +18,25 @@ $sqlAdminPassword =  $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.sitecore.installDir
 $solrServiceURL = $global:Configuration.search.solr.serviceURL
-$package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *single.scwdp.zip*
+if ($global:Configuration.sitecore.installPackage) {
+    $package = $global:Configuration.sitecore.installPackage
+
+    if ($package.StartsWith("http") -and $global:Configuration.SASToken) {
+        $package += $global:Configuration.SASToken
+
+        Start-BitsTransfer -Source $package -Destination "$SAFInstallPackageDir/$($global:Configuration.sitecore.installPackage.substring($global:Configuration.sitecore.installPackage.LastIndexOf('/')+1))"
+    }
+}
+
+$package = (Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *single.scwdp.zip*).FullName
+
 
 $dbs = @("Core", "EXM.Master", "ExperienceForms", "Master", "Processing.Tasks", "Reporting", "Web")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
 
 $sitecoreParams = @{
     Path                           = "$SAFInstallPackageDir\sitecore-XP0.json"
-    Package                        = $package.FullName
+    Package                        = $package
     LicenseFile                    = $license
     SqlDbPrefix                    = $prefix
     SqlServer                      = $sqlServer
@@ -58,9 +69,9 @@ $sitecoreParams = @{
     XConnectCert                   = $clientCert
     Sitename                       = $siteName
     XConnectCollectionService      = "https://$xConnectHostName"
-    # InstallDirectory               = $installDir
+    InstallDirectory               = $installDir
 }
-Install-SitecoreConfiguration @sitecoreParams
+Install-SitecoreConfiguration @sitecoreParams -Verbose:$VerbosePreference
 AddWebBindings -SiteName $siteName -HostNames $hostNames 
 
 Write-Output "Install Sitecore done."

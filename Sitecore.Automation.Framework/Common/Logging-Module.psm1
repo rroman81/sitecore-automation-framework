@@ -1,4 +1,5 @@
 $ErrorActionPreference = "Stop"
+. "$PSScriptRoot\..\Install\InstallParams.ps1"
 function GetOrCreateHistoryLogFile {
     [CmdletBinding()]
     Param
@@ -6,7 +7,7 @@ function GetOrCreateHistoryLogFile {
         [string]$Pipeline
     )
 
-    $historyFile = "$PSScriptRoot\..\temp\$Pipeline-history.txt"
+    $historyFile = "$SAFInstallPackageDir/$Pipeline-history.txt"
     
     if (!(Test-Path $historyFile)) {
         New-Item $historyFile -ItemType File

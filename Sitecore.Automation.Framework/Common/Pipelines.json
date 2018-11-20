@@ -7,7 +7,7 @@
         {
             "name": "Configure KeyVault"
         }
-    ]
+    ],
     "installOnPremSolr-XP": [
         {
             "name": "Configure Java Runtime Environment",

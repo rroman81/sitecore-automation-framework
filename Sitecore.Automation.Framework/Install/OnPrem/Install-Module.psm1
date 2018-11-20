@@ -93,10 +93,10 @@ function StartInstall {
     $pipeline = ResolvePipeline
 
     if ($Force.IsPresent) {
-        RunSteps -Pipeline $pipeline -Force
+        RunSteps -Pipeline $pipeline -Force -Verbose:$VerbosePreference
     }
     else {
-        RunSteps -Pipeline $pipeline
+        RunSteps -Pipeline $pipeline -Verbose:$VerbosePreference
     }
 }
 

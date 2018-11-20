@@ -1,6 +1,7 @@
 . "$PSScriptRoot\..\..\..\InstallParams.ps1"
 Import-Module "$PSScriptRoot\..\..\..\..\SQL\SQL-Module.psm1" -Force
 Import-Module "$PSScriptRoot\..\..\..\..\Common\SSL\SSL-Module.psm1" -Force
+Import-Module BitsTransfer
 $ErrorActionPreference = "Stop"
 
 Write-Output "Install xConnect started..."
@@ -16,7 +17,19 @@ $sqlAdminPassword =  $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
 $installDir = $global:Configuration.xConnect.installDir
 $solrServiceURL = $global:Configuration.search.solr.serviceURL
-$package = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *xconnect.scwdp.zip*
+
+if ($global:Configuration.XConnect.installPackage) {
+    $package = $global:Configuration.XConnect.installPackage
+
+    if ($package.StartsWith("http") -and $global:Configuration.SASToken) {
+        $package += $global:Configuration.SASToken
+
+        Start-BitsTransfer -Source $package -Destination "$SAFInstallPackageDir/$($global:Configuration.XConnect.installPackage.substring($global:Configuration.XConnect.installPackage.LastIndexOf('/')+1))"
+    }
+}
+  
+$package = (Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *xconnect.scwdp.zip*).FullName
+
 
 $dbs = @("MarketingAutomation", "Messaging", "Processing.Pools", "ReferenceData", "Xdb.Collection.Shard0", "Xdb.Collection.Shard1", "Xdb.Collection.ShardMapManager")
 DeleteDatabases -SqlServer $sqlServer -Prefix $prefix -Databases $dbs -Username $sqlUser -Password $sqlAdminPassword
@@ -24,7 +37,7 @@ DeleteLogin -SqlServer $sqlServer -SqlLogin "$($prefix)_collectionuser" -Usernam
 
 $xconnectParams = @{
     Path                           = "$SAFInstallPackageDir\xconnect-xp0.json"
-    Package                        = $package.FullName
+    Package                        = $package
     LicenseFile                    = $license
     Sitename                       = $xConnectHostName
     SSLCert                        = $serverCert
@@ -47,6 +60,6 @@ $xconnectParams = @{
     SolrURL                        = $solrServiceURL
     InstallDirectory               = $installDir
 }
-Install-SitecoreConfiguration @xconnectParams
+Install-SitecoreConfiguration @xconnectParams -Verbose:$VerbosePreference
 
 Write-Output "Install xConnect done."

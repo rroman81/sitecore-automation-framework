@@ -186,6 +186,11 @@
             "DefaultValue": "https://localhost:8983/solr",
             "Description": "The Solr instance to use."
         },
+		"SolrZookeeperUrl": {
+            "Type": "string",
+            "DefaultValue": "localhost:2181",
+            "Description": "The Zookeeper instance to use."
+        },
         "XConnectCollectionService": {
             "Type": "string",
             "DefaultValue": "https://XConnect",
@@ -250,10 +255,8 @@
         "Solr.FXM.Master.Name": "[concat(parameter('SolrCorePrefix'), '_fxm_master_index')]",
         "Solr.FXM.Web.Name":    "[concat(parameter('SolrCorePrefix'), '_fxm_web_index')]",
 
-        // The sites full path on disk
         "Site.PhysicalPath": "[parameter('InstallDirectory')]",
 
-        // The sites data folder
         "Site.DataFolder": "[joinpath(variable('Site.PhysicalPath'), 'App_Data')]"
     },
     "Tasks": {
@@ -404,6 +407,7 @@
                         { "Name": "XDB MA Ops Client", "Value": "[parameter('MarketingAutomationOperationsService')]" },
                         { "Name": "XConnect Server Certificate Validation Thumbprint", "Value": "[variable('Security.XConnect.CertificateThumbprint')]" },
                         { "Name": "SOLR Connection String", "Value": "[parameter('SolrUrl')]" },
+                        { "Name": "SOLR Zookeeper Connection String", "Value": "[parameter('SolrZookeeperUrl')]" },
                         { "Name": "Solr Core Index Name", "Value": "[variable('Solr.Core.Name')]" },
                         { "Name": "Solr Master Index Name", "Value": "[variable('Solr.Master.Name')]" },
                         { "Name": "Solr Web Index Name", "Value": "[variable('Solr.Web.Name')]" },
