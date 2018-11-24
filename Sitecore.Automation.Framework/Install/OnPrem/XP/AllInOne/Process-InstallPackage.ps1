@@ -8,7 +8,10 @@ if (Test-Path $SAFInstallPackageDir) {
 }
 Expand-Archive -Path $global:Configuration.installPackage -DestinationPath "$SAFInstallPackageDir" -Force
 $configFilesZip = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *Configuration*
-Expand-Archive -Path $configFilesZip.FullName -DestinationPath "$SAFInstallPackageDir" -Force
+if ($configFilesZip) {
+    Expand-Archive -Path $configFilesZip.FullName -DestinationPath "$SAFInstallPackageDir" -Force
+}
+
 Copy-Item "$PSScriptRoot\Overrides\sitecore-XP0.json" -Destination "$SAFInstallPackageDir" -Force
 Copy-Item "$PSScriptRoot\Overrides\xconnect-xp0.json" -Destination "$SAFInstallPackageDir" -Force
 

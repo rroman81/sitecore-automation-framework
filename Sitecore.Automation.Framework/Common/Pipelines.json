@@ -1,4 +1,13 @@
 {
+    "installCloudAllInOne-XP": [
+        {
+            "name": "Install .Net Framework",
+            "script": "\\Install\\OnPrem\\Install-DotNet.ps1"
+        },
+        {
+            "name": "Configure KeyVault"
+        }
+    ],
     "installOnPremSolr-XP": [
         {
             "name": "Configure Java Runtime Environment",

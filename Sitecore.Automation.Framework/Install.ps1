@@ -58,11 +58,21 @@ function LoadLatestPSModule {
 
 function ConfigurePSGallery {
     Write-Output "Ensuring NuGet package provider..."
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
+    $minNuGetPackageProviderVersion = [System.Version]::Parse('2.8.5.201')
+
+
+    if  (!(Get-PackageProvider -Name NuGet -ListAvailable -ErrorAction SilentlyContinue) -and
+        (Get-PackaeProvider -Name NuGet -ListAvailable).Version -lt $minNuGetPackageProviderVersion) {
+        Install-PackageProvider -Name NuGet -MinimumVersion $minNuGetPackageProviderVersion -Force | Out-Null
+    }
+
 
     # Ensure Trusted, so that users are not prompted before installing modules from that source.
     Write-Output "Trusting PSGallery..."
-    Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+    if ((Get-PSRepository -Name "PSGallery").InstallationPolicy -ne "Trusted") {
+        Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+    }
+
     LoadLatestPSModule -Name PowerShellGet
 	LoadLatestPSModule -Name PackageManagement
 }

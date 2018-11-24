@@ -11,8 +11,11 @@ function EnableWindowsFeatures {
         "IIS-ISAPIFilter", "IIS-HttpCompressionStatic", "IIS-ASPNET45")
 
     foreach ($feature in $windowsFeatures) {
+        Write-Verbose "Enabling IIS Windows Optional Feature: $feature"
         if ((Get-WindowsOptionalFeature -FeatureName $feature -Online).State -ne "Enabled") {
             Enable-WindowsOptionalFeature -FeatureName $feature -Online -All | Out-Null
+        } else {
+            Write-Verbose "Optional Feature $feature has already been enabled previously. Skipping..."
         }
     }
 }
@@ -27,8 +30,11 @@ function EnableWindesServerFeatures {
     "Web-WebSockets", "Web-Mgmt-Tools", "Web-Mgmt-Console")
 
     foreach ($feature in $windowsServerFeatures) {
+        Write-Verbose "Enabling IIS Windows Feature: $feature"
         if (!(Get-WindowsFeature $feature).Installed) {
             Install-WindowsFeature -Name $feature | Out-Null
+        } else {
+            Write-Verbose "Windows Feature $feature has already been enabled previously. Skipping..."
         }
     }
 }
@@ -38,9 +44,11 @@ function Initialize-IIS {
     $operatingSystem = (Get-WmiObject win32_operatingsystem).Caption
     
     if (($operatingSystem -like '*server*') -or ($operatingSystem -like '*Server*')) {
+        Write-Verbose "Deteced Server OS. Enabling Server Features"
         EnableWindesServerFeatures
     }
     else {
+        Write-Verbose "Deteced Client OS. Enabling Server Features"
         EnableWindowsFeatures
     }
 

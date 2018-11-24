@@ -15,12 +15,23 @@ Properties {
 
 Task default -Depends Test
 
-Task Deploy -Depends Test {
-
+Task Publish -Depends Test {
+  $APIKey = $env:MyGetFeedApiKey
+  $PSrepositoryName = $env:SAFMyGetRepository
+  
+  Import-Module PowerShellGet
+  if ( (Get-PSRepository RomasMyGetFeed -ErrorAction SilentlyContinue ) -eq $null) {
+      $PSGalleryPublishUri = 'https://www.myget.org/F/psromaoneget/api/v2/package'
+      $PSGallerySourceUri = 'https://www.myget.org/F/psromaoneget/api/v2'
+      Register-PSRepository -Name RomasMyGetFeed -SourceLocation $PSGallerySourceUri -PublishLocation $PSGalleryPublishUri -InstallationPolicy Trusted
+  }
+    
+  Publish-Module -Path "$ProjectRoot\$ModuleName\" -NuGetApiKey $APIKey -Repository RomasMyGetFeed  -Force
 }
 
 Task Test -Depends Compile {
   Test-ModuleManifest "$ProjectRoot\$ModuleName\$ModuleName.psd1" | Out-Null
+  "Testing Module manifest has completed successfully!"
  }
 
 Task Compile {
