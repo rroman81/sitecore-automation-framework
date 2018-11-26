@@ -21,8 +21,14 @@ function EnableIISAdministration {
     Import-Module -Name WebAdministration
 }
 
-function IISReset {
-    [CmdletBinding(SupportsShouldProcess = $true)]
+<#
+.Synopsis 
+    Restarts the IIS web server via iisreset.exe.
+.Description
+    Restarts the IIS Web Server via IISReset.exe with 3 retries.
+#>
+function Restart-WebServer {
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact="Medium")]
     Param
     (
         [string]$Reason,
@@ -36,7 +42,7 @@ function IISReset {
         if (($process.ExitCode -gt 0) -and ($TryNumber -lt 3) ) {
             Write-Warning "IIS Reset failed. Retrying..."
             $newTryNumber = $TryNumber + 1
-            IISReset -Reason $Reason -TryNumber $newTryNumber -Force
+            Restart-WebServer -Reason $Reason -TryNumber $newTryNumber -Force
         }
     }
 }
@@ -133,8 +139,8 @@ function AddAppPoolUserToGroups {
         }
     }
 
-    if ($needIISReset -eq $true) {
-        IISReset -Reason "Groups changes will take effect after IIS Reset. Do it now?" -Confirm
+    if ($needIISReset) {
+        Restart-WebServer -Reason "Groups changes will take effect after IIS Reset. Do it now?" -Confirm:$false
     }
 }
 
@@ -283,6 +289,6 @@ Export-ModuleMember -Function "AddHostFileEntry"
 Export-ModuleMember -Function "TestURI"
 Export-ModuleMember -Function "AddAppPoolUserToGroups"
 Export-ModuleMember -Function "AddConnectionString"
-Export-ModuleMember -Function "IISReset"
+Export-ModuleMember -Function "Restart-WebServer"
 Export-ModuleMember -Function "DeleteIISWebsite"
 Export-ModuleMember -Function "DeleteIISAppPool"
