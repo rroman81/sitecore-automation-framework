@@ -1,7 +1,12 @@
 If (Test-Path $env:Temp)
 {
-    $SAFInstallPackageDir = "$env:Temp\SAF\package"    
+    $SAFInstallDir = "$env:Temp\SAF"
+    $SAFInstallPackageDir = Join-Path $SAFInstallDir "package"
+    if (-not (Test-Path $SAFInstallPackageDir)) {
+        New-Item -ItemType Directory -Path $SAFInstallPackageDir
+    }    
 } else {
-    $SAFInstallPackageDir = "$PSScriptRoot\..\temp\package"
+    $SAFInstallDir = "$PSScriptRoot\..\temp"
+    $SAFInstallPackageDir = Join-Path $SAFInstallDir "package"
 }
 Write-Verbose "Set Install Package Directory to $SAFInstallPackageDir"

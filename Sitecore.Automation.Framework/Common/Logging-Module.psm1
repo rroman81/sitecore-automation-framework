@@ -7,10 +7,10 @@ function GetOrCreateHistoryLogFile {
         [string]$Pipeline
     )
 
-    $historyFile = "$SAFInstallPackageDir/$Pipeline-history.txt"
+    $historyFile = "$SAFInstallDir/$Pipeline-history.txt"
     
     if (!(Test-Path $historyFile)) {
-        New-Item $historyFile -ItemType File
+        New-Item $historyFile -ItemType File -Force 
     }
 
     return $historyFile
@@ -43,7 +43,8 @@ function MarkStepAsCompleted {
     )
 
     $historyFile = GetOrCreateHistoryLogFile -Pipeline $Pipeline
-    Add-Content -Path $historyFile -Value $Step -Encoding "UTF8" -Force
+    $Step | Out-File -FilePath $historyFile -Append
+    # Add-Content -Path $historyFile -Value $Step -Encoding "UTF8" -UseTransaction -Force
 }
 
 function EraseHistoryLog {

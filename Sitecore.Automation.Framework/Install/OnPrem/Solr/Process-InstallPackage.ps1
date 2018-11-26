@@ -8,7 +8,7 @@ if (Test-Path $SAFInstallPackageDir) {
 }
 Expand-Archive -Path $global:Configuration.solr.install.installPackage -DestinationPath "$SAFInstallPackageDir" -Force
 $configFilesZip = Get-ChildItem -Path "$SAFInstallPackageDir\*" -Include *Configuration*
-if ($configFilesZip)) {
+if ($configFilesZip) {
     Expand-Archive -Path $configFilesZip.FullName -DestinationPath "$SAFInstallPackageDir" -Force
 }
 

@@ -26,7 +26,7 @@ Task Publish -Depends Test {
       Register-PSRepository -Name RomasMyGetFeed -SourceLocation $PSGallerySourceUri -PublishLocation $PSGalleryPublishUri -InstallationPolicy Trusted
   }
     
-  Publish-Module -Path "$ProjectRoot\$ModuleName\" -NuGetApiKey $APIKey -Repository RomasMyGetFeed  -Force
+  Publish-Module -Path "$ProjectRoot\$ModuleName\" -NuGetApiKey $APIKey -Repository RomasMyGetFeed
 }
 
 Task Test -Depends Compile {
