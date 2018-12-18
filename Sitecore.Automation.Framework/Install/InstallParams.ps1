@@ -1,6 +1,10 @@
 If (Test-Path $env:Temp)
 {
     $SAFInstallDir = "$env:Temp\SAF"
+    if (-not $SAFInstallDir) {
+        New-Item -ItemType Directory -Path $SAFInstallDir
+    }
+    
     $SAFInstallPackageDir = Join-Path $SAFInstallDir "package"
     if (-not (Test-Path $SAFInstallPackageDir)) {
         New-Item -ItemType Directory -Path $SAFInstallPackageDir

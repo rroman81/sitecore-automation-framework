@@ -20,7 +20,7 @@ function DownloadAndUnzip {
         if (!(Test-Path -Path $toolZip)) {
             Write-Verbose "The $toolName download is not cached under $toolZip."
             Write-Output "Downloading $toolName..."
-            Start-BitsTransfer -Source $toolSourceFile -Destination $toolZip
+            Start-BitsTransfer -Source $toolSourceFile -Destination $toolZip -ProxyUsage AutoDetect
         }
 
         Write-Output "Extracting $toolName to $toolFolder..."

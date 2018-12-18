@@ -7,10 +7,14 @@ function GetOrCreateHistoryLogFile {
         [string]$Pipeline
     )
 
+    if (-not $SAFInstallDir) {
+        New-Item -ItemType Directory -Path $SAFInstallDir
+    }
+
     $historyFile = "$SAFInstallDir/$Pipeline-history.txt"
-    
+
     if (!(Test-Path $historyFile)) {
-        New-Item $historyFile -ItemType File -Force 
+        New-Item $historyFile -ItemType File -Force
     }
 
     return $historyFile
