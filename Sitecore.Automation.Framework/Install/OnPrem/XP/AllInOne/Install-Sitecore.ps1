@@ -16,6 +16,7 @@ $sqlServer = $global:Configuration.sql.serverName
 $sqlUser =  $global:Configuration.sql.adminUsername
 $sqlAdminPassword =  $global:Configuration.sql.adminPassword
 $sqlSitecorePassword = $global:Configuration.sql.sitecorePassword
+$sitecoreAdminPassowrd = $global:Configuration.sql.sitecoreAdminPassword
 $installDir = $global:Configuration.sitecore.installDir
 $solrServiceURL = $global:Configuration.search.solr.serviceURL
 if ($global:Configuration.sitecore.installPackage) {
@@ -23,8 +24,14 @@ if ($global:Configuration.sitecore.installPackage) {
 
     if ($package.StartsWith("http") -and $global:Configuration.SASToken) {
         $package += $global:Configuration.SASToken
-
-        Start-BitsTransfer -Source $package -Destination "$SAFInstallPackageDir/$($global:Configuration.sitecore.installPackage.substring($global:Configuration.sitecore.installPackage.LastIndexOf('/')+1))"
+        
+        $destinationPath = "$SAFInstallPackageDir/$($global:Configuration.sitecore.installPackage.substring($global:Configuration.sitecore.installPackage.LastIndexOf('/')+1))"
+        Write-Verbose "Downloading $package to $destinationPath"
+        Start-BitsTransfer -Source $package -Destination $destinationPath
+    } else {
+        $destinationPath = "$SAFInstallPackageDir/$($global:Configuration.sitecore.installPackage.substring($global:Configuration.sitecore.installPackage.LastIndexOf('\')+1))"
+        Write-Verbose "Copying $package to $destinationPath"
+        Copy-Item -Path $package -Destination $destinationPath
     }
 }
 
@@ -39,6 +46,7 @@ $sitecoreParams = @{
     Package                        = $package
     LicenseFile                    = $license
     SqlDbPrefix                    = $prefix
+    SitecoreAdminPassword          = $sitecoreAdminPassowrd
     SqlServer                      = $sqlServer
     SqlAdminUser                   = $sqlUser
     SqlAdminPassword               = $sqlAdminPassword

@@ -23,8 +23,14 @@ if ($global:Configuration.XConnect.installPackage) {
 
     if ($package.StartsWith("http") -and $global:Configuration.SASToken) {
         $package += $global:Configuration.SASToken
-
-        Start-BitsTransfer -Source $package -Destination "$SAFInstallPackageDir/$($global:Configuration.XConnect.installPackage.substring($global:Configuration.XConnect.installPackage.LastIndexOf('/')+1))"
+        
+        $destinationPath = "$SAFInstallPackageDir/$($global:Configuration.XConnect.installPackage.substring($global:Configuration.XConnect.installPackage.LastIndexOf('/')+1))"
+        Write-Verbose "Downloading $package to $destinationPath"
+        Start-BitsTransfer -Source $package -Destination $destinationPath 
+    } else {
+        $destinationPath = "$SAFInstallPackageDir/$($global:Configuration.XConnect.installPackage.substring($global:Configuration.XConnect.installPackage.LastIndexOf('\')+1))"
+        Write-Verbose "Copying $package to $destinationPath"
+        Copy-Item -Path $package -Destination $destinationPath
     }
 }
   
